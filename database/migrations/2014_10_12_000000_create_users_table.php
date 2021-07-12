@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('company_name');
             $table->string('address');
             $table->string('p_iva', 11)->unique();
+            $table->string('path_image', 255)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
