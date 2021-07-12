@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'company_name', 'email', 'password', 'address', 'p_iva',
     ];
 
     /**
@@ -28,12 +28,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function type()
+    {
+        return $this->belongsTo('App\Type');
+    }
+    public function dishes()
+    {
+        return $this->hasMany('App\Dish');
+    }
 }
