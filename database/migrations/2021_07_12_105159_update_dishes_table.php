@@ -16,7 +16,7 @@ class UpdateDishesTable extends Migration
         Schema::table('dishes', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->after('visibility');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedBigInteger('category_id')->after('visibility');
+            $table->unsignedBigInteger('category_id')->after('visibility')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
         });
     }

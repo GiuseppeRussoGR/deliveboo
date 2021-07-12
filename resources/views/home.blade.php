@@ -1,5 +1,8 @@
 @extends('layouts.app')
-
+@section('header_script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+@endsection
 @section('content')
 {{-- <div class="container">
     <div class="row justify-content-center">
@@ -20,9 +23,17 @@
         </div>
     </div>
 </div> --}}
-<ul>
-    @foreach($types as $type)
-    <li>{{$type->name}}</li>
-    @endforeach
-</ul>
+<div id="root">
+    <ul>
+        <li v-for="type in types" @click='getRestaurants(type.id)'>@{{type.name}}</li>
+    </ul>
+    <div v-if='restaurants.length > 0'>
+        <ul>
+            <li v-for='restaurant in restaurants'>@{{restaurant.company_name}}</li>
+        </ul>
+    </div>
+</div>
+@endsection
+@section('footer_script')
+    <script src="{{ asset('js/vue.js') }}" charset="utf-8"></script>
 @endsection
