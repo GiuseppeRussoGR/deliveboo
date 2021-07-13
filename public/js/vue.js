@@ -2223,6 +2223,7 @@ module.exports = g;
 
     /**
      * Funzione che permette di fare chiamate API verso Bentree
+     * reference docs https://graphql.braintreepayments.com/
      * @param query string stringa JSON per la richiesta API
      * @param queryVariables object '{}'oggetto contenente i valori delle variabili presenti nella query
      */
@@ -2230,7 +2231,6 @@ module.exports = g;
       var _this2 = this;
 
       var token = Buffer.from("r555cgsj76v73wp8:e9e23aabf186e6ae9ec43f3092808dc0", 'utf8').toString('base64');
-      var value = '';
       axios.post('https://payments.sandbox.braintree-api.com/graphql', {
         query: query,
         variables: queryVariables
@@ -2265,7 +2265,7 @@ module.exports = g;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\danie\Downloads\Progetto finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

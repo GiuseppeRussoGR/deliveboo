@@ -68,8 +68,8 @@ class UserController extends Controller
         $new_dish->fill($form_data);
         $new_dish->save();
 
-        return redirect()->route('admin.user.show', ['user'=>$new_dish->id]);
-
+        //Reindirizziamo l'utente al nuovo piatto appena inserito nel DB
+        return redirect()->route('admin.user.index');
 
     }
 
@@ -81,9 +81,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $dish = Dish::findOrFail($id);
 
-        return view('admin.show', compact('dish'));
     }
 
     /**
@@ -128,8 +126,9 @@ class UserController extends Controller
         $form_data['user_id'] = $dish_to_modify->user_id;
         $dish_to_modify->update($form_data);
 
-        
-        return redirect()->route('admin.user.show', ['user'=>$dish_to_modify->id]);
+        //Reindirizziamo l'utente al nuovo fumetto appena inserito nel DB
+        // TODO
+        return redirect()->route('admin.user.index');
     }
 
     /**
@@ -140,11 +139,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $dish_to_delete = Dish::findOrFail($id);
-        $dish_to_delete->orders()->sync([]);
-        $dish_to_delete->delete();
-
-        return redirect()->route('admin.user.index');
+        //
     }
 
     private function getValidationRules(){
