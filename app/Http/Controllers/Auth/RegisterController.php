@@ -50,6 +50,8 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
+    //This function will validate the registering user's data
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -68,25 +70,24 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
+
+    //This function will create the new User using the given data in the register page form 
     protected function create(array $data)
     {
-        //Se l'img_path esiste, allora con la funzione storage creo il path all'immagine
+        //If $data['img_path'] exists, we create the path with the Storage function
         if(isset($data['img_path'])){
             $img_path = Storage::put('users-cover', $data['img_path']);
 
-            //Se la variabile $img_path viene creata la imposto come valore di $form_data['img_path']
+            //If $img_path gets created we set it as value of $data['img_path']
             if ($img_path) {
                 $data['img_path'] = $img_path;
             }
         } else {
             $data['img_path'] = '';
         }
-
+        
+        //Transforming $data['type_id'] into an integer
         $data['type_id'] = intVal($data['type_id']);
-
-        // dd($data);
-
-
 
         return User::create([
             'company_name' => $data['company_name'],
@@ -100,6 +101,7 @@ class RegisterController extends Controller
         ]);
     }
 
+    //With this function we return all the types to the auth.register view
     public function showRegistrationForm(){
         $types = Type::all();
         return view('auth.register', compact('types'));
