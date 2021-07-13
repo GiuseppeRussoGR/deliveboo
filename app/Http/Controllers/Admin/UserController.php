@@ -99,7 +99,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $dish = Dish::findOrFail($id);
+        $categories = Category::all();
+
+        return view('admin.edit', compact('dish', 'categories'));
     }
 
     /**
@@ -111,7 +114,33 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dish_to_modify = Dish::findOrFail($id);
+
+        $request->validate($this->getValidationRules());
+
+        $form_data = $request->all();
+
+        $form_data['price'] = floatval($form_data['price']);
+
+        //If $data['img_path'] exists, we create the path with the Storage function
+        if(isset($form_data['img_path'])){
+            $img_path = Storage::put('dishes-cover', $form_data['img_path']);
+
+            //If $img_path gets created we set it as value of $form_data['img_path']
+            if ($img_path) {
+                $form_data['img_path'] = $img_path;
+            }
+        } else {
+            $form_data['img_path'] = $dish_to_modify->img_path;
+        }
+
+        $form_data['user_id'] = $dish_to_modify->user_id;
+
+        $dish_to_modify->update($form_data);
+
+        //Reindirizziamo l'utente al nuovo fumetto appena inserito nel DB
+        // TODO
+        return redirect()->route('admin.user.index');
     }
 
     /**

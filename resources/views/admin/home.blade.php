@@ -8,6 +8,7 @@
     <li><img src="{{ asset('storage/' . $dish->img_path) }}" alt="Dish Cover"></li>
     <li>{{$dish->description}}</li>
     <li>{{$dish->price}}</li>
+    <li><a href="{{ route('admin.user.edit', [ 'user' => $dish->id ])}}" class="btn btn-success">Modifica</a></li>
   </ul>
 </li>
 @endforeach
