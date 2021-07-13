@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<a href=" {{route('admin.user.create')}} " class="btn btn-primary">Aggiungi nuovo piatto</a>
 <ul>
 @foreach($dishes as $dish)
 <li>{{$dish->name}}
