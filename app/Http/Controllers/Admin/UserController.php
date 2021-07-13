@@ -15,6 +15,8 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    //This function will return all the information and the dishes of the logged user
     public function index()
     {
         $user = Auth::user();

@@ -17,5 +17,7 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+//API Routes
 Route::get('/types', 'Api\UsersController@type')->name('api-types');
 Route::get('/restaurants/{id}', 'Api\UsersController@index')->name('api-restaurants');

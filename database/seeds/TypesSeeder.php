@@ -13,15 +13,15 @@ class TypesSeeder extends Seeder
     public function run()
     {
         $types = [
-            'italiano',
-            'internazionale',
-            'cinese',
-            'giapponese',
-            'messicano',
-            'indiano',
-            'pesce',
-            'carne',
-            'pizza'
+            'Italiano',
+            'Internazionale',
+            'Cinese',
+            'Giapponese',
+            'Messicano',
+            'Indiano',
+            'Pesce',
+            'Carne',
+            'Pizza'
         ];
 
         foreach ($types as $type) {

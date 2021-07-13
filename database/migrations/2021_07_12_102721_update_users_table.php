@@ -11,6 +11,8 @@ class UpdateUsersTable extends Migration
      *
      * @return void
      */
+
+    //Setting the creation of foreing keys for Users table
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
@@ -24,6 +26,8 @@ class UpdateUsersTable extends Migration
      *
      * @return void
      */
+    
+    //Setting the creation of foreing keys for Dishes table
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
