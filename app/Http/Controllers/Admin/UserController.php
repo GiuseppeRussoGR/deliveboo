@@ -17,7 +17,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     //This function will return all the information and the dishes of the logged user
     public function index()
     {
@@ -35,7 +35,6 @@ class UserController extends Controller
     public function create()
     {
         $categories = Category::all();
-
         return view('admin.create', compact('categories'));
     }
 
@@ -48,13 +47,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-
         $request->validate($this->getValidationRules());
-
         $form_data = $request->all();
-
         $form_data['price'] = floatval($form_data['price']);
-
         $new_dish = new Dish();
 
         //If $data['img_path'] exists, we create the path with the Storage function
@@ -70,9 +65,7 @@ class UserController extends Controller
         }
 
         $form_data['user_id'] = $user->id;
-
         $new_dish->fill($form_data);
-
         $new_dish->save();
 
         return redirect()->route('admin.user.show', ['user'=>$new_dish->id]);
@@ -117,11 +110,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $dish_to_modify = Dish::findOrFail($id);
-
         $request->validate($this->getValidationRules());
-
         $form_data = $request->all();
-
         $form_data['price'] = floatval($form_data['price']);
 
         //If $data['img_path'] exists, we create the path with the Storage function
@@ -135,9 +125,7 @@ class UserController extends Controller
         } else {
             $form_data['img_path'] = $dish_to_modify->img_path;
         }
-
         $form_data['user_id'] = $dish_to_modify->user_id;
-
         $dish_to_modify->update($form_data);
 
         
