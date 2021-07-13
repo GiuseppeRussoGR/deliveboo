@@ -24,6 +24,7 @@
     </div>
 </div> --}}
 <div id="root">
+    @{{response}}
     <ul>
         <li v-for="type in types" @click='getRestaurants(type.id)'>@{{type.name}}</li>
     </ul>
