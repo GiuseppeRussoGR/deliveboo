@@ -81,7 +81,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $dish = Dish::findOrFail($id);
 
+        return view('admin.show', compact('dish'));
     }
 
     /**
@@ -139,7 +141,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $dish_to_delete = Dish::findOrFail($id);
+        $dish_to_delete->orders()->sync([]);
+        $dish_to_delete->delete();
+
+        return redirect()->route('admin.user.index');
     }
 
     private function getValidationRules(){
