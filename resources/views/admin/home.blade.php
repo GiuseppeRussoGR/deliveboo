@@ -9,6 +9,8 @@
     <li>{{$dish->description}}</li>
     <li>{{$dish->price}}</li>
     <li><a href="{{ route('admin.user.edit', [ 'user' => $dish->id ])}}" class="btn btn-success">Modifica</a></li>
+    <li><a href="{{ route('admin.user.show', [ 'user' => $dish->id ])}}" class="btn btn-primary">Dettagli</a></li>
+
   </ul>
 </li>
 @endforeach
