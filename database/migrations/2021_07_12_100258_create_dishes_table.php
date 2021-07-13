@@ -19,7 +19,7 @@ class CreateDishesTable extends Migration
             $table->string('description', 255)->nullable();
             $table->float('price', 5, 2);
             $table->boolean('visibility')->default(1);
-            $table->string('path_image', 255)->nullable();
+            $table->string('img_path', 255)->nullable();
             $table->timestamps();
         });
     }

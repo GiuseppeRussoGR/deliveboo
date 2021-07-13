@@ -29,7 +29,12 @@
     </ul>
     <div v-if='restaurants.length > 0'>
         <ul>
-            <li v-for='restaurant in restaurants'>@{{restaurant.company_name}}</li>
+            <li v-for='restaurant in restaurants'>
+                <ul>
+                    <li><img :src="'storage/' + restaurant.img_path" alt="Restaurant Cover"></li>
+                    <li>@{{restaurant.company_name}}</li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

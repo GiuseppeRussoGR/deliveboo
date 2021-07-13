@@ -14,11 +14,12 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             'Antipasti',
-            'Primi',
-            'Secondi',
-            'Contorno',
-            'Dolce'
+            'Contorni',
+            'Primi Piatti',
+            'Secondi Piatti',
+            'Dessert'
         ];
+        
         foreach ($categories as $category) {
             $new_category = new Category();
             $new_category->name = $category;

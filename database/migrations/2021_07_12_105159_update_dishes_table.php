@@ -11,6 +11,8 @@ class UpdateDishesTable extends Migration
      *
      * @return void
      */
+
+    //Setting the creation of foreing keys for Dishes table
     public function up()
     {
         Schema::table('dishes', function (Blueprint $table) {
@@ -26,6 +28,8 @@ class UpdateDishesTable extends Migration
      *
      * @return void
      */
+
+    //Setting the cancellation of foreing keys for Dishes table
     public function down()
     {
         Schema::table('dishes', function (Blueprint $table) {

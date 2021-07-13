@@ -11,16 +11,19 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
+
+    //Setting the creation of Users Table Columns
     public function up()
-    {
+    {   
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('company_name');
-            $table->string('address');
+            $table->string('company_name', 50);
+            $table->string('address', 100);
+            $table->string('city', 50);
             $table->string('p_iva', 11)->unique();
-            $table->string('path_image', 255)->nullable();
+            $table->string('img_path', 255)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -31,6 +34,8 @@ class CreateUsersTable extends Migration
      *
      * @return void
      */
+
+    //Setting the cancellation of Users Table
     public function down()
     {
         Schema::dropIfExists('users');

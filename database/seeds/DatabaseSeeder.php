@@ -10,6 +10,8 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+    
+    //Putting all seeders together in order to run them all in one single command
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
