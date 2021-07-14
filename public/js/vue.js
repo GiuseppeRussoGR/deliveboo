@@ -2211,7 +2211,7 @@ module.exports = g;
   methods: {
     /**
      * Funzione che permette di ricevere via API i ristoranti
-     * @param id id del ristoratore
+     * @param id id univoco del ristoratore
      */
     getRestaurants: function getRestaurants(id) {
       var _this = this;
