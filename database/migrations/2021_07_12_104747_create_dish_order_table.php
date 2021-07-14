@@ -18,6 +18,7 @@ class CreateDishOrderTable extends Migration
             $table->foreign('dish_id')->references('id')->on('dishes');
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders');
+            $table->tinyInteger('quantita')->after('order_id');
         });
     }
 

@@ -43,10 +43,12 @@ class OrderController extends Controller
             //Creo istanza di Braintree dove eseguo la richiesta di generazione di un Token
             $token = $gateway->clientToken()->generate();
             $success = true;
+            $status = 200;
 
         } catch (Exception $e) {
 
             $success = $e;
+            $status = 404;
         }
 
         $data = [
@@ -54,7 +56,7 @@ class OrderController extends Controller
             'token' => $token
         ];
 
-        return response()->json($data, 200);
+        return response()->json($data, $status);
     }
 
     /**

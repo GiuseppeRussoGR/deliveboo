@@ -13,13 +13,16 @@ const app = new Vue(
              */
             getRestaurants(id) {
                 this.restaurants = [];
-                this.dishes = [];
                 axios
                     .get('api/restaurants/' + id)
                     .then((response) => {
                         this.restaurants = response.data;
                     });
             },
+            /**
+             * Funzione che permette di ricevere via API i piatti
+             * @param id
+             */
             getDishes(id) {
                 this.dishes = [];
                 axios

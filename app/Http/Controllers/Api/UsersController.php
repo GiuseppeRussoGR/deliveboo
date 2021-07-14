@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\User;
-use App\Type;
 use App\Dish;
+use App\Http\Controllers\Controller;
+use App\Type;
+use App\User;
 
 class UsersController extends Controller
-{   
+{
     //This function will return all the Users/Restaurants Types in our DB
     public function type()
     {
