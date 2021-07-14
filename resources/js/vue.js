@@ -38,5 +38,35 @@ const app = new Vue(
                 .then((response) => {
                     this.types = response.data;
                 });
+            /**
+             * Esempio di chiamata per l'ordine
+             */
+            axios
+                .get('api/order', {
+                    params: {
+                        total_price: 250,
+                        client_name: 'pasticcio',
+                        client_address: 'via',
+                        client_number: 132456,
+                        payment_status: 'accettato',
+                        dishes: [
+                            {
+                                id: 1,
+                                quantita: 1
+                            },
+                            {
+                                id: 5,
+                                quantita: 5
+                            },
+                            {
+                                id: 2,
+                                quantita: 2
+                            },
+                        ]
+                    }
+                })
+                .then((response) => {
+                    console.log(response)
+                });
         }
     });

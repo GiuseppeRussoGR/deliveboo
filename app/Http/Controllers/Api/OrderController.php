@@ -16,13 +16,18 @@ class OrderController extends Controller
     {
         $request->validate($this->validateOrder());
         $request->all();
-
         $new_order = new Order();
         $new_order->fill($request->toArray());
         $new_order->save();
-
-        $new_order->dishes()->attach($request->dishes);
-
+        $dishes = $request->dishes;
+        foreach ($dishes as $dish) {
+            $dish_encoded = json_decode($dish);
+            $new_order->dishes()->attach([
+                $dish_encoded->id => [
+                    'quantita' => $dish_encoded->quantita
+                ]
+            ]);
+        }
         return response()->json($new_order, 200);
     }
 
