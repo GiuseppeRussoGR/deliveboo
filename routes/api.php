@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-//API Routes
+//API Type Restaurants
 Route::get('/types', 'Api\UsersController@type')->name('api-types');
 Route::get('/restaurants/{id}', 'Api\UsersController@index')->name('api-restaurants');
+//API Payment and Order
+Route::get('/orders/token', [OrderController::class, 'getToken'])->name('getToken');
+Route::get('/order', [OrderController::class, 'getOrder'])->name('getOrder');
+Route::post('/orders/payment', [OrderController::class, 'makePayment'])->name('makePayment');
