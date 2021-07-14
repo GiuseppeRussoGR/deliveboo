@@ -4,6 +4,7 @@ const app = new Vue(
         data: {
             types: [],
             restaurants: [],
+            dishes: [],
             response: ''
         },
         methods: {
@@ -13,10 +14,19 @@ const app = new Vue(
              */
             getRestaurants(id) {
                 this.restaurants = [];
+                this.dishes = [];
                 axios
                     .get('api/restaurants/' + id)
                     .then((response) => {
                         this.restaurants = response.data;
+                    });
+            },
+            getDishes(id) {
+                this.dishes = [];
+                axios
+                    .get('api/dishes/' + id)
+                    .then((response) => {
+                        this.dishes = response.data;
                     });
             },
             /**

@@ -32,7 +32,20 @@
             <li v-for='restaurant in restaurants'>
                 <ul>
                     <li><img :src="'storage/' + restaurant.img_path" alt="Restaurant Cover"></li>
-                    <li>@{{restaurant.company_name}}</li>
+                    <li @click='getDishes(restaurant.id)'>@{{restaurant.company_name}}</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div v-if='dishes.length > 0'>
+        <ul>
+            <li v-for='dish in dishes'>
+                <ul>
+                    <li><img :src="'storage/' + dish.img_path" alt="Restaurant Cover"></li>
+                    <li>@{{dish.name}}</li>
+                    <li>@{{dish.description}}</li>
+                    <li>@{{dish.price}}</li>
                 </ul>
             </li>
         </ul>

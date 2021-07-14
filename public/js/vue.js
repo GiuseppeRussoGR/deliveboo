@@ -2205,6 +2205,7 @@ module.exports = g;
   data: {
     types: [],
     restaurants: [],
+    dishes: [],
     response: ''
   },
   methods: {
@@ -2216,8 +2217,17 @@ module.exports = g;
       var _this = this;
 
       this.restaurants = [];
+      this.dishes = [];
       axios.get('api/restaurants/' + id).then(function (response) {
         _this.restaurants = response.data;
+      });
+    },
+    getDishes: function getDishes(id) {
+      var _this2 = this;
+
+      this.dishes = [];
+      axios.get('api/dishes/' + id).then(function (response) {
+        _this2.dishes = response.data;
       });
     },
 
@@ -2228,7 +2238,7 @@ module.exports = g;
      * @param queryVariables object '{}'oggetto contenente i valori delle variabili presenti nella query
      */
     paymentBentree: function paymentBentree(query, queryVariables) {
-      var _this2 = this;
+      var _this3 = this;
 
       var token = Buffer.from("r555cgsj76v73wp8:e9e23aabf186e6ae9ec43f3092808dc0", 'utf8').toString('base64');
       axios.post('https://payments.sandbox.braintree-api.com/graphql', {
@@ -2241,16 +2251,16 @@ module.exports = g;
           'Content-Type': 'application/json'
         }
       }).then(function (response) {
-        _this2.response = response.data;
+        _this3.response = response.data;
       });
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
     axios.get('api/types').then(function (response) {
       var result = response.data;
-      _this3.types = result;
+      _this4.types = result;
     });
   }
 });
@@ -2265,7 +2275,7 @@ module.exports = g;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Endrit Morina\github\progetto-finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })
