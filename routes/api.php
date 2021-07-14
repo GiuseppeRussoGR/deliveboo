@@ -18,11 +18,12 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-//API Type Restaurants
+//API Type Restaurants and Dishes
 Route::get('/types', 'Api\UsersController@type')->name('api-types');
 Route::get('/restaurants/{id}', 'Api\UsersController@index')->name('api-restaurants');
 Route::get('/dishes/{id}', 'Api\UsersController@dishes')->name('api-dishes');
 //API Payment and Order
-Route::get('/order', [OrderController::class, 'getOrder'])->name('getOrder');
+Route::get('/order', [OrderController::class, 'setOrder'])->name('setOrder');
+Route::get('/order/get', [OrderController::class, 'getOrder'])->name('getOrder');
 Route::get('/orders/token', [OrderController::class, 'getToken'])->name('getToken');
 Route::post('/orders/payment', [OrderController::class, 'makePayment'])->name('makePayment');

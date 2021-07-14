@@ -11,6 +11,21 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+
+    public function setOrder(Request $request)
+    {
+        $request->validate($this->validateOrder());
+        $request->all();
+
+        $new_order = new Order();
+        $new_order->fill($request->toArray());
+        $new_order->save();
+
+        $new_order->dishes()->attach($request->dishes);
+
+        return response()->json($new_order, 200);
+    }
+
     /**
      * Richiesta API per recuperare l'ordine del cliente
      * @param Request $request
@@ -91,5 +106,19 @@ class OrderController extends Controller
         ];
 
         return response()->json($data, $status);
+    }
+
+    /**
+     * Funzione che permette la validazione della $request dell'ordine
+     * @return string[]
+     */
+    protected function validateOrder()
+    {
+        return [
+            'total_price' => 'required|min:0.70',
+            'client_name' => 'required|string|max:50',
+            'client_address' => 'required|string|max:100',
+            'client_number' => 'required|string|max:10',
+        ];
     }
 }
