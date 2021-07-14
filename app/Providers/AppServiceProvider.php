@@ -28,13 +28,13 @@ class AppServiceProvider extends ServiceProvider
          * Eseguo applicazione in singleton per avere una ed una sola istanza per volta
          * della classe Braintree
          */
-        $this->app->singleton(Gateway::class, function ($app) {
+        $this->app->singleton(Gateway::class, function () {
             return new Gateway(
                 [
-                    'environment' => 'sandbox',
-                    'merchantId' => '6p8mw3xphybtnx2f',
-                    'publicKey' => 'r555cgsj76v73wp8',
-                    'privateKey' => 'e9e23aabf186e6ae9ec43f3092808dc0'
+                    'environment' => config('braintree.environment'),
+                    'merchantId' => config('braintree.merchantId'),
+                    'publicKey' => config('braintree.publicKey'),
+                    'privateKey' => config('braintree.privateKey')
                 ]
             );
         });

@@ -22,6 +22,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/types', 'Api\UsersController@type')->name('api-types');
 Route::get('/restaurants/{id}', 'Api\UsersController@index')->name('api-restaurants');
 //API Payment and Order
-Route::get('/orders/token', [OrderController::class, 'getToken'])->name('getToken');
 Route::get('/order', [OrderController::class, 'getOrder'])->name('getOrder');
+Route::get('/orders/token', [OrderController::class, 'getToken'])->name('getToken');
 Route::post('/orders/payment', [OrderController::class, 'makePayment'])->name('makePayment');

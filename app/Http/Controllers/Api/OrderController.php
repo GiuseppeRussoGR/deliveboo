@@ -5,11 +5,18 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Order;
 use Braintree\Gateway;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function getOrder(Request $request): \Illuminate\Http\JsonResponse
+    /**
+     * Richiesta API per recuperare l'ordine del cliente
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getOrder(Request $request): JsonResponse
     {
 
         $order = Order::find($request->id);
@@ -24,7 +31,12 @@ class OrderController extends Controller
 
     }
 
-    public function getToken(Request $request, Gateway $gateway): \Illuminate\Http\JsonResponse
+    /**
+     * Richiesta per la generazione del Token da inviare al servizio di Braintree
+     * @param Gateway $gateway
+     * @return JsonResponse
+     */
+    public function getToken(Gateway $gateway): JsonResponse
     {
 
         try {
@@ -32,7 +44,7 @@ class OrderController extends Controller
             $token = $gateway->clientToken()->generate();
             $success = true;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
             $success = $e;
         }
@@ -45,7 +57,13 @@ class OrderController extends Controller
         return response()->json($data, 200);
     }
 
-    public function makePayment(Request $request, Gateway $gateway): \Illuminate\Http\JsonResponse
+    /**
+     * Richiesta di pagamento verso i servizi di BrainTree
+     * @param Request $request
+     * @param Gateway $gateway
+     * @return JsonResponse
+     */
+    public function makePayment(Request $request, Gateway $gateway): JsonResponse
     {
         $payment = $gateway->transaction()->sale([
             'amount' => $request->total_price,
