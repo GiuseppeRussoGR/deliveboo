@@ -58,14 +58,46 @@
 <!-- Fine Navigator -->
 
 <!-- Inizio Jumbotron -->
-<div class="my_jumbotron">
+<div class="my_jumbotron ">
+
+    {{-- col-left  --}}
+    <div class="col-left">
+        <h1>Ordina cibo della tua zona con l'app</h1>
+
+        <h5>Scegli una delle categorie e visualizza subito i menù di tutti i ristoranti disponibili</h5>
+    </div>
+    {{-- fine col-left  --}}
+
+    {{-- col-right  --}}
+    <div class="col-right">
+        <img src="https://st.depositphotos.com/1008939/1376/i/950/depositphotos_13766635-stock-photo-eating-pizza.jpg" alt="">
+    </div>
+    {{-- fine col-right  --}}
 
 </div>
 <!-- Fine Jumbotron -->
 
 <!-- Inizio Categorie -->
 <div class="categories">
+    
+    {{-- card  --}}
+    <div class="cat_card">
+        
+        <div class="_img">
+            <i class="fas fa-pizza-slice"></i>
+        </div>
 
+        <div class="_text">
+            <span>Pizza</span>
+        </div>
+
+        <div class="_chevron">
+            <i class="fas fa-chevron-circle-right"></i>
+        </div>
+    </div>
+    {{-- end card  --}}
+
+   
 </div>
 <!-- Fine Categorie -->
 
