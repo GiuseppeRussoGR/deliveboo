@@ -25,7 +25,7 @@
 </div> --}}
 <div id="root">
     <ul>
-        <li v-for="type in types" @click='getRestaurants(type.id)'>@{{type.name}}</li>
+        <li v-for="type in types" @click='getApi("api/restaurants/", "restaurants", type.id)'>@{{type.name}}</li>
     </ul>
     <div v-if='restaurants.length > 0'>
         <ul>

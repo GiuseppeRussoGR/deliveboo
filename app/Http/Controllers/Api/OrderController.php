@@ -8,6 +8,7 @@ use Braintree\Gateway;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -16,15 +17,19 @@ class OrderController extends Controller
     {
         $request->validate($this->validateOrder());
         $request->all();
+        $client_code = $this->uniqueID();
+        while (Order::where('client_code', '=', $client_code)->first()) {
+            $client_code = $this->uniqueID();
+        }
+        $request['client_code'] = $client_code;
         $new_order = new Order();
         $new_order->fill($request->toArray());
         $new_order->save();
         $dishes = $request->dishes;
         foreach ($dishes as $dish) {
-            $dish_encoded = json_decode($dish);
             $new_order->dishes()->attach([
-                $dish_encoded->id => [
-                    'quantita' => $dish_encoded->quantita
+                $dish['id'] => [
+                    'quantita' => $dish['quantita']
                 ]
             ]);
         }
@@ -125,5 +130,10 @@ class OrderController extends Controller
             'client_address' => 'required|string|max:100',
             'client_number' => 'required|string|max:10',
         ];
+    }
+
+    protected function uniqueID()
+    {
+        return Str::random(32);
     }
 }
