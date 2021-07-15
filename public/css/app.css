@@ -11015,7 +11015,7 @@ h6 {
   background: linear-gradient(180deg, #76c4ff 0%, #24A1FF 75%, #43aeff 100%);
 }
 
-#app .container {
+#app > .container {
   background-color: #FFFFFF;
   height: 80%;
   border-radius: 30px;
@@ -11023,11 +11023,12 @@ h6 {
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-#app .container .row {
+#app > .container .row {
   height: 100%;
 }
 
-#app .app-content {
+#app .app-content,
+#app .side-window {
   background-color: #FBF9F9;
 }
 
@@ -11088,5 +11089,56 @@ h6 {
   height: 220px;
   background-color: blue;
   padding-bottom: 1.5rem;
+}
+
+.client .cart {
+  padding: 1.9rem 15px 0;
+  overflow-y: auto;
+}
+
+.client .cart .title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.client .cart .cart-subtitle {
+  margin-top: 0.8rem;
+  font-weight: 600;
+}
+
+.client .cart form label {
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+
+.client .cart form .form-group {
+  margin-bottom: 0.5rem;
+}
+
+.client .cart form input {
+  height: 2.1rem;
+}
+
+.client .cart .order-items ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.client .cart .order-items ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.client .cart .order-items ul li img {
+  width: 25%;
+}
+
+.client .cart .order-total {
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 

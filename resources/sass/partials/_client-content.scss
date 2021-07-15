@@ -77,4 +77,60 @@
 
     }
 
+    .cart {
+        padding: 1.9rem 15px 0;
+        overflow-y: auto;
+
+        .title {
+            @include d-flex-sb-center;
+        }
+
+        .cart-subtitle {
+            margin-top: 0.8rem;
+            font-weight: 600;
+        }
+
+        form {
+
+            label {
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .form-group {
+                margin-bottom: 0.5rem;
+            }
+
+            input {
+                height: 2.1rem;
+            }
+        }
+
+        .order-items {
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+
+                    img {
+                        width: 25%;
+                    }
+
+                }
+            }
+        }
+
+        .order-total {
+            font-weight: 700;
+            @include d-flex-sb-center;
+        }
+
+
+    }
+
 }
