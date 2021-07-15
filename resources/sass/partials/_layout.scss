@@ -1,0 +1,34 @@
+#app {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    @include d-flex-center;
+
+    &.client {
+        background: $secondary_color;
+        background: linear-gradient(180deg, lighten($secondary_color, 16%) 0%, $secondary_color 75%, lighten($secondary_color, 6%) 100%);
+    }
+
+    &.user {
+        background: $secondary_color;
+        background: linear-gradient(180deg, lighten($secondary_color, 16%) 0%, $secondary_color 75%, lighten($secondary_color, 6%) 100%);
+    }
+
+    .container {
+        background-color: $background_light;
+        height: 80%;
+        border-radius: 30px;
+        overflow: hidden;
+        @include shadow-standard;
+
+        .row {
+            height: 100%;
+        }
+    }
+
+    .app-content {
+        background-color: $background_grey;
+    }
+
+}
+

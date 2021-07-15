@@ -6,3 +6,13 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+
+@import 'partials/variables.scss';
+@import 'partials/mixins.scss';
+@import 'partials/common.scss';
+@import 'partials/layout.scss';
+@import 'partials/header.scss';
+@import 'partials/client-content.scss';
+@import 'partials/footer.scss';
