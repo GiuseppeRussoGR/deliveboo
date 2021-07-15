@@ -1,0 +1,20 @@
+//Fonts
+$header_font: 'Montserrat', sans-serif;
+$content_font: 'Nunito', sans-serif;
+
+//COLOUR PALETTE
+//Identity Colours
+$primary_color: #FFA823;
+$primary_dark: darken($primary_color, 10%);
+
+$secondary_color: #24A1FF;
+$secondary_dark: darken($secondary_color, 10%);
+
+//Backgrounds
+$background_light: #FFFFFF;
+$background_grey: #FBF9F9;
+
+//Complementary
+$icon_color: hsl(24, 8%, 76%);
+$subtext_color: #e9e8e8;
+$text_color: #2C1A0D;
