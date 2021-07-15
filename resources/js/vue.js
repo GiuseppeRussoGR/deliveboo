@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const app = new Vue(
     {
         el: '#root',
@@ -5,68 +7,52 @@ const app = new Vue(
             types: [],
             restaurants: [],
             dishes: [],
+            order: {
+                total_price: 0,
+                client_name: '',
+                client_address: '',
+                client_number: "",
+                dishes: [
+                    /*{
+                        id:1,
+                        quantita:10
+                    }*/
+                ]
+            }
         },
         methods: {
             /**
              * Funzione che permette di ricevere via API i ristoranti
              * @param id id univoco del ristoratore
+             * @param route string route di destinazione dell'API
+             * @param variable string variabile da popolare
              */
-            getRestaurants(id) {
-                this.restaurants = [];
+            getApi(route, variable, id) {
+                this[variable] = [];
                 axios
-                    .get('api/restaurants/' + id)
+                    .get(route + id)
                     .then((response) => {
-                        this.restaurants = response.data;
+                        this[variable] = response.data;
                     });
             },
             /**
-             * Funzione che permette di ricevere via API i piatti
-             * @param id
+             * Funzione che permette di inserire l'ordine nel DB
              */
-            getDishes(id) {
-                this.dishes = [];
+            setOrder() {
+                /**
+                 * Esempio di chiamata per l'ordine
+                 */
                 axios
-                    .get('api/dishes/' + id)
+                    .post('api/order', {
+                        ...this.order
+                    })
                     .then((response) => {
-                        this.dishes = response.data;
+                        console.log(response.data)
                     });
             }
         },
         mounted() {
-            axios
-                .get('api/types')
-                .then((response) => {
-                    this.types = response.data;
-                });
-            /**
-             * Esempio di chiamata per l'ordine
-             */
-            axios
-                .get('api/order', {
-                    params: {
-                        total_price: 250,
-                        client_name: 'pasticcio',
-                        client_address: 'via',
-                        client_number: 132456,
-                        payment_status: 'accettato',
-                        dishes: [
-                            {
-                                id: 1,
-                                quantita: 1
-                            },
-                            {
-                                id: 5,
-                                quantita: 5
-                            },
-                            {
-                                id: 2,
-                                quantita: 2
-                            },
-                        ]
-                    }
-                })
-                .then((response) => {
-                    console.log(response)
-                });
+            this.getApi('api/types/', 'types', '')
+
         }
     });
