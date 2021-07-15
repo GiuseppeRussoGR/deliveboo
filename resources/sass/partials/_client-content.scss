@@ -63,18 +63,28 @@
         height: 220px;
         background-color: blue;
         padding-bottom: 1.5rem;
+    
     }
 
-    .restaurants {
+    .restaurant {
+        display: flex;
+        width: 490px;
+        height: 132px;
+        border-radius: 5px;
 
+        h3 {
+            font-size: 20px;
+        }
     }
 
-    .single-restaurant {
-
+    .restaurant-img {
+        width: 50%;
     }
 
-    .restaurant-menu {
-
+    .restaurant-infos {
+        width: 50%;
+        color: white;
+        background-color: #ffa823;
+        padding: 10px;
     }
-
 }

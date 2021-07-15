@@ -72,6 +72,18 @@
 <!-- Inizio Ristoranti -->
 <div class="restaurants">
 
+    <div class="restaurant">
+        <div class="restaurant-img">
+            <img src="" alt="#">
+        </div>
+
+        <div class="restaurant-infos">
+            <h3>Pizzeria Sangiovanni</h3>
+            <span>Magenta, Milano</span>
+            <span>Molto Buono</span>
+        </div>
+    </div>
+
 </div>
 <!-- Fine Ristoranti -->
 
