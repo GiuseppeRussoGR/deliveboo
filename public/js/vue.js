@@ -2105,13 +2105,31 @@ process.umask = function() { return 0; };
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 var app = new Vue({
   el: '#root',
   data: {
     types: [],
     restaurants: [],
-    dishes: []
+    dishes: [],
+    order: {
+      total_price: 0,
+      client_name: '',
+      client_address: '',
+      client_number: "",
+      dishes: [
+        /*{
+            id:1,
+            quantita:10
+        }*/
+      ]
+    }
   },
   methods: {
     /**
@@ -2128,54 +2146,18 @@ var app = new Vue({
         _this[variable] = response.data;
       });
     },
-
-    /**
-     * Funzione che permette di generare una stringa con codice unico
-     * @returns {string} ritorna una stringa con un codice unico
-     */
-    uniqueId: function uniqueId() {
-      var uuidValue = "",
-          k,
-          randomValue;
-
-      for (k = 0; k < 32; k++) {
-        randomValue = Math.random() * 16 | 0;
-
-        if (k === 8 || k === 12 || k === 16 || k === 20) {
-          uuidValue += "-";
-        }
-
-        uuidValue += (k === 12 ? 4 : k === 16 ? randomValue & 3 | 8 : randomValue).toString(16);
-      }
-
-      return uuidValue;
+    setOrder: function setOrder() {
+      /**
+       * Esempio di chiamata per l'ordine
+       */
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/order', _objectSpread({}, this.order)).then(function (response) {
+        console.log(response.data);
+      });
     }
   },
   mounted: function mounted() {
     this.getApi('api/types/', 'types', '');
-    /**
-     * Esempio di chiamata per l'ordine
-     */
-
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/order', {
-      total_price: 250,
-      client_name: 'pasticcio',
-      client_address: 'via',
-      client_number: "132456",
-      payment_status: 'accettato',
-      dishes: [{
-        id: 1,
-        quantita: 1
-      }, {
-        id: 5,
-        quantita: 5
-      }, {
-        id: 2,
-        quantita: 2
-      }]
-    }).then(function (response) {
-      console.log(response.data);
-    });
+    this.setOrder();
   }
 });
 

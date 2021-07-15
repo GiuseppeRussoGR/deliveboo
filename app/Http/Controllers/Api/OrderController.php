@@ -27,13 +27,18 @@ class OrderController extends Controller
         $new_order->save();
         $dishes = $request->dishes;
         foreach ($dishes as $dish) {
-            $new_order->dishes()->attach([
-                $dish['id'] => [
-                    'quantita' => $dish['quantita']
-                ]
-            ]);
+            if ($new_order->dishes->where('id', '=', $dish['id'])) {
+                $new_order->dishes()->attach([
+                    $dish['id'] => [
+                        'quantita' => $dish['quantita']
+                    ]
+                ]);
+            }
         }
-        return response()->json($new_order, 200);
+        $order_insert = [
+            'message' => 'Ordine Inserito'
+        ];
+        return response()->json($order_insert, 200);
     }
 
     /**
@@ -129,6 +134,8 @@ class OrderController extends Controller
             'client_name' => 'required|string|max:50',
             'client_address' => 'required|string|max:100',
             'client_number' => 'required|string|max:10',
+            'dishes.*.id' => 'required|exists:dishes,id',
+            'dishes.*.quantita' => 'required|int|min:1'
         ];
     }
 
