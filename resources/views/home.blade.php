@@ -58,14 +58,50 @@
 <!-- Fine Navigator -->
 
 <!-- Inizio Jumbotron -->
-<div class="my_jumbotron">
+<div class="my_jumbotron ">
+
+    {{-- col-left  --}}
+    <div class="col-7">
+        <h1>Ordina cibo della tua zona con l'app</h1>
+
+        <div class="subtitle">
+            Scegli una delle categorie e visualizza subito i menù di tutti i ristoranti disponibili
+        </div>
+    </div>
+    {{-- fine col-left  --}}
+
+    {{-- col-right  --}}
+    <div class="col-4 banner-image">
+        <img src="https://st.depositphotos.com/1008939/1376/i/950/depositphotos_13766635-stock-photo-eating-pizza.jpg" alt="">
+    </div>
+    {{-- fine col-right  --}}
 
 </div>
 <!-- Fine Jumbotron -->
 
 <!-- Inizio Categorie -->
 <div class="categories">
+    <h6>
+        Esplora le Categorie
+    </h6>
+    
+    <div class="categories-container">
+        {{-- card  --}}
+        <div class="cat_card" v-for="type in types" @click='getaApi("api/restaurants/", "restaurants", type.id)'>
+            <div class="_img">
+                <i class="fas fa-pizza-slice"></i>
+            </div>
+            <div class="card-title">
+                @{{type.name}}
+            </div>
+            <div class="_chevron">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+        {{-- end card  --}}
+    </div>
 
+   
 </div>
 <!-- Fine Categorie -->
 
@@ -141,6 +177,86 @@
 @section('side-window')
 <!-- Inizio Carrello -->
 <div class="cart">
+    <div class="title">
+        <div class="subtitle">
+            Carrello
+        </div>
+        <button class="btn btn-primary">
+            Ciao
+        </button>
+    </div>
+
+    <div class="cart-subtitle">
+        Dati di consegna
+    </div>
+
+    <form class="my_form" action="">
+
+        <div class="form-group">
+            <label for="client_name">Nome</label>
+            <input type="text" class="form-control" id="client_name" placeholder="Mario Rossi">
+        </div>
+        <div class="form-group">
+            <label for="client_number">Recapito Telefonico</label>
+            <input type="number" class="form-control" id="client_number" placeholder="es. 3249065865">
+        </div>
+    
+        <div class="form-group">
+            <label for="client_address">Address</label>
+            <input type="text" class="form-control" id="client_address" placeholder="via Giuseppe Garibaldi">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="civic_number">Civico</label>
+                <input type="number" class="form-control" id="civic_number" placeholder="31">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="city_cap">CAP</label>
+                <input type="text" class="form-control" id="city_cap" placeholder="20123">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="client_city">Città</label>
+            <input type="text" class="form-control" id="client_city" placeholder="Milano">
+        </div>
+
+    </form>
+    
+    <div class="cart-subtitle">
+        Ordine
+    </div>
+
+    <div class="order-items">
+        <ul>
+            <li>
+                <img src="https://static.gamberorosso.it/da-zero.jpg" alt="">
+                <span>Pizza Margherita</span>
+                <span>5€</span>
+            </li>
+            <li>
+                <img src="https://static.gamberorosso.it/da-zero.jpg" alt="">
+                <span>Pizza Margherita</span>
+                <span>5€</span>
+            </li>
+            <li>
+                <img src="https://static.gamberorosso.it/da-zero.jpg" alt="">
+                <span>Pizza Margherita</span>
+                <span>5€</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="order-total">
+        <span class="total-order">
+            Totale Ordine:
+        </span>
+        <span>
+            15€ 
+        </span>
+    </div>
+
 
 </div>
 <!-- Fine Carrello -->

@@ -53,17 +53,66 @@
     //Fine Menu Verticale
 
     .my_jumbotron {
+        @include d-flex-sb-center;
         height: calc(100% - 220px - 100px);
-        background-color: red;
         padding-top: 1rem;
         padding-bottom: 1rem;
+
+        .banner-image {
+            img {
+                width: 100%;
+            }
+        }
     }
 
     .categories {
         height: 220px;
-        background-color: blue;
         padding-bottom: 1.5rem;
-    
+
+        .categories-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .cat_card {
+            width: calc(100% / 9 - 15px);
+            padding: 13px;
+            border-radius: 10px;
+            text-align: center;
+            @include shadow-standard;
+            background-color:#FFFFFF;
+
+
+            ._img {
+                font-size: 2.25rem;
+                width: 60px;
+                height: 60px;
+                line-height: 60px;
+                border-radius: 50%;
+                text-align: center;
+                background-color: $primary_color;
+                color: #FFFFFF;
+                margin: 0 auto;
+            }
+
+            ._chevron {
+
+                i {
+                    color: #FFFFFF;
+                    background-color: $primary_color;
+                    font-size: 0.8rem;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    border-radius: 50%;
+                    line-height: 1.5rem;
+                    text-align: center;
+                }
+            }
+
+            .card-title {
+                margin: .6rem 0;
+            }
+        }
     }
 
     .restaurant {
@@ -87,4 +136,62 @@
         background-color: #ffa823;
         padding: 10px;
     }
+
+    .cart {
+        padding: 1.9rem 15px 0;
+        overflow-y: auto;
+        display: none;
+
+        .title {
+            @include d-flex-sb-center;
+        }
+
+        .cart-subtitle {
+            margin-top: 0.8rem;
+            font-weight: 600;
+        }
+
+        form {
+
+            label {
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .form-group {
+                margin-bottom: 0.5rem;
+            }
+
+            input {
+                height: 2.1rem;
+            }
+        }
+
+        .order-items {
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+
+                    img {
+                        width: 25%;
+                    }
+
+                }
+            }
+        }
+
+        .order-total {
+            font-weight: 700;
+            @include d-flex-sb-center;
+        }
+
+
+    }
+
 }

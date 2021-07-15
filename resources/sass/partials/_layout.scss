@@ -14,7 +14,7 @@
         background: linear-gradient(180deg, lighten($secondary_color, 16%) 0%, $secondary_color 75%, lighten($secondary_color, 6%) 100%);
     }
 
-    .container {
+    & > .container {
         background-color: $background_light;
         height: 80%;
         border-radius: 30px;
@@ -26,7 +26,7 @@
         }
     }
 
-    .app-content {
+    .app-content, .side-window {
         background-color: $background_grey;
     }
 
