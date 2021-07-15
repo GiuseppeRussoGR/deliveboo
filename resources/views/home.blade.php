@@ -75,6 +75,12 @@
 </div>
 <!-- Fine Ristoranti -->
 
+<!-- Inizio Singolo Ristorante -->
+<div class="restaurants">
+
+</div>
+<!-- Fine Singolo Ristorante -->
+
 <!-- Inizio Menu -->
 <div class="menu">
 
