@@ -35,6 +35,9 @@ const app = new Vue(
                         this[variable] = response.data;
                     });
             },
+            /**
+             * Funzione che permette di inserire l'ordine nel DB
+             */
             setOrder() {
                 /**
                  * Esempio di chiamata per l'ordine
@@ -50,7 +53,6 @@ const app = new Vue(
         },
         mounted() {
             this.getApi('api/types/', 'types', '')
-            this.setOrder();
 
         }
     });
