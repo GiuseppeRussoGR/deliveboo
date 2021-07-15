@@ -53,16 +53,64 @@
     //Fine Menu Verticale
 
     .my_jumbotron {
+        // @include d-flex-sb-center;
+        display: flex;
         height: calc(100% - 220px - 100px);
-        background-color: red;
         padding-top: 1rem;
         padding-bottom: 1rem;
+
+        // col-left 
+        .col-left {
+            width: 50%;
+            padding-top: 40px;
+
+            h1 {
+                font-size: 40px;
+            }
+
+            h5 {
+                font-size: 15px;
+                margin-top: 20px;
+            }
+        }
+        // fine col-left
+
+        // col-right
+        .col-right {
+            width: 50%;
+            padding: 20px;
+
+            img {
+                width: 100%;
+            }
+        }
+        // fine col-right
     }
 
     .categories {
         height: 220px;
-        background-color: blue;
         padding-bottom: 1.5rem;
+        @include d-flex-center;
+
+        .cat_card {
+            width: 10%;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+            text-align: center;
+            margin-right: 10px;
+
+            ._img {
+                font-size: 35px;
+                border: 1px solid black;
+                border-radius: 50%;
+                color: $primary_color;
+            }
+
+            ._chevron {
+                color: $primary_color;
+            }
+        }
     }
 
     .restaurants {
