@@ -61,15 +61,17 @@
 <div class="my_jumbotron ">
 
     {{-- col-left  --}}
-    <div class="col-left">
+    <div class="col-6">
         <h1>Ordina cibo della tua zona con l'app</h1>
 
-        <h5>Scegli una delle categorie e visualizza subito i menù di tutti i ristoranti disponibili</h5>
+        <div class="subtitle">
+            Scegli una delle categorie e visualizza subito i menù di tutti i ristoranti disponibili
+        </div>
     </div>
     {{-- fine col-left  --}}
 
     {{-- col-right  --}}
-    <div class="col-right">
+    <div class="col-5">
         <img src="https://st.depositphotos.com/1008939/1376/i/950/depositphotos_13766635-stock-photo-eating-pizza.jpg" alt="">
     </div>
     {{-- fine col-right  --}}
