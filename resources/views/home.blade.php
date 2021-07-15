@@ -61,7 +61,7 @@
 <div class="my_jumbotron ">
 
     {{-- col-left  --}}
-    <div class="col-6">
+    <div class="col-7">
         <h1>Ordina cibo della tua zona con l'app</h1>
 
         <div class="subtitle">
@@ -71,7 +71,7 @@
     {{-- fine col-left  --}}
 
     {{-- col-right  --}}
-    <div class="col-5">
+    <div class="col-4 banner-image">
         <img src="https://st.depositphotos.com/1008939/1376/i/950/depositphotos_13766635-stock-photo-eating-pizza.jpg" alt="">
     </div>
     {{-- fine col-right  --}}
@@ -81,23 +81,25 @@
 
 <!-- Inizio Categorie -->
 <div class="categories">
+    <h6>
+        Esplora le Categorie
+    </h6>
     
-    {{-- card  --}}
-    <div class="cat_card">
-        
-        <div class="_img">
-            <i class="fas fa-pizza-slice"></i>
+    <div class="categories-container">
+        {{-- card  --}}
+        <div class="cat_card" v-for="type in types" @click='getaApi("api/restaurants/", "restaurants", type.id)'>
+            <div class="_img">
+                <i class="fas fa-pizza-slice"></i>
+            </div>
+            <div class="card-title">
+                @{{type.name}}
+            </div>
+            <div class="_chevron">
+                <i class="fas fa-chevron-right"></i>
+            </div>
         </div>
-
-        <div class="_text">
-            <span>Pizza</span>
-        </div>
-
-        <div class="_chevron">
-            <i class="fas fa-chevron-circle-right"></i>
-        </div>
+        {{-- end card  --}}
     </div>
-    {{-- end card  --}}
 
    
 </div>

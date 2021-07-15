@@ -53,53 +53,64 @@
     //Fine Menu Verticale
 
     .my_jumbotron {
-        // @include d-flex-sb-center;
-        display: flex;
+        @include d-flex-sb-center;
         height: calc(100% - 220px - 100px);
         padding-top: 1rem;
         padding-bottom: 1rem;
 
-        // col-left 
-        .col-left {
-            width: 50%;
-            padding-top: 40px;
-        }
-        // fine col-left
-
-        // col-right
-        .col-right {
-            width: 50%;
-            padding: 20px;
-
+        .banner-image {
             img {
                 width: 100%;
             }
         }
-        // fine col-right
     }
 
     .categories {
         height: 220px;
         padding-bottom: 1.5rem;
-        @include d-flex-center;
+
+        .categories-container {
+            display: flex;
+            justify-content: space-between;
+        }
 
         .cat_card {
-            width: 10%;
-            padding: 20px;
-            border: 1px solid black;
+            width: calc(100% / 9 - 15px);
+            padding: 13px;
             border-radius: 10px;
             text-align: center;
-            margin-right: 10px;
+            @include shadow-standard;
+            background-color:#FFFFFF;
+
 
             ._img {
-                font-size: 35px;
-                border: 1px solid black;
+                font-size: 2.25rem;
+                width: 60px;
+                height: 60px;
+                line-height: 60px;
                 border-radius: 50%;
-                color: $primary_color;
+                text-align: center;
+                background-color: $primary_color;
+                color: #FFFFFF;
+                margin: 0 auto;
             }
 
             ._chevron {
-                color: $primary_color;
+
+                i {
+                    color: #FFFFFF;
+                    background-color: $primary_color;
+                    font-size: 0.8rem;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    border-radius: 50%;
+                    line-height: 1.5rem;
+                    text-align: center;
+                }
+            }
+
+            .card-title {
+                margin: .6rem 0;
             }
         }
     }
@@ -119,6 +130,7 @@
     .cart {
         padding: 1.9rem 15px 0;
         overflow-y: auto;
+        display: none;
 
         .title {
             @include d-flex-sb-center;
