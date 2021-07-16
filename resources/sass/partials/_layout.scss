@@ -26,9 +26,16 @@
         }
     }
 
-    .app-content, .side-window {
+    .app-content {
         background-color: $background_grey;
         height: 100%;
+        transition: all .4s;
+    }
+
+    .side-window {
+        background-color: $background_light;
+        height: 100%;
+        transition: all .4s;
     }
 
 }

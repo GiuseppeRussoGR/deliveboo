@@ -41,14 +41,14 @@
                     
                 <!-- Inizio App Content -->
                 <!-- ATTENZIONE: Mentre si struttura il carrello metti col-8 -->
-                <div class="col-11 app-content">
+                <div class="app-content" :class="dishChosen ? 'col-8' : 'col-11'">
                     @yield('content')
                 </div>
                 <!-- Fine App Content -->
 
                 <!-- Inizio Finestra Laterale -->
                 <!-- ATTENZIONE: Mentre si struttura il carrello metti col-3 -->
-                <div class="side-window"> 
+                <div class="side-window" :class="dishChosen ? 'col-3' : ''"> 
                     @yield('side-window')
                 </div>
                 <!-- Fine Finestra Laterale -->

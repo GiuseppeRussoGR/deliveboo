@@ -13,16 +13,18 @@ const app = new Vue(
                 client_address: '',
                 client_number: "",
                 dishes: [
-                    /*{
-                        id:1,
-                        quantita:10
-                    }*/
+                    // {
+                    //     id:1,
+                    //     quantita:10
+                    // },
                 ]
             },
+            quantity: 1,
             
             categoryChosen: false,
             restaurantChosen: false,
-            chosenRestaurantIndex: 0
+            chosenRestaurantIndex: 0,
+            dishChosen: false
         },
         methods: {
             /**
@@ -50,9 +52,87 @@ const app = new Vue(
                         .get('api/dishes/' + id)
                         .then((response) => {
                             this.dishes = response.data;
-                            console.log(this.dishes);
-
+                            this.dishes.forEach(element => {
+                                element.quantity = 1;
+                            });
                     });    
+            },
+
+            startOrder(dishIndex, quantity) {
+                this.dishChosen = true;
+
+                const dish = this.dishes[dishIndex];
+                const dishes = this.order.dishes;
+
+                if (dishes.length != 0) {
+
+                    dishes.forEach(element => {
+                        if (element.id == dish.id){
+                            element.quantita = element.quantita + parseInt(quantity);
+                        } else {
+                            dishes.push({
+                                id : dish.id,
+                                quantita :  parseInt(dish.quantity)
+                            });
+                        }
+                    });
+
+                } else {
+                    dishes.push({
+                        id : dish.id,
+                        quantita : parseInt(dish.quantity)
+                    });
+                }
+
+                
+
+                
+
+                
+
+                this.order.total_price += dish.price * dish.quantity;
+
+                console.log('piatti ordine: ', this.order.dishes);
+
+               
+
+                // if(this.order.dishes.some(dish=>dish.id === dish.id)){
+
+                //     this.order.dishes[]
+                // }
+
+
+                   
+
+
+            },
+
+            addQuantity(dishIndex) {
+                const dish = this.dishes[dishIndex];
+                const inputId = 'quantity-' + dishIndex;
+                
+                dish.quantity = dish.quantity + 1;
+
+                let valore = parseInt(document.getElementById(inputId).value);
+                let newValore = valore + 1;
+                document.getElementById(inputId).value = newValore;
+
+            },
+
+            decQuantity(dishIndex){
+                const dish = this.dishes[dishIndex];
+                const inputId = 'quantity-' + dishIndex;
+
+                
+                if (dish.quantity != 1){
+                    dish.quantity--;
+
+                    let valore = parseInt(document.getElementById(inputId).value);
+                    let newValore = valore - 1;
+                    document.getElementById(inputId).value = newValore;
+                }
+               
+    
             },
             /**
              * Funzione che permette di inserire l'ordine nel DB

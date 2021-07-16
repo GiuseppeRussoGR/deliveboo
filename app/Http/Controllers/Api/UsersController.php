@@ -56,6 +56,7 @@ class UsersController extends Controller
 
         foreach ($dishes as $dish) {
             $dishes_result[] = [
+                'id' => $dish->id,
                 'name' => $dish->name,
                 'description' => $dish->description,
                 'price' => $dish->price,

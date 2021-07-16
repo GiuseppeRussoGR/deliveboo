@@ -2123,16 +2123,17 @@ var app = new Vue({
       client_name: '',
       client_address: '',
       client_number: "",
-      dishes: [
-        /*{
-            id:1,
-            quantita:10
-        }*/
+      dishes: [// {
+        //     id:1,
+        //     quantita:10
+        // },
       ]
     },
+    quantity: 1,
     categoryChosen: false,
     restaurantChosen: false,
-    chosenRestaurantIndex: 0
+    chosenRestaurantIndex: 0,
+    dishChosen: false
   },
   methods: {
     /**
@@ -2157,8 +2158,58 @@ var app = new Vue({
       this.chosenRestaurantIndex = restaurantIndex;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/dishes/' + id).then(function (response) {
         _this2.dishes = response.data;
-        console.log(_this2.dishes);
+
+        _this2.dishes.forEach(function (element) {
+          element.quantity = 1;
+        });
       });
+    },
+    startOrder: function startOrder(dishIndex, quantity) {
+      this.dishChosen = true;
+      var dish = this.dishes[dishIndex];
+      var dishes = this.order.dishes;
+
+      if (dishes.length != 0) {
+        dishes.forEach(function (element) {
+          if (element.id == dish.id) {
+            element.quantita = element.quantita + parseInt(quantity);
+          } else {
+            dishes.push({
+              id: dish.id,
+              quantita: parseInt(dish.quantity)
+            });
+          }
+        });
+      } else {
+        dishes.push({
+          id: dish.id,
+          quantita: parseInt(dish.quantity)
+        });
+      }
+
+      this.order.total_price += dish.price * dish.quantity;
+      console.log('piatti ordine: ', this.order.dishes); // if(this.order.dishes.some(dish=>dish.id === dish.id)){
+      //     this.order.dishes[]
+      // }
+    },
+    addQuantity: function addQuantity(dishIndex) {
+      var dish = this.dishes[dishIndex];
+      var inputId = 'quantity-' + dishIndex;
+      dish.quantity = dish.quantity + 1;
+      var valore = parseInt(document.getElementById(inputId).value);
+      var newValore = valore + 1;
+      document.getElementById(inputId).value = newValore;
+    },
+    decQuantity: function decQuantity(dishIndex) {
+      var dish = this.dishes[dishIndex];
+      var inputId = 'quantity-' + dishIndex;
+
+      if (dish.quantity != 1) {
+        dish.quantity--;
+        var valore = parseInt(document.getElementById(inputId).value);
+        var newValore = valore - 1;
+        document.getElementById(inputId).value = newValore;
+      }
     },
 
     /**
