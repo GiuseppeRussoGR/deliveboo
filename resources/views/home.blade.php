@@ -47,9 +47,9 @@
          <h5>Delive<span>Boo</span></h5>
     </div>
     <div class="login">
-        <a href="">
+        <a href="{{ route('register') }}">
         <span class="subtext">
-            Sei un ristoratore? Registrata qui la tua attività.
+            Sei un ristoratore? Collabora con noi.
         </span>
         <i class="fas fa-user-circle icon"></i>
         </a>
@@ -58,43 +58,42 @@
 <!-- Fine Navigator -->
 
 <!-- Inizio Jumbotron -->
-<div class="my_jumbotron ">
+<div class="container my-jumbotron" :class="{hide : categoryChosen}">
+    <div class="row">
+        <div class="col-7 jumbotron-text">
+            <h2>Ordina cibo della tua zona con l'app</h2>
 
-    {{-- col-left  --}}
-    <div class="col-7">
-        <h1>Ordina cibo della tua zona con l'app</h1>
-
-        <div class="subtitle">
-            Scegli una delle categorie e visualizza subito i menù di tutti i ristoranti disponibili
+            <div class="subtitle">
+                Scegli una delle categorie e visualizza subito i menù di tutti i ristoranti disponibili
+            </div>
         </div>
-    </div>
-    {{-- fine col-left  --}}
+        {{-- fine col-left  --}}
 
-    {{-- col-right  --}}
-    <div class="col-4 banner-image">
-        <img src="https://st.depositphotos.com/1008939/1376/i/950/depositphotos_13766635-stock-photo-eating-pizza.jpg" alt="">
+        {{-- col-right  --}}
+        <div class="col-5 banner-image">
+            <img src="https://st.depositphotos.com/1008939/1376/i/950/depositphotos_13766635-stock-photo-eating-pizza.jpg" alt="">
+        </div>
+        {{-- fine col-right  --}}
     </div>
-    {{-- fine col-right  --}}
-
 </div>
 <!-- Fine Jumbotron -->
 
-<!-- Inizio Categorie -->
-<div class="categories">
+<!-- Inizio Tipologie -->
+<div class="types-section" :class="{hide : restaurantChosen}">
     <h6>
-        Esplora le Categorie
+        Esplora le Tipologie
     </h6>
     
-    <div class="categories-container">
+    <div class="types-container">
         {{-- card  --}}
-        <div class="cat_card" v-for="type in types" @click='getaApi("api/restaurants/", "restaurants", type.id)'>
-            <div class="_img">
+        <div class="type-card" v-for="type in types" @click='getApi("api/restaurants/", "restaurants", type.id); categoryChosen = true'>
+            <div class="img-container">
                 <i class="fas fa-pizza-slice"></i>
             </div>
             <div class="card-title">
                 @{{type.name}}
             </div>
-            <div class="_chevron">
+            <div class="card-icon">
                 <i class="fas fa-chevron-right"></i>
             </div>
         </div>
@@ -103,37 +102,79 @@
 
    
 </div>
-<!-- Fine Categorie -->
+<!-- Fine Tipologie -->
 
 <!-- Inizio Ristoranti -->
-<div class="restaurants">
-
-    <div class="restaurant">
+<div class="restaurants-container" :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
+    <div class="restaurant-card" v-for='(restaurant, index) in restaurants' 
+    @click="getDishes(restaurant.id, index)">
         <div class="restaurant-img">
-            <img src="" alt="#">
+            <img :src="'storage/' + restaurant.img_path" alt="#">
         </div>
 
         <div class="restaurant-infos">
-            <h3>Pizzeria Sangiovanni</h3>
-            <span>Magenta, Milano</span>
-            <span>Molto Buono</span>
+            <div class="card-title">
+                @{{restaurant.name}}
+            </div>
+            <div class="restaurant-location">
+                <div class="restaurant-address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    @{{restaurant.address}}
+                </div>
+                <div class="restaurant-city">
+                    @{{restaurant.city}}
+                </div>
+            </div>
+            <div class="restaurant-rate subtext">
+                <i class="fas fa-star"></i>
+                Molto Buono
+                <span>(88)</span>
+            </div>
         </div>
     </div>
-
-</div>
+</div> 
 <!-- Fine Ristoranti -->
 
-<!-- Inizio Singolo Ristorante -->
-<div class="restaurants">
+<div v-if="restaurantChosen" class="single-restaurant-page">
+    
+    <!-- Inizio Singolo Ristorante -->
+    <div class="single-restaurant-container">
+        <div class="single-restaurant-card container">
+            <div class="img-container">
+                <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path" alt="">
+            </div>
+            <div class="single-restaurant-info">
+                <div class="card-title">
+                    @{{restaurants[chosenRestaurantIndex].name}}
+                </div>
+                <div class="restaurant-location">
+                    
+                    <i class="fas fa-map-marker-alt"></i>
+                    @{{restaurants[chosenRestaurantIndex].address}}
 
+                </div>
+                <div class="restaurant-rate subtext">
+                    <i class="fas fa-star"></i>
+                    Molto Buono
+                    <span>(88)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fine Singolo Ristorante -->
+    
+    <!-- Inizio Menu -->
+    <div class="menu">
+
+        <div class="dish-card" v-for="dish in dishes">
+
+            <h5>@{{dish.name}}</h5>
+
+        </div>
+        
+    </div>
+    <!-- Fine Menu -->
 </div>
-<!-- Fine Singolo Ristorante -->
-
-<!-- Inizio Menu -->
-<div class="menu">
-
-</div>
-<!-- Fine Menu -->
 
 
     <!-- <ul>
