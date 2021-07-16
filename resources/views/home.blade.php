@@ -139,37 +139,63 @@
     
     <!-- Inizio Singolo Ristorante -->
     <div class="single-restaurant-container">
+
         <div class="single-restaurant-card container">
-            <div class="img-container">
-                <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path" alt="">
-            </div>
-            <div class="single-restaurant-info">
-                <div class="card-title">
-                    @{{restaurants[chosenRestaurantIndex].name}}
+            <div class="row">
+                
+                <div class="img-container col-6">
+                    <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path" alt="">
                 </div>
-                <div class="restaurant-location">
-                    
-                    <i class="fas fa-map-marker-alt"></i>
-                    @{{restaurants[chosenRestaurantIndex].address}}
+
+                <div class="single-restaurant-info col-6">
+                    <div class="card-title">
+                        <h2> @{{restaurants[chosenRestaurantIndex].name}}</h2>
+                    </div>
+
+                    <div class="restaurant-location">
+                        
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h5>@{{restaurants[chosenRestaurantIndex].address}}</h5> 
+    
+                    </div>
+
+                    <div class="restaurant-rate subtext">
+                        <i class="fas fa-star"></i>
+                        Molto Buono
+                        <span>(88)</span>
+                    </div>
+
+                    <div class="restaurant-category">
+                        <span>Categoria:</span>
+                    </div>
 
                 </div>
-                <div class="restaurant-rate subtext">
-                    <i class="fas fa-star"></i>
-                    Molto Buono
-                    <span>(88)</span>
-                </div>
             </div>
+
+
+
         </div>
-    </div>
+    </div> 
     <!-- Fine Singolo Ristorante -->
     
     <!-- Inizio Menu -->
     <div class="menu">
+        
+        <div class="dish-card-container">
+            <div class="dish-card" v-for="dish in dishes">
+                <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path" alt="">
+                
+                <div class="dish-content">
+                    <span class="dish-name">@{{dish.name}}</span>
+                    <span class="dish-description">Descrizione piatto bla bla bla bla bla</span>
+                    <div>
+                        <span class="price">€5.00</span>
+                        <span class="quantity">- 0 +</span>  
+                        <div class="cart-button"><i class="fas fa-cart-plus"></i></div>                       
+                    </div>
+                </div>
 
-        <div class="dish-card" v-for="dish in dishes">
-
-            <h5>@{{dish.name}}</h5>
-
+            </div>
         </div>
         
     </div>
