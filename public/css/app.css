@@ -11142,6 +11142,28 @@ h6 {
   margin: 0.6rem 0;
 }
 
+.client .restaurant {
+  display: flex;
+  width: 490px;
+  height: 132px;
+  border-radius: 5px;
+}
+
+.client .restaurant h3 {
+  font-size: 20px;
+}
+
+.client .restaurant-img {
+  width: 50%;
+}
+
+.client .restaurant-infos {
+  width: 50%;
+  color: white;
+  background-color: #ffa823;
+  padding: 10px;
+}
+
 .client .cart {
   padding: 1.9rem 15px 0;
   overflow-y: auto;
