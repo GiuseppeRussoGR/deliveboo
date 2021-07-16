@@ -2129,7 +2129,10 @@ var app = new Vue({
             quantita:10
         }*/
       ]
-    }
+    },
+    categoryChosen: false,
+    restaurantChosen: false,
+    chosenRestaurantIndex: 0
   },
   methods: {
     /**
@@ -2144,6 +2147,17 @@ var app = new Vue({
       this[variable] = [];
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route + id).then(function (response) {
         _this[variable] = response.data;
+      });
+    },
+    getDishes: function getDishes(id, restaurantIndex) {
+      var _this2 = this;
+
+      this.dishes = [];
+      this.restaurantChosen = true;
+      this.chosenRestaurantIndex = restaurantIndex;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/dishes/' + id).then(function (response) {
+        _this2.dishes = response.data;
+        console.log(_this2.dishes);
       });
     },
 

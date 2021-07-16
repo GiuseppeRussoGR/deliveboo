@@ -18,7 +18,11 @@ const app = new Vue(
                         quantita:10
                     }*/
                 ]
-            }
+            },
+            
+            categoryChosen: false,
+            restaurantChosen: false,
+            chosenRestaurantIndex: 0
         },
         methods: {
             /**
@@ -29,11 +33,26 @@ const app = new Vue(
              */
             getApi(route, variable, id) {
                 this[variable] = [];
+
                 axios
                     .get(route + id)
                     .then((response) => {
                         this[variable] = response.data;
                     });
+            },
+
+            getDishes(id, restaurantIndex) {
+                this.dishes = [];
+                this.restaurantChosen = true;
+                this.chosenRestaurantIndex = restaurantIndex;
+
+                    axios
+                        .get('api/dishes/' + id)
+                        .then((response) => {
+                            this.dishes = response.data;
+                            console.log(this.dishes);
+
+                    });    
             },
             /**
              * Funzione che permette di inserire l'ordine nel DB
@@ -53,6 +72,5 @@ const app = new Vue(
         },
         mounted() {
             this.getApi('api/types/', 'types', '')
-
         }
     });

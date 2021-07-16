@@ -10,8 +10,8 @@
     }
 
     &.user {
-        background: $secondary_color;
-        background: linear-gradient(180deg, lighten($secondary_color, 16%) 0%, $secondary_color 75%, lighten($secondary_color, 6%) 100%);
+        background: $primary_color;
+        background: linear-gradient(180deg, lighten($primary_color, 16%) 0%, $primary_color 75%, lighten($primary_color, 6%) 100%);
     }
 
     & > .container {
@@ -28,6 +28,7 @@
 
     .app-content, .side-window {
         background-color: $background_grey;
+        height: 100%;
     }
 
 }

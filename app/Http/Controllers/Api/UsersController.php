@@ -37,8 +37,9 @@ class UsersController extends Controller
         foreach ($restaurants as $restaurant) {
             $restaurants_result[] = [
                 'id' => $restaurant->id,
-                'company_name' => $restaurant->company_name,
+                'name' => $restaurant->company_name,
                 'address' => $restaurant->address,
+                'city' => $restaurant->city,
                 'img_path' => $restaurant->img_path ? $restaurant->img_path : ''
             ];
         }
@@ -55,7 +56,7 @@ class UsersController extends Controller
 
         foreach ($dishes as $dish) {
             $dishes_result[] = [
-                'name' => $dish->_name,
+                'name' => $dish->name,
                 'description' => $dish->description,
                 'price' => $dish->price,
                 'img_path' => $dish->img_path ? $dish->img_path : ''
