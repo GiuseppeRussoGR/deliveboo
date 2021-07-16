@@ -53,75 +53,144 @@
     //Fine Menu Verticale
 
     .my_jumbotron {
-        // @include d-flex-sb-center;
-        display: flex;
+        @include d-flex-sb-center;
         height: calc(100% - 220px - 100px);
         padding-top: 1rem;
         padding-bottom: 1rem;
 
-        // col-left 
-        .col-left {
-            width: 50%;
-            padding-top: 40px;
-
-            h1 {
-                font-size: 40px;
-            }
-
-            h5 {
-                font-size: 15px;
-                margin-top: 20px;
-            }
-        }
-        // fine col-left
-
-        // col-right
-        .col-right {
-            width: 50%;
-            padding: 20px;
-
+        .banner-image {
             img {
                 width: 100%;
             }
         }
-        // fine col-right
     }
 
     .categories {
         height: 220px;
         padding-bottom: 1.5rem;
-        @include d-flex-center;
+
+        .categories-container {
+            display: flex;
+            justify-content: space-between;
+        }
 
         .cat_card {
-            width: 10%;
-            padding: 20px;
-            border: 1px solid black;
+            width: calc(100% / 9 - 15px);
+            padding: 13px;
             border-radius: 10px;
             text-align: center;
-            margin-right: 10px;
+            @include shadow-standard;
+            background-color:#FFFFFF;
+
 
             ._img {
-                font-size: 35px;
-                border: 1px solid black;
+                font-size: 2.25rem;
+                width: 60px;
+                height: 60px;
+                line-height: 60px;
                 border-radius: 50%;
-                color: $primary_color;
+                text-align: center;
+                background-color: $primary_color;
+                color: #FFFFFF;
+                margin: 0 auto;
             }
 
             ._chevron {
-                color: $primary_color;
+
+                i {
+                    color: #FFFFFF;
+                    background-color: $primary_color;
+                    font-size: 0.8rem;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    border-radius: 50%;
+                    line-height: 1.5rem;
+                    text-align: center;
+                }
+            }
+
+            .card-title {
+                margin: .6rem 0;
             }
         }
     }
 
-    .restaurants {
+    .restaurant {
+        display: flex;
+        width: 490px;
+        height: 132px;
+        border-radius: 5px;
 
+        h3 {
+            font-size: 20px;
+        }
     }
 
-    .single-restaurant {
-
+    .restaurant-img {
+        width: 50%;
     }
 
-    .restaurant-menu {
+    .restaurant-infos {
+        width: 50%;
+        color: white;
+        background-color: #ffa823;
+        padding: 10px;
+    }
+
+    .cart {
+        padding: 1.9rem 15px 0;
+        overflow-y: auto;
+        display: none;
+
+        .title {
+            @include d-flex-sb-center;
+        }
+
+        .cart-subtitle {
+            margin-top: 0.8rem;
+            font-weight: 600;
+        }
+
+        form {
+
+            label {
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .form-group {
+                margin-bottom: 0.5rem;
+            }
+
+            input {
+                height: 2.1rem;
+            }
+        }
+
+        .order-items {
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+
+                    img {
+                        width: 25%;
+                    }
+
+                }
+            }
+        }
+
+        .order-total {
+            font-weight: 700;
+            @include d-flex-sb-center;
+        }
+
 
     }
 
