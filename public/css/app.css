@@ -11033,10 +11033,16 @@ h6 {
   height: 100%;
 }
 
-#app .app-content,
-#app .side-window {
+#app .app-content {
   background-color: #FBF9F9;
   height: 100%;
+  transition: all 0.4s;
+}
+
+#app .side-window {
+  background-color: #FFFFFF;
+  height: 100%;
+  transition: all 0.4s;
 }
 
 .client nav {
@@ -11331,6 +11337,11 @@ h6 {
 .client .single-restaurant-page {
   overflow-y: auto;
   height: 100%;
+  scrollbar-width: none;
+}
+
+.client .single-restaurant-page::-webkit-scrollbar {
+  display: none;
 }
 
 .client .single-restaurant-page .single-restaurant-container .single-restaurant-card .row .img-container img {
@@ -11360,7 +11371,8 @@ h6 {
 
 .client .single-restaurant-page .menu .dish-card-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   padding-top: 20px;
 }
 
@@ -11370,6 +11382,7 @@ h6 {
   box-shadow: 3px 2px 5px 0 rgba(0, 0, 0, 0.15), -3px -3px 7px #FFFFFF;
   border-radius: 10px;
   cursor: pointer;
+  margin-bottom: 39px;
 }
 
 .client .single-restaurant-page .menu .dish-card-container .dish-card:hover {
@@ -11427,6 +11440,22 @@ h6 {
 
 .client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div .cart-button i {
   color: white;
+}
+
+.client .single-restaurant-page .menu .dish-card-container .dish-card:not(:nth-child(4n+0)) {
+  margin-right: 39px;
+}
+
+.client .single-restaurant-page .menu .dish-card-container .dish-card.cart-open:not(:nth-child(4n+0)) {
+  margin-right: 0;
+}
+
+.client .single-restaurant-page .menu .dish-card-container .dish-card.cart-open:not(:nth-child(3n+0)) {
+  margin-right: 29px;
+}
+
+.client .cart {
+  height: 100%;
 }
 
 .client .show {

@@ -172,8 +172,6 @@
                 </div>
             </div>
 
-
-
         </div>
     </div> 
     <!-- Fine Singolo Ristorante -->
@@ -182,15 +180,20 @@
     <div class="menu">
         
         <div class="dish-card-container">
-            <div class="dish-card" v-for="dish in dishes">
-                <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path" alt="">
+            <div class="dish-card" :class="{'cart-open' : dishChosen}"
+            v-for="(dish, index) in dishes" >
+                <img :src="'storage/' + dish.img_path" alt=""
+                @click="startOrder(index, dish.quantity)">
                 
                 <div class="dish-content">
-                    <span class="dish-name">@{{dish.name}}</span>
-                    <span class="dish-description">Descrizione piatto bla bla bla bla bla</span>
+                    <span class="dish-name">@{{ dish.name }}</span>
+                    <span class="dish-description">@{{ dish.description }}</span>
                     <div>
-                        <span class="price">€5.00</span>
-                        <span class="quantity">- 0 +</span>  
+                        <span class="price">@{{ dish.price }} €</span>
+                        <!-- Ricorda di settare il più e il meno -->
+                        <span @click="decQuantity(index)">-</span>
+                        <input :id="'quantity' + '-' + index" type="number" v-model="dish.quantity">
+                        <span @click="addQuantity(index)">+</span>
                         <div class="cart-button"><i class="fas fa-cart-plus"></i></div>                       
                     </div>
                 </div>
@@ -201,44 +204,6 @@
     </div>
     <!-- Fine Menu -->
 </div>
-
-
-    <!-- <ul>
-        <li v-for="type in types" @click='getRestaurants(type.id)'>@{{type.name}}</li>
-    </ul>
-    <div v-if='restaurants.length > 0'>
-        <ul>
-            <li v-for='restaurant in restaurants'>
-                <ul>
-                    <li><img :src="'storage/' + restaurant.img_path" alt="Restaurant Cover"></li>
-                    <li @click='getDishes(restaurant.id)'>@{{restaurant.company_name}}</li>
-                </ul>
-            </li>
-        </ul>
-        <div v-if='restaurants.length > 0'>
-            <ul>
-                <li v-for='restaurant in restaurants'>
-                    <ul>
-                        <li><img :src="'storage/' + restaurant.img_path" alt="Restaurant Cover"></li>
-                        <li @click='getDishes(restaurant.id)'>@{{restaurant.company_name}}</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-
-    <div v-if='dishes.length > 0'>
-        <ul>
-            <li v-for='dish in dishes'>
-                <ul>
-                    <li><img :src="'storage/' + dish.img_path" alt="Restaurant Cover"></li>
-                    <li>@{{dish.name}}</li>
-                    <li>@{{dish.description}}</li>
-                    <li>@{{dish.price}}</li>
-                </ul>
-            </li>
-        </ul>
-    </div> -->
-
 @endsection
 
 @section('side-window')
