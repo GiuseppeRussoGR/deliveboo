@@ -888,15 +888,10 @@ var app = new Vue({
     dishes: [],
     order: {
       total_price: 0,
-      client_name: 'asd',
-      client_address: 'asd',
-      client_number: "0321654",
-      dishes: [// {
-        //     id: 1,
-        //     quantita: 10,
-        //     ristorante: 0
-        // }
-      ]
+      client_name: '',
+      client_address: '',
+      client_number: "",
+      dishes: []
     },
     order_set: {},
     braintree_payment: {
@@ -904,7 +899,6 @@ var app = new Vue({
       instance: '',
       error: ''
     },
-    token: '',
     categoryChosen: false,
     restaurantChosen: false,
     chosenRestaurantIndex: 0,
@@ -1020,7 +1014,9 @@ var app = new Vue({
               case 9:
                 _this2.braintree_payment.token = _context.sent;
 
-              case 10:
+                _this2.getDataPayment();
+
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -1028,6 +1024,11 @@ var app = new Vue({
         }, _callee);
       }))();
     },
+
+    /**
+     * Funzione che permette di creare il token da inviare ai servizi di braintree
+     * @returns {Promise<*>}
+     */
     getToken: function getToken() {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var response;
@@ -1054,6 +1055,11 @@ var app = new Vue({
         }, _callee2);
       }))();
     },
+
+    /**
+     * Funzione che prende i dati di pagamento dall'utente e genero l'istanza di braintree
+     * @returns {Promise<void>}
+     */
     getDataPayment: function getDataPayment() {
       var _this3 = this;
 
@@ -1081,6 +1087,11 @@ var app = new Vue({
         }, _callee3);
       }))();
     },
+
+    /**
+     * Funzione che invia il pagamento verso i servizi di braintree e
+     * ne riceve il risultato
+     */
     makePayment: function makePayment() {
       var price = this.order.total_price;
       this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
@@ -1089,7 +1100,7 @@ var app = new Vue({
           amount: price
         }).then(function (response) {
           console.log(response.data);
-        }); // Submit payload.nonce to your server
+        });
       });
     }
   },

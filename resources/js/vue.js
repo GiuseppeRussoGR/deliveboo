@@ -7,16 +7,10 @@ const app = new Vue(
             dishes: [],
             order: {
                 total_price: 0,
-                client_name: 'asd',
-                client_address: 'asd',
-                client_number: "0321654",
-                dishes: [
-                    // {
-                    //     id: 1,
-                    //     quantita: 10,
-                    //     ristorante: 0
-                    // }
-                ]
+                client_name: '',
+                client_address: '',
+                client_number: "",
+                dishes: []
             },
             order_set: {},
             braintree_payment: {
@@ -24,7 +18,6 @@ const app = new Vue(
                 instance: '',
                 error: ''
             },
-            token: '',
             categoryChosen: false,
             restaurantChosen: false,
             chosenRestaurantIndex: 0,
@@ -110,11 +103,20 @@ const app = new Vue(
                     client_code: value.client_code
                 }
                 this.braintree_payment.token = await this.getToken();
+                this.getDataPayment();
             },
+            /**
+             * Funzione che permette di creare il token da inviare ai servizi di braintree
+             * @returns {Promise<*>}
+             */
             async getToken() {
                 const response = await axios.get('api/order/token ');
                 return await response.data.token;
             },
+            /**
+             * Funzione che prende i dati di pagamento dall'utente e genero l'istanza di braintree
+             * @returns {Promise<void>}
+             */
             async getDataPayment() {
                 const externVue = this;
                 await braintree.dropin.create({
@@ -125,6 +127,10 @@ const app = new Vue(
                     externVue.braintree_payment.error = err
                 });
             },
+            /**
+             * Funzione che invia il pagamento verso i servizi di braintree e
+             * ne riceve il risultato
+             */
             makePayment() {
                 const price = this.order.total_price;
                 this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
@@ -134,7 +140,6 @@ const app = new Vue(
                     }).then(response => {
                         console.log(response.data)
                     })
-                    // Submit payload.nonce to your server
                 });
             }
         },

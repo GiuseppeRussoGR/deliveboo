@@ -225,18 +225,18 @@
         <form class="my_form" action="" @submit.prevent="setOrder()">
             <div class="form-group">
                 <label for="client_name">Nome</label>
-                <input type="text" class="form-control" id="client_name" required name="client_name"
+                <input type="text" class="form-control" id="client_name" v-model="order.client_name" required name="client_name"
                        placeholder="Mario Rossi">
             </div>
             <div class="form-group">
                 <label for="client_number">Recapito Telefonico</label>
-                <input type="number" class="form-control" id="client_number" required name="client_number"
+                <input type="number" class="form-control" id="client_number" v-model="order.client_number" required name="client_number"
                        placeholder="es. 3249065865">
             </div>
 
             <div class="form-group">
                 <label for="client_address">Address</label>
-                <input type="text" class="form-control" id="client_address" required name="client_address"
+                <input type="text" class="form-control" id="client_address" v-model="order.client_address" required name="client_address"
                        placeholder="via Giuseppe Garibaldi">
             </div>
 
@@ -256,7 +256,7 @@
                 <label for="client_city">Città</label>
                 <input type="text" class="form-control" id="client_city" name="client_city" placeholder="Milano">
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#payment">
                 Manda l'ordine
             </button>
 
@@ -290,12 +290,6 @@
         </span>
         </div>
 
-        {{--tasto per modale--}}
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#payment"
-                @click="getDataPayment()">
-            Lancia modale
-        </button>
-        {{--Fine tasto per modale--}}
         {{--Modal--}}
         <div class="modal fade" id="payment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
