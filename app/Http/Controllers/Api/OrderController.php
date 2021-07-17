@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Dish;
 use App\Http\Controllers\Controller;
 use App\Order;
 use Braintree\Gateway;
@@ -13,19 +14,32 @@ use Illuminate\Support\Str;
 class OrderController extends Controller
 {
 
-    public function setOrder(Request $request)
+    /**
+     * Set Order in DB and create a new unique client_code
+     * @param Request $request instance of Request
+     * @return JsonResponse
+     */
+    public function setOrder(Request $request): JsonResponse
     {
         $request->validate($this->validateOrder());
         $request->all();
-        $client_code = $this->uniqueID();
-        while (Order::where('client_code', '=', $client_code)->first()) {
-            $client_code = $this->uniqueID();
+        $client_unique = $this->uniqueID();
+        while (Order::where('client_code', '=', $client_unique)->first()) {
+            $client_unique = $this->uniqueID();
         }
-        $request['client_code'] = $client_code;
+        $request['client_code'] = $client_unique;
+        $dishes = $request->dishes;
+        $request['total_price'] = 0;
+        foreach ($dishes as $dish) {
+            $correct_price = Dish::find($dish['id'])->price;
+            if ($correct_price !== $dish['prezzo_singolo']) {
+                $dish['prezzo_singolo'] = $correct_price;
+            }
+            $request['total_price'] += $dish['prezzo_singolo'] * $dish['quantita'];
+        }
         $new_order = new Order();
         $new_order->fill($request->toArray());
         $new_order->save();
-        $dishes = $request->dishes;
         foreach ($dishes as $dish) {
             if ($new_order->dishes->where('id', '=', $dish['id'])) {
                 $new_order->dishes()->attach([
@@ -36,20 +50,21 @@ class OrderController extends Controller
             }
         }
         $order_insert = [
-            'message' => 'Ordine Inserito'
+            'message' => 'Ordine Inserito',
+            'order_number' => $new_order->id,
+            'client_code' => $new_order->client_code
         ];
         return response()->json($order_insert, 200);
     }
 
     /**
-     * Richiesta API per recuperare l'ordine del cliente
-     * @param Request $request
+     * Get Order from DB
+     * @param Request $request instance of Request
      * @return JsonResponse
      */
     public function getOrder(Request $request): JsonResponse
     {
-
-        $order = Order::find($request->id);
+        $order = Order::where('id', '=', $request->id)->where('client_code', '=', $request->value)->get();
         $status = 200;
 
         if (empty($order)) {
@@ -62,8 +77,8 @@ class OrderController extends Controller
     }
 
     /**
-     * Richiesta per la generazione del Token da inviare al servizio di Braintree
-     * @param Gateway $gateway
+     * Generate token for Braintree Service
+     * @param Gateway $gateway instance of Bentree Gateway Service
      * @return JsonResponse
      */
     public function getToken(Gateway $gateway): JsonResponse
@@ -78,7 +93,7 @@ class OrderController extends Controller
         } catch (Exception $e) {
 
             $success = $e;
-            $status = 404;
+            $status = 401;
         }
 
         $data = [
@@ -90,9 +105,9 @@ class OrderController extends Controller
     }
 
     /**
-     * Richiesta di pagamento verso i servizi di BrainTree
-     * @param Request $request
-     * @param Gateway $gateway
+     * Payment request to Braintree service
+     * @param Request $request instance of Request
+     * @param Gateway $gateway instance of Bentree Gateway Service
      * @return JsonResponse
      */
     public function makePayment(Request $request, Gateway $gateway): JsonResponse
@@ -124,10 +139,10 @@ class OrderController extends Controller
     }
 
     /**
-     * Funzione che permette la validazione della $request dell'ordine
+     * Validation $request from order call
      * @return string[]
      */
-    protected function validateOrder()
+    protected function validateOrder(): array
     {
         return [
             'total_price' => 'required|min:0.70',
@@ -139,8 +154,12 @@ class OrderController extends Controller
         ];
     }
 
-    protected function uniqueID()
+    /**
+     * Random generate string
+     * @return string
+     */
+    protected function uniqueID(): string
     {
-        return Str::random(32);
+        return Str::random(8);
     }
 }
