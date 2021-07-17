@@ -2,6 +2,7 @@
 @section('header_script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://js.braintreegateway.com/web/dropin/1.31.0/js/dropin.js"></script>
 @endsection
 
 @section('app_style', 'client')
@@ -216,7 +217,7 @@
                 Carrello
             </div>
             <button @click="setOrder()" class="btn btn-primary">
-                Ciao
+                Manda l'ordine
             </button>
         </div>
 
@@ -228,26 +229,26 @@
 
             <div class="form-group">
                 <label for="client_name">Nome</label>
-                <input type="text" class="form-control" id="client_name" placeholder="Mario Rossi">
+                <input type="text" class="form-control" name="client_name" placeholder="Mario Rossi">
             </div>
             <div class="form-group">
                 <label for="client_number">Recapito Telefonico</label>
-                <input type="number" class="form-control" id="client_number" placeholder="es. 3249065865">
+                <input type="number" class="form-control" name="client_number" placeholder="es. 3249065865">
             </div>
 
             <div class="form-group">
                 <label for="client_address">Address</label>
-                <input type="text" class="form-control" id="client_address" placeholder="via Giuseppe Garibaldi">
+                <input type="text" class="form-control" name="client_address" placeholder="via Giuseppe Garibaldi">
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="civic_number">Civico</label>
-                    <input type="number" class="form-control" id="civic_number" placeholder="31">
+                    <input type="number" class="form-control" name="civic_number" placeholder="31">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="city_cap">CAP</label>
-                    <input type="text" class="form-control" id="city_cap" placeholder="20123">
+                    <input type="text" class="form-control" name="city_cap" placeholder="20123">
                 </div>
             </div>
 
@@ -286,7 +287,33 @@
         </span>
         </div>
 
-
+        {{--tasto per modale--}}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#payment" @click="getDataPayment()">
+            Lancia modale
+        </button>
+        {{--Fine tasto per modale--}}
+        {{--Modal--}}
+        <div class="modal fade" id="payment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Pagamento</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="dropin-container"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="makePayment()">Paga</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{--End Modal--}}
     </div>
     <!-- Fine Carrello -->
 @endsection

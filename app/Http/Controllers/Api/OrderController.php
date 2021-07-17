@@ -39,7 +39,11 @@ class OrderController extends Controller
         }
         $new_order = new Order();
         $new_order->fill($request->toArray());
-        $new_order->save();
+        if ($new_order->save()) {
+            $success = true;
+        } else {
+            $success = false;
+        }
         foreach ($dishes as $dish) {
             if ($new_order->dishes->where('id', '=', $dish['id'])) {
                 $new_order->dishes()->attach([
@@ -50,31 +54,31 @@ class OrderController extends Controller
             }
         }
         $order_insert = [
-            'message' => 'Ordine Inserito',
+            'success' => $success,
             'order_number' => $new_order->id,
             'client_code' => $new_order->client_code
         ];
         return response()->json($order_insert, 200);
     }
 
-    /**
-     * Get Order from DB
-     * @param Request $request instance of Request
-     * @return JsonResponse
-     */
-    public function getOrder(Request $request): JsonResponse
-    {
-        $order = Order::where('id', '=', $request->id)->where('client_code', '=', $request->value)->get();
-        $status = 200;
-
-        if (empty($order)) {
-            $order = 'Ordine non trovato';
-            $status = 404;
-        }
-
-        return response()->json($order, $status);
-
-    }
+//    /**
+//     * Get Order from DB
+//     * @param Request $request instance of Request
+//     * @return JsonResponse
+//     */
+//    public function getOrder(Request $request): JsonResponse
+//    {
+//        $order = Order::where('id', '=', $request->id)->where('client_code', '=', $request->value)->get();
+//        $status = 200;
+//
+//        if (empty($order)) {
+//            $order = 'Ordine non trovato';
+//            $status = 404;
+//        }
+//
+//        return response()->json($order, $status);
+//
+//    }
 
     /**
      * Generate token for Braintree Service
@@ -113,7 +117,7 @@ class OrderController extends Controller
     public function makePayment(Request $request, Gateway $gateway): JsonResponse
     {
         $payment = $gateway->transaction()->sale([
-            'amount' => $request->total_price,
+            'amount' => $request->amount,
             'paymentMethodNonce' => $request->token,
             'options' => [
                 'submitForSettlement' => True

@@ -18,6 +18,13 @@ const app = new Vue(
                     // }
                 ]
             },
+            order_set: {},
+            braintree_payment: {
+                token: '',
+                instance: '',
+                error: ''
+            },
+            token: '',
             categoryChosen: false,
             restaurantChosen: false,
             chosenRestaurantIndex: 0,
@@ -94,17 +101,41 @@ const app = new Vue(
             /**
              * Funzione che permette di inserire l'ordine nel DB
              */
-            setOrder() {
-                /**
-                 * Esempio di chiamata per l'ordine
-                 */
-                axios
-                    .post('api/order', {
-                        ...this.order
-                    })
-                    .then((response) => {
+            async setOrder() {
+                const response = await axios.post('api/order', {...this.order});
+                const value = await response.data;
+                this.order_set = {
+                    success: value.success,
+                    id: value.order_number,
+                    client_code: value.client_code
+                }
+                this.braintree_payment.token = await this.getToken();
+            },
+            async getToken() {
+                const response = await axios.get('api/order/token ');
+                return await response.data.token;
+            },
+            async getDataPayment() {
+                const externVue = this;
+                await braintree.dropin.create({
+                    authorization: this.braintree_payment.token,
+                    selector: '#dropin-container'
+                }, function (err, instance) {
+                    externVue.braintree_payment.instance = instance
+                    externVue.braintree_payment.error = err
+                });
+            },
+            makePayment() {
+                const price = this.order.total_price;
+                this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
+                    axios.post('api/order/payment', {
+                        token: payload.nonce,
+                        amount: price
+                    }).then(response => {
                         console.log(response.data)
-                    });
+                    })
+                    // Submit payload.nonce to your server
+                });
             }
         },
         mounted() {
