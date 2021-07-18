@@ -9,12 +9,18 @@ const app = new Vue(
                 total_price: 0,
                 client_name: '',
                 client_address: '',
+                client_civic_number: '',
+                client_city_cap: '',
+                client_city: '',
                 client_number: "",
                 dishes: []
             },
-            order_set: {},
+            order_set: {
+                disabled: true
+            },
             braintree_payment: {
                 token: '',
+                payment: true,
                 instance: '',
                 error: ''
             },
@@ -52,7 +58,6 @@ const app = new Vue(
                 const select_dish = this.dishes[dishIndex];
                 const order_dishes = this.order.dishes;
                 const restaurant_select = this.chosenRestaurantIndex;
-
                 if (order_dishes.some(dish => dish.ristorante === restaurant_select) || order_dishes.length === 0) {
                     if (order_dishes.some(dish => dish.id === select_dish.id)) {
                         let dish_index = order_dishes.map(element => {
@@ -95,15 +100,20 @@ const app = new Vue(
              * Funzione che permette di inserire l'ordine nel DB
              */
             async setOrder() {
-                const response = await axios.post('api/order', {...this.order});
-                const value = await response.data;
-                this.order_set = {
-                    success: value.success,
-                    id: value.order_number,
-                    client_code: value.client_code
+                if (this.requireFormData()) {
+                    const response = await axios.post('api/order', {...this.order});
+                    const value = await response.data;
+                    this.order_set = {
+                        success: value.success,
+                        id: value.order_number,
+                        client_code: value.client_code
+                    }
+                    this.braintree_payment.token = await this.getToken();
+                    await this.getDataPayment();
+                    $('#payment').modal('show');
+                } else {
+                    console.log('error')
                 }
-                this.braintree_payment.token = await this.getToken();
-                this.getDataPayment();
             },
             /**
              * Funzione che permette di creare il token da inviare ai servizi di braintree
@@ -122,10 +132,32 @@ const app = new Vue(
                 await braintree.dropin.create({
                     authorization: this.braintree_payment.token,
                     selector: '#dropin-container'
-                }, function (err, instance) {
-                    externVue.braintree_payment.instance = instance
-                    externVue.braintree_payment.error = err
+                }, async function (err, instance) {
+                    if (instance === 'undefined') {
+                        externVue.braintree_payment.token = externVue.getToken();
+                        await externVue.getDataPayment();
+                    }
+                    externVue.braintree_payment.instance = instance;
+                    externVue.braintree_payment.error = err;
                 });
+            },
+            /**
+             * Funzione che verifica se i campi 'required' sono popolati
+             * @returns {boolean}
+             */
+            requireFormData() {
+                //TODO da rivedere la validazione
+                if (this.order.client_address !== '' &&
+                    this.order.client_name !== '' &&
+                    this.order.client_city_cap !== '' &&
+                    this.order.client_city !== '' &&
+                    this.order.client_civic_number !== '' &&
+                    this.order.client_number !== '') {
+                    this.order_set.disabled = false;
+                    return true
+                } else {
+                    return false
+                }
             },
             /**
              * Funzione che invia il pagamento verso i servizi di braintree e
@@ -133,12 +165,24 @@ const app = new Vue(
              */
             makePayment() {
                 const price = this.order.total_price;
+                if (!this.braintree_payment.instance) {
+                    //TODO da sistemare, in caso si procedi a pagare due volte
+                    $('#payment').modal('hide');
+                }
                 this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
                     axios.post('api/order/payment', {
                         token: payload.nonce,
                         amount: price
                     }).then(response => {
+                        //TODO da aggiungere funzioni nella risposta
                         console.log(response.data)
+                        if (response.data.success) {
+                            $('#payment').modal('hide');
+                            $('#button_payment').attr('disabled', 'true');
+                        } else {
+                            this.setOrder();
+                            this.makePayment();
+                        }
                     })
                 });
             }

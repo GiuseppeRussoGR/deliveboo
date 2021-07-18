@@ -890,12 +890,18 @@ var app = new Vue({
       total_price: 0,
       client_name: '',
       client_address: '',
+      client_civic_number: '',
+      client_city_cap: '',
+      client_city: '',
       client_number: "",
       dishes: []
     },
-    order_set: {},
+    order_set: {
+      disabled: true
+    },
     braintree_payment: {
       token: '',
+      payment: true,
       instance: '',
       error: ''
     },
@@ -993,30 +999,43 @@ var app = new Vue({
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                if (!_this2.requireFormData()) {
+                  _context.next = 16;
+                  break;
+                }
+
+                _context.next = 3;
                 return axios.post('api/order', _objectSpread({}, _this2.order));
 
-              case 2:
+              case 3:
                 response = _context.sent;
-                _context.next = 5;
+                _context.next = 6;
                 return response.data;
 
-              case 5:
+              case 6:
                 value = _context.sent;
                 _this2.order_set = {
                   success: value.success,
                   id: value.order_number,
                   client_code: value.client_code
                 };
-                _context.next = 9;
+                _context.next = 10;
                 return _this2.getToken();
 
-              case 9:
+              case 10:
                 _this2.braintree_payment.token = _context.sent;
+                _context.next = 13;
+                return _this2.getDataPayment();
 
-                _this2.getDataPayment();
+              case 13:
+                $('#payment').modal('show');
+                _context.next = 17;
+                break;
 
-              case 11:
+              case 16:
+                console.log('error');
+
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -1063,29 +1082,70 @@ var app = new Vue({
     getDataPayment: function getDataPayment() {
       var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var externVue;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 externVue = _this3;
-                _context3.next = 3;
+                _context4.next = 3;
                 return braintree.dropin.create({
                   authorization: _this3.braintree_payment.token,
                   selector: '#dropin-container'
-                }, function (err, instance) {
-                  externVue.braintree_payment.instance = instance;
-                  externVue.braintree_payment.error = err;
-                });
+                }, /*#__PURE__*/function () {
+                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(err, instance) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            if (!(instance === 'undefined')) {
+                              _context3.next = 4;
+                              break;
+                            }
+
+                            externVue.braintree_payment.token = externVue.getToken();
+                            _context3.next = 4;
+                            return externVue.getDataPayment();
+
+                          case 4:
+                            externVue.braintree_payment.instance = instance;
+                            externVue.braintree_payment.error = err;
+
+                          case 6:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  }));
+
+                  return function (_x, _x2) {
+                    return _ref.apply(this, arguments);
+                  };
+                }());
 
               case 3:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
+    },
+
+    /**
+     * Funzione che verifica se i campi 'required' sono popolati
+     * @returns {boolean}
+     */
+    requireFormData: function requireFormData() {
+      //TODO da rivedere la validazione
+      if (this.order.client_address !== '' && this.order.client_name !== '' && this.order.client_city_cap !== '' && this.order.client_city !== '' && this.order.client_civic_number !== '' && this.order.client_number !== '') {
+        this.order_set.disabled = false;
+        return true;
+      } else {
+        return false;
+      }
     },
 
     /**
@@ -1094,12 +1154,30 @@ var app = new Vue({
      */
     makePayment: function makePayment() {
       var price = this.order.total_price;
+
+      if (!this.braintree_payment.instance) {
+        //TODO da sistemare, in caso si procedi a pagare due volte
+        $('#payment').modal('hide');
+      }
+
       this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
+        var _this4 = this;
+
         axios.post('api/order/payment', {
           token: payload.nonce,
           amount: price
         }).then(function (response) {
+          //TODO da aggiungere funzioni nella risposta
           console.log(response.data);
+
+          if (response.data.success) {
+            $('#payment').modal('hide');
+            $('#button_payment').attr('disabled', 'true');
+          } else {
+            _this4.setOrder();
+
+            _this4.makePayment();
+          }
         });
       });
     }
