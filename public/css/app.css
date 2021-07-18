@@ -11425,11 +11425,24 @@ h6 {
   font-weight: bold;
 }
 
-.client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div #quantity {
+.client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div .quantity {
   font-weight: bold;
 }
 
 .client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div .cart-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div .cart-button .price {
+  font-weight: bold;
+}
+
+.client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div .cart-button #quantity {
+  font-weight: bold;
+}
+
+.client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div .cart-button .cart-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11438,7 +11451,7 @@ h6 {
   border-radius: 5px;
 }
 
-.client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div .cart-button i {
+.client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div .cart-button .cart-button i {
   color: white;
 }
 

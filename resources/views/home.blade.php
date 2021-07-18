@@ -182,7 +182,6 @@
 
         <!-- Inizio Menu -->
         <div class="menu">
-
             <div class="dish-card-container">
                 <div class="dish-card" :class="{'cart-open' : openBasket}"
                      v-for="(dish, index) in dishes">
@@ -217,49 +216,50 @@
                 Carrello
             </div>
         </div>
-
         <div class="cart-subtitle">
             Dati di consegna
         </div>
-
-        <form class="my_form" action="" @submit.prevent="setOrder()">
+        <form class="my_form" method="post" action="#" @submit.prevent="setOrder()">
             <div class="form-group">
                 <label for="client_name">Nome</label>
-                <input type="text" class="form-control" id="client_name" v-model="order.client_name" required name="client_name"
+                <input type="text" class="form-control" @change="requireFormData()" id="client_name"
+                       v-model="order.client_name" required name="client_name"
                        placeholder="Mario Rossi">
             </div>
             <div class="form-group">
                 <label for="client_number">Recapito Telefonico</label>
-                <input type="number" class="form-control" id="client_number" v-model="order.client_number" required name="client_number"
+                <input type="number" class="form-control" id="client_number" @change="requireFormData()"
+                       v-model="order.client_number" required name="client_number"
                        placeholder="es. 3249065865">
             </div>
-
             <div class="form-group">
                 <label for="client_address">Address</label>
-                <input type="text" class="form-control" id="client_address" v-model="order.client_address" required name="client_address"
+                <input type="text" class="form-control" id="client_address" @change="requireFormData()"
+                       v-model="order.client_address" required name="client_address"
                        placeholder="via Giuseppe Garibaldi">
             </div>
-
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="civic_number">Civico</label>
-                    <input type="number" class="form-control" id="civic_number" required name="civic_number"
+                    <label for="client_civic_number">Civico</label>
+                    <input type="number" class="form-control" v-model="order.client_civic_number" id="client_civic_number" @change="requireFormData()"
+                           required
+                           name="civic_number"
                            placeholder="31">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="city_cap">CAP</label>
-                    <input type="text" class="form-control" id="city_cap" required name="city_cap" placeholder="20123">
+                    <label for="client_city_cap">CAP</label>
+                    <input type="text" class="form-control"  v-model="order.client_city_cap" id="client_city_cap" @change="requireFormData()" required
+                           name="city_cap" placeholder="20123">
                 </div>
             </div>
-
             <div class="form-group">
                 <label for="client_city">Città</label>
-                <input type="text" class="form-control" id="client_city" name="client_city" placeholder="Milano">
+                <input type="text" class="form-control"  v-model="order.client_city" id="client_city" required @change="requireFormData()"
+                       name="client_city"
+                       placeholder="Milano">
             </div>
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#payment">
-                Manda l'ordine
-            </button>
-
+            <input type="submit" class="btn btn-primary" :disabled="order_set.disabled"
+                   value="Manda ordine">
         </form>
 
         <div class="cart-subtitle">
@@ -268,7 +268,7 @@
 
         <div class="order-items">
             <ul v-if="order.dishes.length > 0">
-                <li v-for="dish in  order.dishes ">
+                <li v-for="dish in order.dishes ">
                     <img src="https://static.gamberorosso.it/da-zero.jpg" alt="">
                     <span>@{{ dish.nome }}</span>
                     <span>@{{ dish.totale_singolo }} €</span>
@@ -306,7 +306,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" @click="makePayment()">Paga</button>
+                        <button type="button" class="btn btn-primary" id="button_payment" @click="makePayment()">Paga</button>
                     </div>
                 </div>
             </div>
