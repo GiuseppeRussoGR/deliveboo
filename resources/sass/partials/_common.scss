@@ -1,7 +1,10 @@
+html {
+    font-size: 15px;
+}
+
 body {
     font-family: $content_font;
     font-weight: 400;
-    font-size: 1rem;
     color: $text_color;
 }
 
@@ -48,8 +51,7 @@ h6 {
 }
 
 .card-title {
-    font-family: $header-font;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 0;
 }
 
