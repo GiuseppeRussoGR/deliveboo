@@ -11425,7 +11425,7 @@ h6 {
   font-weight: bold;
 }
 
-.client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div .quantity {
+.client .single-restaurant-page .menu .dish-card-container .dish-card .dish-content div #quantity {
   font-weight: bold;
 }
 
