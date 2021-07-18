@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 use App\Type;
 
 class HomeController extends Controller
 {
     /**
      * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @param Type $type
+     * @return View
      */
-    public function index()
+    public function index(Type $type): View
     {
-        $types = Type::all();
+        $types = $type->all();
         return view('home', compact('types'));
     }
 }

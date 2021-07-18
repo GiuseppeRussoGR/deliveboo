@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const app = new Vue(
     {
         el: '#root',
@@ -12,145 +10,141 @@ const app = new Vue(
                 client_name: '',
                 client_address: '',
                 client_number: "",
-                dishes: [
-                    // {
-                    //     id:1,
-                    //     quantita:10
-                    // },
-                ]
+                dishes: []
             },
-            quantity: 1,
-            
+            order_set: {},
+            braintree_payment: {
+                token: '',
+                instance: '',
+                error: ''
+            },
             categoryChosen: false,
             restaurantChosen: false,
             chosenRestaurantIndex: 0,
-            dishChosen: false
+            openBasket: false
         },
         methods: {
             /**
              * Funzione che permette di ricevere via API i ristoranti
-             * @param id id univoco del ristoratore
+             * @param parameter eventuale parametro di query string
+             * @param id id univoco da ricercare
              * @param route string route di destinazione dell'API
              * @param variable string variabile da popolare
              */
-            getApi(route, variable, id) {
+            getApi(route, variable, id, parameter) {
                 this[variable] = [];
-
                 axios
-                    .get(route + id)
+                    .get(route + id, {
+                        params: {
+                            value: parameter
+                        }
+                    })
                     .then((response) => {
                         this[variable] = response.data;
                     });
             },
+            /**
+             *Funzione che permette l'inserimento dei prodotti nel carrello
+             * @param dishIndex indice del piatto selezionato
+             * @param quantity quantità del prodotto selezionato
+             */
+            insertBasket(dishIndex, quantity) {
+                const select_dish = this.dishes[dishIndex];
+                const order_dishes = this.order.dishes;
+                const restaurant_select = this.chosenRestaurantIndex;
 
-            getDishes(id, restaurantIndex) {
-                this.dishes = [];
-                this.restaurantChosen = true;
-                this.chosenRestaurantIndex = restaurantIndex;
-
-                    axios
-                        .get('api/dishes/' + id)
-                        .then((response) => {
-                            this.dishes = response.data;
-                            this.dishes.forEach(element => {
-                                element.quantity = 1;
-                            });
-                    });    
-            },
-
-            startOrder(dishIndex, quantity) {
-                this.dishChosen = true;
-
-                const dish = this.dishes[dishIndex];
-                const dishes = this.order.dishes;
-
-                if (dishes.length != 0) {
-
-                    dishes.forEach(element => {
-                        if (element.id == dish.id){
-                            element.quantita = element.quantita + parseInt(quantity);
-                        } else {
-                            dishes.push({
-                                id : dish.id,
-                                quantita :  parseInt(dish.quantity)
-                            });
-                        }
-                    });
-
+                if (order_dishes.some(dish => dish.ristorante === restaurant_select) || order_dishes.length === 0) {
+                    if (order_dishes.some(dish => dish.id === select_dish.id)) {
+                        let dish_index = order_dishes.map(element => {
+                            return element.id
+                        }).indexOf(select_dish.id);
+                        order_dishes[dish_index].quantita += parseInt(quantity);
+                        order_dishes[dish_index].totale_singolo = parseInt(order_dishes[dish_index].quantita) * parseFloat(select_dish.price);
+                    } else {
+                        order_dishes.push({
+                            id: select_dish.id,
+                            quantita: parseInt(quantity),
+                            ristorante: parseInt(restaurant_select),
+                            nome: select_dish.name,
+                            prezzo_singolo: parseFloat(select_dish.price),
+                            totale_singolo: parseInt(quantity) * parseFloat(select_dish.price)
+                        })
+                    }
                 } else {
-                    dishes.push({
-                        id : dish.id,
-                        quantita : parseInt(dish.quantity)
-                    });
+                    //TODO inserire errore da visualizzare in caso si tenti di inserire un altro ristorante
+                    console.log('non puoi inserirlo')
                 }
-
-                
-
-                
-
-                
-
-                this.order.total_price += dish.price * dish.quantity;
-
-                console.log('piatti ordine: ', this.order.dishes);
-
-               
-
-                // if(this.order.dishes.some(dish=>dish.id === dish.id)){
-
-                //     this.order.dishes[]
-                // }
-
-
-                   
-
+                this.order.total_price += select_dish.price * parseInt(quantity);
 
             },
-
-            addQuantity(dishIndex) {
-                const dish = this.dishes[dishIndex];
-                const inputId = 'quantity-' + dishIndex;
-                
-                dish.quantity = dish.quantity + 1;
-
-                let valore = parseInt(document.getElementById(inputId).value);
-                let newValore = valore + 1;
-                document.getElementById(inputId).value = newValore;
-
-            },
-
-            decQuantity(dishIndex){
-                const dish = this.dishes[dishIndex];
-                const inputId = 'quantity-' + dishIndex;
-
-                
-                if (dish.quantity != 1){
-                    dish.quantity--;
-
-                    let valore = parseInt(document.getElementById(inputId).value);
-                    let newValore = valore - 1;
-                    document.getElementById(inputId).value = newValore;
+            /**
+             * Funzione che permette di aumentare o diminuire il valore di input
+             * @param input_type elemento HTML selezionato con JQUERY
+             * @param value valore di aumento '+' o di decremento '-'
+             */
+            setQuantity(input_type, value) {
+                let value_select = input_type.val();
+                if (value === '+') {
+                    value_select++;
+                } else if (value === '-' && value_select > 1) {
+                    value_select--;
                 }
-               
-    
+                input_type.val(value_select);
             },
             /**
              * Funzione che permette di inserire l'ordine nel DB
              */
-            setOrder() {
-                /**
-                 * Esempio di chiamata per l'ordine
-                 */
-                axios
-                    .post('api/order', {
-                        ...this.order
-                    })
-                    .then((response) => {
+            async setOrder() {
+                const response = await axios.post('api/order', {...this.order});
+                const value = await response.data;
+                this.order_set = {
+                    success: value.success,
+                    id: value.order_number,
+                    client_code: value.client_code
+                }
+                this.braintree_payment.token = await this.getToken();
+                this.getDataPayment();
+            },
+            /**
+             * Funzione che permette di creare il token da inviare ai servizi di braintree
+             * @returns {Promise<*>}
+             */
+            async getToken() {
+                const response = await axios.get('api/order/token ');
+                return await response.data.token;
+            },
+            /**
+             * Funzione che prende i dati di pagamento dall'utente e genero l'istanza di braintree
+             * @returns {Promise<void>}
+             */
+            async getDataPayment() {
+                const externVue = this;
+                await braintree.dropin.create({
+                    authorization: this.braintree_payment.token,
+                    selector: '#dropin-container'
+                }, function (err, instance) {
+                    externVue.braintree_payment.instance = instance
+                    externVue.braintree_payment.error = err
+                });
+            },
+            /**
+             * Funzione che invia il pagamento verso i servizi di braintree e
+             * ne riceve il risultato
+             */
+            makePayment() {
+                const price = this.order.total_price;
+                this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
+                    axios.post('api/order/payment', {
+                        token: payload.nonce,
+                        amount: price
+                    }).then(response => {
                         console.log(response.data)
-                    });
+                    })
+                });
             }
         },
         mounted() {
             this.getApi('api/types/', 'types', '')
         }
     });
+Vue.config.devtools = true

@@ -24,6 +24,7 @@ Route::get('/restaurants/{id}', 'Api\UsersController@index')->name('api-restaura
 Route::get('/dishes/{id}', 'Api\UsersController@dishes')->name('api-dishes');
 //API Payment and Order
 Route::post('/order', [OrderController::class, 'setOrder'])->name('setOrder');
-Route::get('/order/get', [OrderController::class, 'getOrder'])->name('getOrder');
+Route::get('/order/get/{id}', [OrderController::class, 'getOrder'])->name('getOrder');
 Route::get('/order/token', [OrderController::class, 'getToken'])->name('getToken');
 Route::post('/order/payment', [OrderController::class, 'makePayment'])->name('makePayment');
+
