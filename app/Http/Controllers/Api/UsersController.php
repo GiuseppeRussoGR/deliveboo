@@ -33,7 +33,7 @@ class UsersController extends Controller
     }
 
     /**
-     * //This function will return all the Users/Restaurants from a determinated Type
+     * This function will return all the Users/Restaurants from a determinated Type
      * @param $id int by restaurant
      * @param User $user instance of User
      * @return JsonResponse

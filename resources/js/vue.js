@@ -133,9 +133,8 @@ const app = new Vue(
                     authorization: this.braintree_payment.token,
                     selector: '#dropin-container'
                 }, async function (err, instance) {
-                    if (instance === 'undefined') {
-                        externVue.braintree_payment.token = externVue.getToken();
-                        await externVue.getDataPayment();
+                    if (!instance) {
+                        console.log('richiesta di pagamento non riuscita, riprovare');
                     }
                     externVue.braintree_payment.instance = instance;
                     externVue.braintree_payment.error = err;
@@ -147,17 +146,29 @@ const app = new Vue(
              */
             requireFormData() {
                 //TODO da rivedere la validazione
-                if (this.order.client_address !== '' &&
-                    this.order.client_name !== '' &&
-                    this.order.client_city_cap !== '' &&
-                    this.order.client_city !== '' &&
-                    this.order.client_civic_number !== '' &&
-                    this.order.client_number !== '') {
-                    this.order_set.disabled = false;
-                    return true
-                } else {
-                    return false
+                let array_value = [];
+                for (const element in this.order) {
+                    if (this.order[element] === '') {
+                        array_value.push(false);
+                    } else {
+                        array_value.push(true);
+                    }
                 }
+                this.order_set.disabled = !array_value.includes(false);
+                return !array_value.includes(false);
+
+
+                // if (this.order.client_address !== '' &&
+                //     this.order.client_name !== '' &&
+                //     this.order.client_city_cap !== '' &&
+                //     this.order.client_city !== '' &&
+                //     this.order.client_civic_number !== '' &&
+                //     this.order.client_number !== '') {
+                //     this.order_set.disabled = false;
+                //     return true
+                // } else {
+                //     return false
+                // }
             },
             /**
              * Funzione che invia il pagamento verso i servizi di braintree e
@@ -166,25 +177,26 @@ const app = new Vue(
             makePayment() {
                 const price = this.order.total_price;
                 if (!this.braintree_payment.instance) {
-                    //TODO da sistemare, in caso si procedi a pagare due volte
+                    //TODO da sistemare, in caso si procede a pagare due volte
                     $('#payment').modal('hide');
+                } else {
+                    this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
+                        axios.post('api/order/payment', {
+                            token: payload.nonce,
+                            amount: price
+                        }).then(response => {
+                            //TODO da aggiungere funzioni nella risposta
+                            console.log(response.data)
+                            if (response.data.success) {
+                                $('#payment').modal('hide');
+                                $('#button_payment').attr('disabled', 'true');
+                            } else {
+                                console.log('pagamento non riuscito')
+                            }
+                        })
+                    });
                 }
-                this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
-                    axios.post('api/order/payment', {
-                        token: payload.nonce,
-                        amount: price
-                    }).then(response => {
-                        //TODO da aggiungere funzioni nella risposta
-                        console.log(response.data)
-                        if (response.data.success) {
-                            $('#payment').modal('hide');
-                            $('#button_payment').attr('disabled', 'true');
-                        } else {
-                            this.setOrder();
-                            this.makePayment();
-                        }
-                    })
-                });
+
             }
         },
         mounted() {

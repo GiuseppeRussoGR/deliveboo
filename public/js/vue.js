@@ -1099,20 +1099,14 @@ var app = new Vue({
                       while (1) {
                         switch (_context3.prev = _context3.next) {
                           case 0:
-                            if (!(instance === 'undefined')) {
-                              _context3.next = 4;
-                              break;
+                            if (!instance) {
+                              console.log('richiesta di pagamento non riuscita, riprovare');
                             }
 
-                            externVue.braintree_payment.token = externVue.getToken();
-                            _context3.next = 4;
-                            return externVue.getDataPayment();
-
-                          case 4:
                             externVue.braintree_payment.instance = instance;
                             externVue.braintree_payment.error = err;
 
-                          case 6:
+                          case 3:
                           case "end":
                             return _context3.stop();
                         }
@@ -1140,12 +1134,28 @@ var app = new Vue({
      */
     requireFormData: function requireFormData() {
       //TODO da rivedere la validazione
-      if (this.order.client_address !== '' && this.order.client_name !== '' && this.order.client_city_cap !== '' && this.order.client_city !== '' && this.order.client_civic_number !== '' && this.order.client_number !== '') {
-        this.order_set.disabled = false;
-        return true;
-      } else {
-        return false;
+      var array_value = [];
+
+      for (var element in this.order) {
+        if (this.order[element] === '') {
+          array_value.push(false);
+        } else {
+          array_value.push(true);
+        }
       }
+
+      this.order_set.disabled = !array_value.includes(false);
+      return !array_value.includes(false); // if (this.order.client_address !== '' &&
+      //     this.order.client_name !== '' &&
+      //     this.order.client_city_cap !== '' &&
+      //     this.order.client_city !== '' &&
+      //     this.order.client_civic_number !== '' &&
+      //     this.order.client_number !== '') {
+      //     this.order_set.disabled = false;
+      //     return true
+      // } else {
+      //     return false
+      // }
     },
 
     /**
@@ -1156,30 +1166,26 @@ var app = new Vue({
       var price = this.order.total_price;
 
       if (!this.braintree_payment.instance) {
-        //TODO da sistemare, in caso si procedi a pagare due volte
+        //TODO da sistemare, in caso si procede a pagare due volte
         $('#payment').modal('hide');
-      }
+      } else {
+        this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
+          axios.post('api/order/payment', {
+            token: payload.nonce,
+            amount: price
+          }).then(function (response) {
+            //TODO da aggiungere funzioni nella risposta
+            console.log(response.data);
 
-      this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
-        var _this4 = this;
-
-        axios.post('api/order/payment', {
-          token: payload.nonce,
-          amount: price
-        }).then(function (response) {
-          //TODO da aggiungere funzioni nella risposta
-          console.log(response.data);
-
-          if (response.data.success) {
-            $('#payment').modal('hide');
-            $('#button_payment').attr('disabled', 'true');
-          } else {
-            _this4.setOrder();
-
-            _this4.makePayment();
-          }
+            if (response.data.success) {
+              $('#payment').modal('hide');
+              $('#button_payment').attr('disabled', 'true');
+            } else {
+              console.log('pagamento non riuscito');
+            }
+          });
         });
-      });
+      }
     }
   },
   mounted: function mounted() {
@@ -1197,7 +1203,7 @@ Vue.config.devtools = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Endrit Morina\github\progetto-finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

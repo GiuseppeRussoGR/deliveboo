@@ -69,12 +69,13 @@
                 Scegli una delle categorie e visualizza subito i menù di tutti i ristoranti disponibili
             </div>
         </div>
-           
+
         <div class="col-5 banner-image">
-            <img src="https://st.depositphotos.com/1008939/1376/i/950/depositphotos_13766635-stock-photo-eating-pizza.jpg"
+            <img
+                src="https://st.depositphotos.com/1008939/1376/i/950/depositphotos_13766635-stock-photo-eating-pizza.jpg"
                 alt="">
         </div>
-            
+
     </div>
     <!-- Fine Jumbotron -->
 
@@ -87,7 +88,8 @@
         <div class="container">
             <div class="type-cards">
                 <div class="" v-for="type in types">
-                    <div class="type-card" @click='getApi("api/restaurants/", "restaurants", type.id); categoryChosen = true'>
+                    <div class="type-card"
+                         @click='getApi("api/restaurants/", "restaurants", type.id); categoryChosen = true'>
                         <div class="img-container">
                             <i class="fas fa-pizza-slice"></i>
                         </div>
@@ -106,9 +108,9 @@
 
     <!-- Inizio Ristoranti -->
     <div class="restaurants-container row" :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
-        <div class="col-6" v-for='(restaurant, index) in restaurants'> 
-            <div class="restaurant-card" 
-                @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index">
+        <div class="col-6" v-for='(restaurant, index) in restaurants'>
+            <div class="restaurant-card"
+                 @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index">
                 <div class="restaurant-img">
                     <img :src="'storage/' + restaurant.img_path" alt="#">
                 </div>
@@ -146,9 +148,9 @@
             </div>
 
             <div class="single-restaurant-info col-6">
-                        
+
                 <h5>@{{restaurants[chosenRestaurantIndex].name}}</h5>
-                    
+
 
                 <div class="restaurant-location">
                     <i class="fas fa-map-marker-alt"></i>
@@ -163,9 +165,9 @@
                     <span>(88)</span>
                 </div>
 
-                        <!-- <div class="restaurant-category">
-                            <span>Categoria:</span>
-                        </div> -->
+                <!-- <div class="restaurant-category">
+                    <span>Categoria:</span>
+                </div> -->
 
             </div>
         </div>
@@ -189,10 +191,12 @@
                             <!-- Ricorda di settare il più e il meno -->
                             <div class="number-input">
                                 <button @click="setQuantity($('#quantity-'+ index ), '-')"></button>
-                                <input min="1" :id="'quantity-' + index" type="number" name="quantita" value="1" class="quantity">
-                                <button @click="setQuantity($('#quantity-'+ index ), '+')" class="plus"></button> 
+                                <input min="1" :id="'quantity-' + index" type="number" name="quantita" value="1"
+                                       class="quantity">
+                                <button @click="setQuantity($('#quantity-'+ index ), '+')" class="plus"></button>
                             </div>
-                            <div class="cart-button" @click="insertBasket(index,$('#quantity-'+ index ).val()); openBasket = true">
+                            <div class="cart-button"
+                                 @click="insertBasket(index,$('#quantity-'+ index ).val()); openBasket = true">
                                 <i class="fas fa-shopping-cart"></i>
                                 <div class="plus-icon">
                                     <i class="fas fa-plus"></i>
@@ -222,7 +226,7 @@
         <div class="cart-subtitle">
             Dati di consegna
         </div>
-        <form class="my_form" method="post" action="#" @submit.prevent="setOrder()">
+        <form class="my_form" method="post" action="#">
             <div class="form-group">
                 <label for="client_name">Nome</label>
                 <input type="text" class="form-control" @change="requireFormData()" id="client_name"
@@ -244,20 +248,23 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="client_civic_number">Civico</label>
-                    <input type="number" class="form-control" v-model="order.client_civic_number" id="client_civic_number" @change="requireFormData()"
+                    <input type="number" class="form-control" v-model="order.client_civic_number"
+                           id="client_civic_number" @change="requireFormData()"
                            required
                            name="civic_number"
                            placeholder="31">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="client_city_cap">CAP</label>
-                    <input type="text" class="form-control"  v-model="order.client_city_cap" id="client_city_cap" @change="requireFormData()" required
+                    <input type="text" class="form-control" v-model="order.client_city_cap" id="client_city_cap"
+                           @change="requireFormData()" required
                            name="city_cap" placeholder="20123">
                 </div>
             </div>
             <div class="form-group">
                 <label for="client_city">Città</label>
-                <input type="text" class="form-control"  v-model="order.client_city" id="client_city" required @change="requireFormData()"
+                <input type="text" class="form-control" v-model="order.client_city" id="client_city" required
+                       @change="requireFormData()"
                        name="client_city"
                        placeholder="Milano">
             </div>
@@ -270,7 +277,8 @@
         <div class="order-items">
             <ul v-if="order.dishes.length > 0">
                 <li v-for="dish in  order.dishes">
-                    <span class="dish-name">@{{ dish.nome }} <span class="dish-quantity">(x@{{dish.quantita}})</span></span>
+                    <span class="dish-name">@{{ dish.nome }} <span
+                            class="dish-quantity">(x@{{dish.quantita}})</span></span>
                     <span class="dish-total-price">@{{ dish.totale_singolo }} € <i class="fas fa-times"></i></span>
                 </li>
             </ul>
@@ -290,8 +298,8 @@
                 @{{ order.total_price }} €
                 </span>
             </div>
-            <button class="btn-checkout" data-toggle="modal" data-target="#payment">
-                    CHECKOUT
+            <button class="btn-checkout" type="submit" :disabled="order_set.disabled" @click="setOrder()">
+                CHECKOUT
             </button>
         </div>
 
@@ -311,7 +319,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="button_payment" @click="makePayment()">Paga</button>
+                        <button type="button" class="btn btn-primary" id="button_payment" @click="makePayment()">Paga
+                        </button>
                     </div>
                 </div>
             </div>
