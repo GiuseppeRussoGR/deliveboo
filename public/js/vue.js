@@ -1029,13 +1029,15 @@ var app = new Vue({
 
               case 13:
                 $('#payment').modal('show');
-                _context.next = 17;
+                _context.next = 18;
                 break;
 
               case 16:
+                _this2.errorValidate();
+
                 console.log('error');
 
-              case 17:
+              case 18:
               case "end":
                 return _context.stop();
             }
@@ -1157,6 +1159,9 @@ var app = new Vue({
       //     return false
       // }
     },
+    errorValidate: function errorValidate() {
+      $('#my_form').addClass('was-validated');
+    },
 
     /**
      * Funzione che invia il pagamento verso i servizi di braintree e
@@ -1203,7 +1208,7 @@ Vue.config.devtools = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Boolean\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

@@ -298,7 +298,7 @@
                 @{{ order.total_price }} €
                 </span>
             </div>
-            <button class="btn-checkout" :disabled="order_set.disabled" @click="setOrder()">
+            <button class="btn-checkout"  @click="setOrder()">
                 CHECKOUT
             </button>
         </div>
