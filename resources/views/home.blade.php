@@ -226,11 +226,11 @@
         <div class="cart-subtitle">
             Dati di consegna
         </div>
-        <form class="my_form" method="post" action="#">
+        <form class="my_form" action="#" id="my_form">
             <div class="form-group">
                 <label for="client_name">Nome</label>
                 <input type="text" class="form-control" @change="requireFormData()" id="client_name"
-                       v-model="order.client_name" required name="client_name"
+                       v-model="order.client_name" :value="order.client_name" required name="client_name"
                        placeholder="Mario Rossi">
             </div>
             <div class="form-group">
@@ -264,7 +264,7 @@
             <div class="form-group">
                 <label for="client_city">Città</label>
                 <input type="text" class="form-control" v-model="order.client_city" id="client_city" required
-                       @change="requireFormData()"
+                       @keyup="requireFormData()"
                        name="client_city"
                        placeholder="Milano">
             </div>
@@ -298,7 +298,7 @@
                 @{{ order.total_price }} €
                 </span>
             </div>
-            <button class="btn-checkout" type="submit" :disabled="order_set.disabled" @click="setOrder()">
+            <button class="btn-checkout" :disabled="order_set.disabled" @click="setOrder()">
                 CHECKOUT
             </button>
         </div>
@@ -333,3 +333,4 @@
 @section('footer_script')
     <script src="{{ asset('js/vue.js') }}" charset="utf-8"></script>
 @endsection
+

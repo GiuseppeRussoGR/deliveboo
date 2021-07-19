@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -12,5 +14,6 @@ Route::prefix('admin')
     ->namespace('Admin')
     ->name('admin.')
     ->group(function () {
-    Route::resource('/user', 'UserController');
-});
+        Route::resource('/user', 'UserController');
+        Route::get('/statistics', [UserController::class, 'statistics'])->name('restaurant-statistics');
+    });
