@@ -1,5 +1,9 @@
 // SMARTPHONE 
 @include media-sm {
+    #root {
+        max-width: 600px;
+    }
+
     .client {
         height: 100%;
         overflow: hidden;
@@ -17,16 +21,32 @@
         // end jumbotron
 
         // tipologie
-        .types-section {
-            height: 100%;
-            overflow-y: auto;
-
-            .type-cards {
-                flex-wrap: wrap;
-
-                & > div {
-                    width: calc(100% / 3 - 6px);
-                    margin-bottom: 10px;
+        .container {
+            .types-section {
+                height: auto;
+                margin-top: 20px;
+    
+                h6 {
+                    margin-bottom: 11px;
+                }
+    
+                .type-cards {
+                    flex-wrap: wrap;
+                    height: 165px;
+                    overflow-y: auto;
+                    scrollbar-width: none;
+    
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+    
+                    & > div {
+                        width: calc(100% / 3 - 1rem);
+    
+                        .type-card {
+                            margin-bottom: 1rem;
+                        }
+                    }
                 }
             }
         }
@@ -38,6 +58,7 @@
 
 // TABLET 
 @include media-md {
+   
     .client {
         height: 100%;
         overflow: hidden;
@@ -55,16 +76,32 @@
         // end jumbotron 
 
         // tipologie
-        .types-section {
-            height: 100%;
-            overflow-y: auto;
-
-            .type-cards {
-                flex-wrap: wrap;
-
-                & > div {
-                    width: calc(100% / 4 - 6px);
-                    margin-bottom: 10px;
+        .container {
+            .types-section {
+                height: auto;
+                margin-top: 20px;
+    
+                h6 {
+                    margin-bottom: 11px;
+                }
+    
+                .type-cards {
+                    flex-wrap: wrap;
+                    height: 165px;
+                    overflow-y: auto;
+                    scrollbar-width: none;
+    
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+    
+                    & > div {
+                        width: calc(100% / 4 - 1rem);
+    
+                        .type-card {
+                            margin-bottom: 1rem;
+                        }
+                    }
                 }
             }
         }

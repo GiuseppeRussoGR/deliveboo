@@ -19,6 +19,9 @@ class TypesSeeder extends Seeder
             'Giapponese',
             'Messicano',
             'Indiano',
+            'Vegetariano',
+            'Thailandese',
+            'Greco',
             'Pesce',
             'Carne',
             'Pizza'

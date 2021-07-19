@@ -27,7 +27,8 @@ const app = new Vue(
             categoryChosen: false,
             restaurantChosen: false,
             chosenRestaurantIndex: 0,
-            openBasket: false
+            openBasket: false,
+            stage: 0
         },
         methods: {
             /**

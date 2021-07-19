@@ -6,10 +6,23 @@
         align-items: center;
         padding-top: 1rem;
 
+        .home-icon {
+            margin-top: 19px;
+            
+            &.active {
+                margin-top: 0;
+            }
+        }
+
         .icon {
             font-size: 1.3rem;
             margin-bottom: 2.5rem;
             transition: color .4s, background-color .4s, font-size .4s;
+            cursor: pointer;
+
+            &:hover {
+                color: $primary_color;
+            }
 
             &.active {
                 font-size: 1.7rem;
@@ -89,74 +102,88 @@
             font-weight: 600;
         }
 
-        .type-cards {
-            display: flex;
-            justify-content: space-between;
-            
-            & > div {
-                width: calc(100% / 9 - 7.5px);
+        .container {
+            padding-right: 0;
+
+            .type-cards {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                height: 179px;
+                overflow-x: auto;
+                padding-right: 1rem;
+                scrollbar-width: none;
     
-            }
-    
-            .type-card {
-                padding: 13px 0;
-                border-radius: 10px;
-                text-align: center;
-                background-color: #FFFFFF;
-                cursor: pointer;
-                @include neumorph-shadow;
-                transition: all .4s;
-    
-                &:hover {
-                    @include neumorph-shadow-hover;
-                }
-    
-                &.active {
-                    background-color: $primary_color;
-                    color: white;
-                    @include neumorph-shadow-active;
-                }
-    
-    
-                .img-container {
-                    font-size: 2rem;
-                    width: 60px;
-                    height: 60px;
-                    line-height: 60px;
-                    border-radius: 50%;
-                    text-align: center;
-                    background-color: $primary_color;
-                    color: #FFFFFF;
-                    margin: 0 auto;
-                }
-    
-                &.active .img-container {
-                    color: $primary_color;
-                    background-color: #FFFFFF;
-                }
-    
-                .card-icon {
-    
-                    i {
-                        color: #FFFFFF;
-                        background-color: $primary_color;
-                        font-size: 0.8rem;
-                        width: 1.5rem;
-                        height: 1.5rem;
-                        border-radius: 50%;
-                        line-height: 1.5rem;
-                        text-align: center;
-                        padding-left: 2px;
+                    &::-webkit-scrollbar {
+                        display: none;
                     }
+                
+                
+                & > div {
+                    width: calc(100% / 6 - 10px);
                 }
-    
-                &.active i {
-                    color: $primary_color;
+        
+                .type-card {
+                    padding: 13px 0;
+                    border-radius: 10px;
+                    text-align: center;
                     background-color: #FFFFFF;
-                }
-    
-                .card-title {
-                    margin: .6rem 0;
+                    cursor: pointer;
+                    @include neumorph-shadow;
+                    transition: all .4s;
+                    margin-bottom: 30px;
+        
+                    &:hover {
+                        @include neumorph-shadow-hover;
+                    }
+        
+                    &.active {
+                        background-color: $primary_color;
+                        color: white;
+                        @include neumorph-shadow-active;
+                    }
+        
+        
+                    .img-container {
+                        font-size: 2rem;
+                        width: 60px;
+                        height: 60px;
+                        line-height: 60px;
+                        border-radius: 50%;
+                        text-align: center;
+                        background-color: $primary_color;
+                        color: #FFFFFF;
+                        margin: 0 auto;
+                    }
+        
+                    &.active .img-container {
+                        color: $primary_color;
+                        background-color: #FFFFFF;
+                    }
+        
+                    .card-icon {
+        
+                        i {
+                            color: #FFFFFF;
+                            background-color: $primary_color;
+                            font-size: 0.8rem;
+                            width: 1.5rem;
+                            height: 1.5rem;
+                            border-radius: 50%;
+                            line-height: 1.5rem;
+                            text-align: center;
+                            padding-left: 2px;
+                        }
+                    }
+        
+                    &.active i {
+                        color: $primary_color;
+                        background-color: #FFFFFF;
+                    }
+        
+                    .card-title {
+                        margin: .6rem 0;
+                    }
                 }
             }
         }

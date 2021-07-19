@@ -11054,10 +11054,23 @@ h6 {
   padding-top: 1rem;
 }
 
+.client .icons-container .home-icon {
+  margin-top: 19px;
+}
+
+.client .icons-container .home-icon.active {
+  margin-top: 0;
+}
+
 .client .icons-container .icon {
   font-size: 1.3rem;
   margin-bottom: 2.5rem;
   transition: color 0.4s, background-color 0.4s, font-size 0.4s;
+  cursor: pointer;
+}
+
+.client .icons-container .icon:hover {
+  color: #FFA823;
 }
 
 .client .icons-container .icon.active {
@@ -11126,16 +11139,29 @@ h6 {
   font-weight: 600;
 }
 
-.client .types-section .type-cards {
+.client .types-section .container {
+  padding-right: 0;
+}
+
+.client .types-section .container .type-cards {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  height: 179px;
+  overflow-x: auto;
+  padding-right: 1rem;
+  scrollbar-width: none;
 }
 
-.client .types-section .type-cards > div {
-  width: calc(100% / 9 - 7.5px);
+.client .types-section .container .type-cards::-webkit-scrollbar {
+  display: none;
 }
 
-.client .types-section .type-cards .type-card {
+.client .types-section .container .type-cards > div {
+  width: calc(100% / 6 - 10px);
+}
+
+.client .types-section .container .type-cards .type-card {
   padding: 13px 0;
   border-radius: 10px;
   text-align: center;
@@ -11143,19 +11169,20 @@ h6 {
   cursor: pointer;
   box-shadow: 3px 2px 5px 0 rgba(0, 0, 0, 0.15), -3px -3px 7px #FFFFFF;
   transition: all 0.4s;
+  margin-bottom: 30px;
 }
 
-.client .types-section .type-cards .type-card:hover {
+.client .types-section .container .type-cards .type-card:hover {
   box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.1), -3px -3px 7px #fff, inset 3px 3px 5px 0 rgba(0, 0, 0, 0.1), inset -3px -3px 7px #FFFFFF;
 }
 
-.client .types-section .type-cards .type-card.active {
+.client .types-section .container .type-cards .type-card.active {
   background-color: #FFA823;
   color: white;
   box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.1), -3px -3px 7px #fff, inset 3px 3px 1px 0 rgba(0, 0, 0, 0.1);
 }
 
-.client .types-section .type-cards .type-card .img-container {
+.client .types-section .container .type-cards .type-card .img-container {
   font-size: 2rem;
   width: 60px;
   height: 60px;
@@ -11167,12 +11194,12 @@ h6 {
   margin: 0 auto;
 }
 
-.client .types-section .type-cards .type-card.active .img-container {
+.client .types-section .container .type-cards .type-card.active .img-container {
   color: #FFA823;
   background-color: #FFFFFF;
 }
 
-.client .types-section .type-cards .type-card .card-icon i {
+.client .types-section .container .type-cards .type-card .card-icon i {
   color: #FFFFFF;
   background-color: #FFA823;
   font-size: 0.8rem;
@@ -11184,12 +11211,12 @@ h6 {
   padding-left: 2px;
 }
 
-.client .types-section .type-cards .type-card.active i {
+.client .types-section .container .type-cards .type-card.active i {
   color: #FFA823;
   background-color: #FFFFFF;
 }
 
-.client .types-section .type-cards .type-card .card-title {
+.client .types-section .container .type-cards .type-card .card-title {
   margin: 0.6rem 0;
 }
 
@@ -11607,6 +11634,10 @@ h6 {
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
+  #root {
+    max-width: 600px;
+  }
+
   .client {
     height: 100%;
     overflow: hidden;
@@ -11620,18 +11651,32 @@ h6 {
     font-size: 1.2rem;
   }
 
-  .client .types-section {
-    height: 100%;
-    overflow-y: auto;
+  .client .container .types-section {
+    height: auto;
+    margin-top: 20px;
   }
 
-  .client .types-section .type-cards {
+  .client .container .types-section h6 {
+    margin-bottom: 11px;
+  }
+
+  .client .container .types-section .type-cards {
     flex-wrap: wrap;
+    height: 165px;
+    overflow-y: auto;
+    scrollbar-width: none;
   }
 
-  .client .types-section .type-cards > div {
-    width: calc(100% / 3 - 6px);
-    margin-bottom: 10px;
+  .client .container .types-section .type-cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .client .container .types-section .type-cards > div {
+    width: calc(100% / 3 - 1rem);
+  }
+
+  .client .container .types-section .type-cards > div .type-card {
+    margin-bottom: 1rem;
   }
 }
 
@@ -11649,18 +11694,32 @@ h6 {
     font-size: 1.2rem;
   }
 
-  .client .types-section {
-    height: 100%;
-    overflow-y: auto;
+  .client .container .types-section {
+    height: auto;
+    margin-top: 20px;
   }
 
-  .client .types-section .type-cards {
+  .client .container .types-section h6 {
+    margin-bottom: 11px;
+  }
+
+  .client .container .types-section .type-cards {
     flex-wrap: wrap;
+    height: 165px;
+    overflow-y: auto;
+    scrollbar-width: none;
   }
 
-  .client .types-section .type-cards > div {
-    width: calc(100% / 4 - 6px);
-    margin-bottom: 10px;
+  .client .container .types-section .type-cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .client .container .types-section .type-cards > div {
+    width: calc(100% / 4 - 1rem);
+  }
+
+  .client .container .types-section .type-cards > div .type-card {
+    margin-bottom: 1rem;
   }
 }
 

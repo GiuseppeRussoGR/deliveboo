@@ -10,11 +10,11 @@
 @section('vertical-nav')
     <!-- Inizio Menu Verticale -->
     <div class="icons-container">
-        <i class="fas fa-home icon active"></i>
-        <i class="fas fa-search icon"></i>
-        <i class="fas fa-utensils icon"></i>
-        <i class="fas fa-wallet icon"></i>
-        <i class="far fa-heart icon"></i>
+        <i class="fas fa-home icon home-icon" :class="stage == 0 ? 'active' : '' " @click="categoryChosen = false, restaurantChosen = false, stage = 0, openBasket = false"></i>
+        <i class="fas fa-search icon" :class="stage == 1 ? 'active' : '' " @click="restaurantChosen = false, stage > 1 ? stage = 1 : '' "></i>
+        <i class="fas fa-utensils icon" :class="stage == 2 ? 'active' : '' " @click="stage == 3 ? openBasket = false : ''; stage == 3 ? stage = 2 : '' "></i>
+        <i class="fas fa-wallet icon" :class="stage == 3 ? 'active' : '' "  @click="stage > 1 ? openBasket = true : '', stage > 1 ? stage = 3 : '' "></i>
+        <i class="far fa-heart icon" :class="stage == 4 ? 'active' : '' "></i>
     </div>
     <!-- Fine Menu Verticale -->
 @endsection
@@ -90,7 +90,7 @@
             <div class="type-cards">
                 <div class="" v-for="type in types">
                     <div class="type-card"
-                         @click='getApi("api/restaurants/", "restaurants", type.id); categoryChosen = true'>
+                        @click='getApi("api/restaurants/", "restaurants", type.id); categoryChosen = true; stage = 1'>
                         <div class="img-container">
                             <i class="fas fa-pizza-slice"></i>
                         </div>
@@ -111,9 +111,9 @@
     <div class="restaurants-container row" :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
         <div class="col-6" v-for='(restaurant, index) in restaurants'>
             <div class="restaurant-card"
-                 @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index">
+                @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
                 <div class="restaurant-img">
-                    <img :src="'storage/' + restaurant.img_path" alt="#">
+                    <img :src="'storage/' + restaurant.img_path" :alt="restaurant.name">
                 </div>
 
                 <div class="restaurant-infos">
@@ -145,7 +145,7 @@
         <!-- Inizio Singolo Ristorante -->
         <div class="single-restaurant row">
             <div class="img-container col-6">
-                <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path" alt="">
+                <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path" :alt="restaurants[chosenRestaurantIndex].name">
             </div>
 
             <div class="single-restaurant-info col-6">
@@ -197,7 +197,7 @@
                                 <button @click="setQuantity($('#quantity-'+ index ), '+')" class="plus"></button>
                             </div>
                             <div class="cart-button"
-                                 @click="insertBasket(index,$('#quantity-'+ index ).val()); openBasket = true">
+                                @click="insertBasket(index,$('#quantity-'+ index ).val()); openBasket = true; stage = 3">
                                 <i class="fas fa-shopping-cart"></i>
                                 <div class="plus-icon">
                                     <i class="fas fa-plus"></i>
@@ -221,7 +221,7 @@
                 Carrello
             </div>
             <div class="closing-icon">
-                <i class="fas fa-times"></i>
+                <i class="fas fa-times" @click="openBasket = false; stage == 3 ? stage = 2 : stage = stage"></i>
             </div>
         </div>
         <div class="cart-subtitle">
@@ -319,7 +319,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="button_payment" @click="makePayment()">Paga
+                        <button type="button" class="btn btn-primary" id="button_payment" @click="makePayment(); stage=4">Paga
                         </button>
                     </div>
                 </div>

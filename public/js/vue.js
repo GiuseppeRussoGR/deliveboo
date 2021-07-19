@@ -908,7 +908,8 @@ var app = new Vue({
     categoryChosen: false,
     restaurantChosen: false,
     chosenRestaurantIndex: 0,
-    openBasket: false
+    openBasket: false,
+    stage: 0
   },
   methods: {
     /**
@@ -1204,7 +1205,7 @@ Vue.config.devtools = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Endrit Morina\github\progetto-finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

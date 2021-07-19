@@ -34,21 +34,21 @@
         <div id="root" class="container">
             <div class="row">
                 <!-- Inizio Sezione Verticale -->
-                <div class="col-1 vertical-nav">
+                <div class="col-2 col-md-1 vertical-nav">
                     @yield('vertical-nav')
                 </div>
                 <!-- Fine Sezione Verticale -->
 
                 <!-- Inizio App Content -->
                 <!-- ATTENZIONE: Mentre si struttura il carrello metti col-8 -->
-                <div class="app-content" :class="openBasket ? 'col-8' : 'col-11'">
+                <div class="app-content" :class="openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'">
                     @yield('content')
                 </div>
                 <!-- Fine App Content -->
 
                 <!-- Inizio Finestra Laterale -->
                 <!-- ATTENZIONE: Mentre si struttura il carrello metti col-3 -->
-                <div class="side-window" :class="openBasket ? 'col-3' : ''">
+                <div class="side-window" :class="openBasket ? 'col-2 col-md-3' : ''">
                     @yield('side-window')
                 </div>
                 <!-- Fine Finestra Laterale -->
