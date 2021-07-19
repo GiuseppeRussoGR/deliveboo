@@ -112,6 +112,7 @@ const app = new Vue(
                     await this.getDataPayment();
                     $('#payment').modal('show');
                 } else {
+                    this.errorValidate();
                     console.log('error')
                 }
             },
@@ -149,12 +150,14 @@ const app = new Vue(
                 let array_value = [];
                 for (const element in this.order) {
                     if (this.order[element] === '') {
+                                                
                         array_value.push(false);
                     } else {
                         array_value.push(true);
                     }
                 }
                 this.order_set.disabled = array_value.includes(false);
+
                 return !array_value.includes(false);
 
 
@@ -169,6 +172,9 @@ const app = new Vue(
                 // } else {
                 //     return false
                 // }
+            },
+            errorValidate() {
+                $('#my_form').addClass('was-validated');
             },
             /**
              * Funzione che invia il pagamento verso i servizi di braintree e

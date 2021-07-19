@@ -5,20 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Dish;
 use App\Http\Controllers\Controller;
-use Auth;
+use App\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
 
     //This function will return all the information and the dishes of the logged user
-    public function index()
+    public function index(): View
     {
         $user = Auth::user();
         $id = $user->id;
@@ -29,9 +31,9 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return  View
      */
-    public function create()
+    public function create(): View
     {
         $categories = Category::all();
         return view('admin.create', compact('categories'));
@@ -39,11 +41,10 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return  RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $user = Auth::user();
         $request->validate($this->getValidationRules());
@@ -52,7 +53,7 @@ class UserController extends Controller
         $new_dish = new Dish();
 
         //If $data['img_path'] exists, we create the path with the Storage function
-        if(isset($form_data['img_path'])){
+        if (isset($form_data['img_path'])) {
             $img_path = Storage::put('dishes-cover', $form_data['img_path']);
 
             //If $img_path gets created we set it as value of $form_data['img_path']
@@ -74,11 +75,10 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return View
      */
-    public function show($id)
+    public function show(int $id): View
     {
         $dish = Dish::findOrFail($id);
 
@@ -87,11 +87,10 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $dish = Dish::findOrFail($id);
         $categories = Category::all();
@@ -101,12 +100,11 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): RedirectResponse
     {
         $dish_to_modify = Dish::findOrFail($id);
         $request->validate($this->getValidationRules());
@@ -114,7 +112,7 @@ class UserController extends Controller
         $form_data['price'] = floatval($form_data['price']);
 
         //If $data['img_path'] exists, we create the path with the Storage function
-        if(isset($form_data['img_path'])){
+        if (isset($form_data['img_path'])) {
             $img_path = Storage::put('dishes-cover', $form_data['img_path']);
 
             //If $img_path gets created we set it as value of $form_data['img_path']
@@ -126,19 +124,15 @@ class UserController extends Controller
         }
         $form_data['user_id'] = $dish_to_modify->user_id;
         $dish_to_modify->update($form_data);
-
-        //Reindirizziamo l'utente al nuovo fumetto appena inserito nel DB
-        // TODO
         return redirect()->route('admin.user.index');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): RedirectResponse
     {
         $dish_to_delete = Dish::findOrFail($id);
         $dish_to_delete->orders()->sync([]);
@@ -147,7 +141,22 @@ class UserController extends Controller
         return redirect()->route('admin.user.index');
     }
 
-    private function getValidationRules(){
+    public function statistics()
+    {
+        $statistic_price = 0;
+        $user = User::find(Auth::user()->id);
+        $collection_base = $user->dishes()->join('dish_order', 'id', '=', 'dish_order.dish_id')->join('orders', 'order_id', '=', 'orders.id')->get();
+        foreach ($collection_base as $single_order){
+            dd($single_order);
+        }
+    }
+
+    /**
+     * Validate element from user request
+     * @return string[][]
+     */
+    private function getValidationRules(): array
+    {
         return [
             'name' => ['required', 'string', 'max:50'],
             'description' => ['string', 'max:255'],

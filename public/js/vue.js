@@ -1029,13 +1029,15 @@ var app = new Vue({
 
               case 13:
                 $('#payment').modal('show');
-                _context.next = 17;
+                _context.next = 18;
                 break;
 
               case 16:
+                _this2.errorValidate();
+
                 console.log('error');
 
-              case 17:
+              case 18:
               case "end":
                 return _context.stop();
             }
@@ -1156,6 +1158,9 @@ var app = new Vue({
       // } else {
       //     return false
       // }
+    },
+    errorValidate: function errorValidate() {
+      $('#my_form').addClass('was-validated');
     },
 
     /**
