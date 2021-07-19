@@ -21,7 +21,7 @@
         overflow: hidden;
         @include shadow-standard;
 
-        .row {
+        & > .row {
             height: 100%;
         }
     }
@@ -34,7 +34,6 @@
 
     .side-window {
         background-color: $background_light;
-        height: 100%;
         transition: all .4s;
     }
 

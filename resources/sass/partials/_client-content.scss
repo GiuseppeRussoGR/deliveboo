@@ -1,31 +1,4 @@
 .client {
-    //Inizio Navigator
-    nav {
-        padding: 1.7rem 1rem;
-
-        @include d-flex-sb-center;
-
-        .logo {
-            span {
-                color: $primary_color;
-            }
-        }
-
-        a {
-            span {
-                color: $text_color;
-            }
-
-            .icon {
-                font-size: 2rem;
-                vertical-align: middle;
-                margin-left: 1rem;
-                color: $text_color;
-            }
-        }
-    }
-    //Fine Navigator
-
     //Inizio Menu Verticale
     .icons-container {
         display: flex;
@@ -52,108 +25,145 @@
     }
     //Fine Menu Verticale
 
+    //Inizio Navigator
+    nav {
+        padding: 1.7rem 0 1.6rem;
+        @include d-flex-sb-center;
+
+        .logo {
+
+            h5 {
+                margin-bottom: 0;
+
+                span {
+                    color: $primary_color;
+                }
+            }
+        }
+
+        a {
+            span {
+                color: $text_color;
+            }
+
+            .icon {
+                font-size: 2rem;
+                vertical-align: middle;
+                margin-left: 1rem;
+                color: $text_color;
+            }
+        }
+    }
+    //Fine Navigator
+
+    //Inizio Jumbotron
     .my-jumbotron {
-        height: calc(100% - 220px - 100px);
+        height: calc(100% - 220px - 85px);
         padding-bottom: 1rem;
         transition: all .5s;
         overflow: hidden;
+        align-items: center;
+        overflow-y: auto;
+        scrollbar-width: none;
 
-        .row {
-            align-items: center;
-            overflow-y: auto;
-            scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
-            &::-webkit-scrollbar {
-                display: none;
-            }
-            
-            .jumbotron-text {
-                padding: 0;
-            }
-
-            .banner-image {
-                padding: 0;
-
-                img {
-                    width: 100%;
-                }
+        .banner-image {
+            img {
+                width: 100%;
             }
         }
     }
-
+    //Fine Jumbotron
+    
+    //Inizio Cards Tipologie
     .types-section {
-        height: 220px;
-        padding-bottom: 1.5rem;
+        margin-bottom: 30px;
 
-        .types-container {
+        h6 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-family: $content_font;
+            font-weight: 600;
+        }
+
+        .type-cards {
             display: flex;
             justify-content: space-between;
-        }
-
-        .type-card {
-            width: calc(100% / 9 - 7.5px);
-            padding: 13px 0;
-            border-radius: 10px;
-            text-align: center;
-            background-color: #FFFFFF;
-            cursor: pointer;
-            @include neumorph-shadow;
-            transition: all .4s;
-
-            &:hover {
-                @include neumorph-shadow-hover;
+            
+            & > div {
+                width: calc(100% / 9 - 7.5px);
+    
             }
-
-            &.active {
-                background-color: $primary_color;
-                color: white;
-                @include neumorph-shadow-active;
-            }
-
-
-            .img-container {
-                font-size: 2rem;
-                width: 60px;
-                height: 60px;
-                line-height: 60px;
-                border-radius: 50%;
+    
+            .type-card {
+                padding: 13px 0;
+                border-radius: 10px;
                 text-align: center;
-                background-color: $primary_color;
-                color: #FFFFFF;
-                margin: 0 auto;
-            }
-
-            &.active .img-container {
-                color: $primary_color;
                 background-color: #FFFFFF;
-            }
-
-            .card-icon {
-
-                i {
-                    color: #FFFFFF;
-                    background-color: $primary_color;
-                    font-size: 0.8rem;
-                    width: 1.5rem;
-                    height: 1.5rem;
-                    border-radius: 50%;
-                    line-height: 1.5rem;
-                    text-align: center;
-                    padding-left: 2px;
+                cursor: pointer;
+                @include neumorph-shadow;
+                transition: all .4s;
+    
+                &:hover {
+                    @include neumorph-shadow-hover;
                 }
-            }
-
-            &.active i {
-                color: $primary_color;
-                background-color: #FFFFFF;
-            }
-
-            .card-title {
-                margin: .6rem 0;
+    
+                &.active {
+                    background-color: $primary_color;
+                    color: white;
+                    @include neumorph-shadow-active;
+                }
+    
+    
+                .img-container {
+                    font-size: 2rem;
+                    width: 60px;
+                    height: 60px;
+                    line-height: 60px;
+                    border-radius: 50%;
+                    text-align: center;
+                    background-color: $primary_color;
+                    color: #FFFFFF;
+                    margin: 0 auto;
+                }
+    
+                &.active .img-container {
+                    color: $primary_color;
+                    background-color: #FFFFFF;
+                }
+    
+                .card-icon {
+    
+                    i {
+                        color: #FFFFFF;
+                        background-color: $primary_color;
+                        font-size: 0.8rem;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        border-radius: 50%;
+                        line-height: 1.5rem;
+                        text-align: center;
+                        padding-left: 2px;
+                    }
+                }
+    
+                &.active i {
+                    color: $primary_color;
+                    background-color: #FFFFFF;
+                }
+    
+                .card-title {
+                    margin: .6rem 0;
+                }
             }
         }
     }
-
+    //Fine Cards Tipologie
+    
+    //Inizio Ristoranti
     .restaurants-container {
         display: flex;
         justify-content: space-between;
@@ -171,12 +181,12 @@
         .restaurant-card {
             position: relative;
             display: flex;
-            width: calc(100% / 2 - 7.5px);
+            // width: calc(100% / 2 - 7.5px);
             height: 132px;
             border-radius: 5px;
             overflow: hidden;
             background-color: #FFFFFF;
-            margin-bottom: 0.9rem;
+            margin-bottom: 1rem;
             cursor: pointer;
             @include neumorph-shadow;
             transition: all .4s;
@@ -196,13 +206,15 @@
 
                 img {
                     width: 100%;
+                    height: 100%;
+                    object-fit: cover;
                 }
             }
 
             .restaurant-location {
-                font-size: 15px;
+                font-size: 1rem;
             }
-        
+
             .restaurant-infos {
                 width: 50%;
                 display: flex;
@@ -247,17 +259,239 @@
             }
         }
     }
+    //Fine Ristoranti
 
-    .cart {
-        padding: 1.9rem 15px 0;
+    //Inizio Pagina Ristorante Singolo
+    .single-restaurant-page {
         overflow-y: auto;
+        height: 100%;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+
+        .single-restaurant {
+            height: 200px;
+            margin-bottom: 2rem;
+
+            .img-container {
+                img {
+                    width: 100%;
+                    height: 200px;
+                    border-radius: 5px;
+                    object-fit: cover;
+                }
+            }
+
+            .single-restaurant-info {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+
+                .restaurant-location {
+
+                    i {
+                        font-size: 21px;
+                    }
+
+                    .card-title {
+                        font-size: 18px;
+                        font-weight: 500;
+                    }
+                }
+
+                .restaurant-rate {
+                    color: $primary_color;
+                    padding-bottom: 10px;
+                }
+            }
+        }
+
+        .dishes {
+            margin-bottom: 1rem;
+
+            .dish-card {
+                width: 100%;
+                height: 203px;
+                @include neumorph-shadow;
+                border-radius: 10px;
+                cursor: pointer;
+                margin-bottom: 20px;
+                background-color: $background_grey;
+                transition: all .4s;
+
+                &:hover {
+                    // background-color: $primary_color;
+                    @include neumorph-shadow-hover;
+                    background-color: $background_grey;
+
+                    .dish-name {
+                        // color: white;
+                    }
+                }
+
+                img {
+                    width: 100%;
+                    height: 112px;
+                    border-radius: 10px 10px 0px 0px;
+                }
+
+                .dish-content {
+                    padding: 10px;
+
+                    .dish-description {
+                        font-size: 12px;
+                        display: block;
+                        padding-top: 2px;
+                        padding-bottom: 2px;
+                    }
+
+                    .dish-controls {
+                        display: flex;
+                        justify-content: space-between;
+
+                        .price {
+                            font-weight: 600;
+                            position: relative;
+                            top: 3px;
+                        }
+
+                        input[type="number"] {
+                            -webkit-appearance: textfield;
+                            -moz-appearance: textfield;
+                            appearance: textfield;
+                        }
+                          
+                        input[type=number]::-webkit-inner-spin-button,
+                        input[type=number]::-webkit-outer-spin-button {
+                            -webkit-appearance: none;
+                        }
+                          
+                        .number-input {
+                            border: 0;
+                            display: flex;
+                            align-items: center;
+                        }
+                          
+                        .number-input,
+                        .number-input * {
+                            box-sizing: border-box;
+                        }
+                          
+                        .number-input button {
+                            outline:none;
+                            -webkit-appearance: none;
+                            background-color: transparent;
+                            border: none;
+                            align-items: center;
+                            justify-content: center;
+                            width: 20px;
+                            height: 20px;
+                            cursor: pointer;
+                            margin: 0;
+                            position: relative;
+                            border-radius: 50%;
+
+                            &:hover:after,
+                            &:hover::before {
+                                background-color: $primary_color;
+                            }
+                        }
+                          
+                        .number-input button:before,
+                        .number-input button:after {
+                            display: inline-block;
+                            position: absolute;
+                            content: '';
+                            width: 9px;
+                            height: 2px;
+                            background-color: $text_color;
+                            transform: translate(-50%, -50%);
+                        }
+
+                        .number-input button.plus:after {
+                            transform: translate(-50%, -50%) rotate(90deg);
+                        }
+                          
+                        .number-input input[type=number] {
+                            font-family: sans-serif;
+                            max-width: 2.3rem;
+                            padding: .5rem;
+                            border: none;
+                            border-width: 0 2px;
+                            font-size: 1.2rem;
+                            height: 1.3rem;
+                            font-weight: bold;
+                            text-align: center;
+                            color: $primary_color;
+                            background-color: transparent;
+                        }
+
+                        .cart-button {
+                            width: 3.4rem;
+                            height: 1.8rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 5px;
+                            background: rgb(255,217,158);
+                            background: linear-gradient(180deg, rgba(255,217,158,1) 0%, rgba(255,168,35,1) 100%);
+                            position: relative;
+                            box-shadow: 0 0 3px rgba($color: #000000, $alpha: 0.2);
+
+                            &:hover {
+                                background: rgb(255,217,158);
+                                background: linear-gradient(90deg, rgba(255,217,158,1) 0%, rgba(255,168,35,1) 100%);   
+                            }
+
+                            i {
+                                color: #FFFFFF;
+                                filter: drop-shadow(0 0 1px rgba($color: #000000, $alpha: 0.3));
+                            }
+
+                            .plus-icon {
+                                background-color: red;
+                                width: 1rem;
+                                height: 1rem;
+                                border-radius: 50%;
+                                position: absolute;
+                                @include d-flex-center;
+                                right: -5px;
+                                bottom: -5px;
+
+                                i {
+                                    color: #FFFFFF;
+                                    font-size: 9px;
+                                }
+                            }
+                           
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //Fine Pagina Ristorante Singolo
+
+    //Inizio Carrello
+    .cart {
+        padding: 1.9rem 0;
+        height: 100%;
+        position: relative;
 
         .title {
             @include d-flex-sb-center;
+
+            .closing-icon {
+                font-size: 1.4rem;
+                cursor: pointer;
+            }
         }
 
         .cart-subtitle {
-            margin-top: 0.8rem;
+            margin: 1rem 0 5px;
             font-weight: 600;
         }
 
@@ -284,161 +518,73 @@
                 padding: 0;
 
                 li {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
+                    @include d-flex-sb-center;
+                    font-size: 13px;
+                    margin-bottom: 5px;
+                    font-weight: 500;
 
-                    img {
-                        width: 25%;
+                    .dish-quantity {
+                        font-weight: 400;
+                        font-size: 12px;
+                    }
+
+                    .dish-total-price {
+                        font-size: 15px;
+
+                        i {
+                            font-size: 12px;
+                            position: relative;
+                            bottom: 1px;
+                            margin-left: 5px;
+                            cursor: pointer;
+
+                            &:hover {
+                                color: red;
+                            }
+                        }
                     }
 
                 }
             }
         }
 
-        .order-total {
-            font-weight: 700;
-            @include d-flex-sb-center;
-        }
+        .bottom-info {
+            position: absolute;
+            left: 0;
+            bottom: 2.1rem;
+            width: 100%;
+            text-align: center;
 
-    }
-
-    .single-restaurant-page {
-        overflow-y: auto;
-        height: 100%;
-        scrollbar-width: none;
-
-            &::-webkit-scrollbar {
-                display: none;
+            .order-total {
+                font-weight: 600;
+                @include d-flex-sb-center;
+                font-size: 1.2rem;
             }
 
+            .btn-checkout {
+                padding: 10px 40px;
+                background: rgb(3, 3, 3);
+                background: linear-gradient(180deg, rgba(255,217,158,1) 0%, rgba(255,168,35,1) 100%);
+                color: #FFFFFF;
+                font-size: 1.2rem;
+                font-weight: 600;
+                outline: 0;
+                border: 0;
+                margin-top: 15px;
+                border-radius: 10px;
+                box-shadow: 1px 2px 3px rgba($color: #000000, $alpha: 0.3);
+                text-shadow: 0 0 3px rgba($color: #000000, $alpha: 0.25);
 
-        .single-restaurant-container {
-            .single-restaurant-card {
-                .row {
-                    
-                    .img-container {
-                        img {
-                            width: 100%;
-                        }
-                    }
-
-                    .single-restaurant-info {
-                        .restaurant-location {
-                            padding-top: 30px;
-                            padding-bottom: 25px;
-                            i {
-                                font-size: 30px;
-                                padding-right: 20px;
-                            }
-                            h5 {
-                                display: inline-block;
-                            }
-                        }
-    
-                        .restaurant-rate {
-                            color: $primary_color;
-                            font-weight: bold;
-                            font-size: 15px;
-                            padding-bottom: 10px;
-                        }
-                    }
-
-
+                &:hover {
+                    background: rgb(255,217,158);
+                    background: linear-gradient(90deg, rgba(255,217,158,1) 0%, rgba(255,168,35,1) 100%);   
                 }
             }
-        }
-
-        .menu {
-            .dish-card-container {
-                display: flex;
-                justify-content: flex-start;
-                flex-wrap: wrap;
-                padding-top: 20px;
-
-                   .dish-card {
-                    width: 224px;
-                    height: 224px;
-                    @include neumorph-shadow;
-                    border-radius: 10px;
-                    cursor: pointer;
-                    margin-bottom: 39px;
-
-                        &:hover {
-                            background-color: $primary_color;
-
-                            .dish-name {
-                                color: white;
-                            }
-                        }
-
-                        img {
-                            width: 100%;
-                            height: 112px;
-                            border-radius: 10px 10px 0px 0px;
-                        }
-                    
-                        .dish-content {
-                            padding: 10px;
-                            border-radius: 0px 0px 10px 10px;
-                            
-                            .dish-name {
-                                font-size: 15px;
-                                font-weight: bold;
-                            }
-                           
-                            .dish-description {
-                                font-size: 12px;
-                                display: block;
-                                padding-top: 5px;
-                                padding-bottom: 15px;
-                            }
-
-                            div {
-                                display: flex;
-                                justify-content: space-between;
-                                .price {
-                                    font-weight: bold;
-                                }
-                                .quantity {
-                                    font-weight: bold;
-                                }
-                                .cart-button {
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-                                    background-color: $primary_color;
-                                    padding: 5px 8px;
-                                    border-radius: 5px;
-                                    i {
-                                        color: white;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    .dish-card:not(:nth-child(4n+0)) {
-                        margin-right: 39px;
-                    }
-
-                    .dish-card.cart-open:not(:nth-child(4n+0)) {
-                        margin-right: 0;
-                    }
-
-                    .dish-card.cart-open:not(:nth-child(3n+0)) {
-                        margin-right: 29px;
-                    }
-            }
 
         }
-    }
 
-   
-    .cart {
-        height: 100%;
     }
- 
+    //Fine Carrello
 
     .show {
         display: flex;

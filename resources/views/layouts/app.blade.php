@@ -23,7 +23,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -38,17 +38,17 @@
                     @yield('vertical-nav')
                 </div>
                 <!-- Fine Sezione Verticale -->
-                    
+
                 <!-- Inizio App Content -->
                 <!-- ATTENZIONE: Mentre si struttura il carrello metti col-8 -->
-                <div class="app-content" :class="dishChosen ? 'col-8' : 'col-11'">
+                <div class="app-content" :class="openBasket ? 'col-8' : 'col-11'">
                     @yield('content')
                 </div>
                 <!-- Fine App Content -->
 
                 <!-- Inizio Finestra Laterale -->
                 <!-- ATTENZIONE: Mentre si struttura il carrello metti col-3 -->
-                <div class="side-window" :class="dishChosen ? 'col-3' : ''"> 
+                <div class="side-window" :class="openBasket ? 'col-3' : ''">
                     @yield('side-window')
                 </div>
                 <!-- Fine Finestra Laterale -->
