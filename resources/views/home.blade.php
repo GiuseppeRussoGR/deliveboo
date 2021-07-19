@@ -62,7 +62,8 @@
 
     <!-- Inizio Jumbotron -->
     <div class="my-jumbotron row" :class="{hide : categoryChosen}">
-        <div class="col-7 jumbotron-text">
+        
+        <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 jumbotron-text">
             <h2>Ordina cibo della tua zona con l'app</h2>
 
             <div class="subtitle">
@@ -70,9 +71,9 @@
             </div>
         </div>
 
-        <div class="col-5 banner-image">
+        <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 banner-image">
             <img
-                src="https://st.depositphotos.com/1008939/1376/i/950/depositphotos_13766635-stock-photo-eating-pizza.jpg"
+                src="https://thumbs.dreamstime.com/b/beautiful-woman-smile-her-face-eyes-closed-enjoying-eating-carrot-healthy-organic-food-concept-beautiful-woman-171667781.jpg"
                 alt="">
         </div>
 
