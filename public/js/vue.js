@@ -1144,7 +1144,7 @@ var app = new Vue({
         }
       }
 
-      this.order_set.disabled = !array_value.includes(false);
+      this.order_set.disabled = array_value.includes(false);
       return !array_value.includes(false); // if (this.order.client_address !== '' &&
       //     this.order.client_name !== '' &&
       //     this.order.client_city_cap !== '' &&
