@@ -1033,8 +1033,7 @@ var app = new Vue({
                 break;
 
               case 16:
-                _this2.errorValidate();
-
+                $('#my_form').addClass('was-validated');
                 console.log('error');
 
               case 18:
@@ -1159,9 +1158,6 @@ var app = new Vue({
       //     return false
       // }
     },
-    errorValidate: function errorValidate() {
-      $('#my_form').addClass('was-validated');
-    },
 
     /**
      * Funzione che invia il pagamento verso i servizi di braintree e
@@ -1208,7 +1204,7 @@ Vue.config.devtools = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\danie\Downloads\Progetto finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })
