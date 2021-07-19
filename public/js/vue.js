@@ -1029,13 +1029,14 @@ var app = new Vue({
 
               case 13:
                 $('#payment').modal('show');
-                _context.next = 17;
+                _context.next = 18;
                 break;
 
               case 16:
+                $('#my_form').addClass('was-validated');
                 console.log('error');
 
-              case 17:
+              case 18:
               case "end":
                 return _context.stop();
             }

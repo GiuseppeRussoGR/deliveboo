@@ -10950,6 +10950,7 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   color: #381d0b;
+  min-width: 576px;
 }
 
 h1,
@@ -11603,5 +11604,63 @@ h6 {
 
 .client .hide {
   display: none;
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .client {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .client .jumbotron-text h2 {
+    font-size: 2.5rem;
+  }
+
+  .client .jumbotron-text .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .client .types-section {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .client .types-section .type-cards {
+    flex-wrap: wrap;
+  }
+
+  .client .types-section .type-cards > div {
+    width: calc(100% / 3 - 6px);
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .client {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .client .jumbotron-text h2 {
+    font-size: 2.5rem;
+  }
+
+  .client .jumbotron-text .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .client .types-section {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .client .types-section .type-cards {
+    flex-wrap: wrap;
+  }
+
+  .client .types-section .type-cards > div {
+    width: calc(100% / 4 - 6px);
+    margin-bottom: 10px;
+  }
 }
 

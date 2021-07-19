@@ -33,3 +33,33 @@
                 -3px -3px 7px #fff,
                 inset 3px 3px 1px 0 rgba(0, 0, 0, .1);
 }
+
+// MEDIA QUERIES
+
+// smartphone
+@mixin media-sm {
+    @media screen and (min-width: 576px) and (max-width: 767px) {
+        @content;
+    }
+}
+
+// tablet
+@mixin media-md {
+    @media screen and (min-width: 768px) and (max-width: 991px) {
+        @content;
+    }
+}
+
+// laptop
+@mixin media-lg {
+    @media screen and (min-width: 992px) and (max-width: 1199px) {
+        @content;
+    }
+}
+
+// large desktop
+@mixin media-xl {
+    @media screen and (min-width: 1200px) {
+        @content;
+    }
+}
