@@ -6,11 +6,13 @@ use App\Category;
 use App\Dish;
 use App\Http\Controllers\Controller;
 use App\User;
+use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use stdClass;
 
 class UserController extends Controller
 {
@@ -141,14 +143,25 @@ class UserController extends Controller
         return redirect()->route('admin.user.index');
     }
 
-    public function statistics()
+    /**
+     * Make an array with all data about user from orders table
+     * @return View
+     */
+    public function statistics(): View
     {
-        $statistic_price = 0;
+        $array_statistic = [];
         $user = User::find(Auth::user()->id);
         $collection_base = $user->dishes()->join('dish_order', 'id', '=', 'dish_order.dish_id')->join('orders', 'order_id', '=', 'orders.id')->get();
-        foreach ($collection_base as $single_order){
-            dd($single_order);
+        foreach ($collection_base as $single_order) {
+            $order_statistic = new stdClass();
+            $order_statistic->dish_id = $single_order->dish_id;
+            $order_statistic->order_id = $single_order->order_id;
+            $order_statistic->name_dish = $single_order->name;
+            $order_statistic->total_price = $single_order->total_price;
+            $order_statistic->created_at = date_format(date_create($single_order->created_at), 'Y-m');
+            $array_statistic[] = $order_statistic;
         }
+        return view('admin.statistic', compact('array_statistic'));
     }
 
     /**
