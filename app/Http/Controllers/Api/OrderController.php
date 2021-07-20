@@ -23,9 +23,9 @@ class OrderController extends Controller
     {
         $request->validate($this->validateOrder());
         $request->all();
-        $client_unique = $this->uniqueID();
+        $client_unique = $this->generateUniqueID();
         while (Order::where('client_code', '=', $client_unique)->first()) {
-            $client_unique = $this->uniqueID();
+            $client_unique = $this->generateUniqueID();
         }
         $request['client_code'] = $client_unique;
         $dishes = $request->dishes;
@@ -115,6 +115,7 @@ class OrderController extends Controller
      */
     public function makePayment(Request $request, Gateway $gateway): JsonResponse
     {
+        //TODO fare verifica prezzo db e aggiungere invio mail
         $payment = $gateway->transaction()->sale([
             'amount' => $request->amount,
             'paymentMethodNonce' => $request->token,
@@ -161,7 +162,7 @@ class OrderController extends Controller
      * Random generate string
      * @return string
      */
-    protected function uniqueID(): string
+    protected function generateUniqueID(): string
     {
         return Str::random(8);
     }

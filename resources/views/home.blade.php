@@ -10,17 +10,28 @@
 @section('vertical-nav')
     <!-- Inizio Menu Verticale -->
     <div class="icons-container">
-        <i class="fas fa-home icon home-icon" :class="stage == 0 ? 'active' : '' " @click="categoryChosen = false, restaurantChosen = false, stage = 0, openBasket = false"></i>
-        <i class="fas fa-search icon" :class="stage == 1 ? 'active' : '' " @click="restaurantChosen = false, stage > 1 ? stage = 1 : '' "></i>
-        <i class="fas fa-utensils icon" :class="stage == 2 ? 'active' : '' " @click="stage == 3 ? openBasket = false : ''; stage == 3 ? stage = 2 : '' "></i>
-        <i class="fas fa-wallet icon" :class="stage == 3 ? 'active' : '' "  @click="stage > 1 ? openBasket = true : '', stage > 1 ? stage = 3 : '' "></i>
-        <i class="far fa-heart icon" :class="stage == 4 ? 'active' : '' "></i>
+        <i class="fas fa-home icon home-icon" :class="stage === 0 ? 'active' : '' "
+           @click="categoryChosen = false; restaurantChosen = false; stage = 0;openBasket = false; card = false"></i>
+        <i class="fas fa-search icon" :class="stage === 1 ? 'active' : '' "
+           @click="restaurantChosen = false; stage > 1 ? stage = 1 : '' "></i>
+        <i class="fas fa-utensils icon" :class="stage === 2 ? 'active' : '' "
+           @click="stage === 3 ? openBasket = false : ''; stage === 3 ? stage = 2 : '' "></i>
+        <i class="fas fa-wallet icon" :class="stage === 3 ? 'active' : '' "
+           @click="stage > 1 ? openBasket = true : ''; stage > 1 ? stage = 3 : '' "></i>
+        <i class="far fa-heart icon" :class="stage === 4 ? 'active' : '' "></i>
     </div>
     <!-- Fine Menu Verticale -->
 @endsection
 
 
 @section('content')
+    <div v-if="notify.message !== undefined" :class="'alert alert-dismissible fade show alert-'+ notify.style"
+         role="alert">
+        @{{ notify.message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="notify = {}">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <!-- {{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -88,11 +99,11 @@
 
         <div class="container">
             <div class="type-cards">
-                <div class="" v-for="type in types">
-                    <div class="type-card"
-                        @click='getApi("api/restaurants/", "restaurants", type.id); categoryChosen = true; stage = 1'>
+                <div class="" v-for="(type,index) in types">
+                    <div class="type-card" :class="{active : card === index}"
+                         @click='getApi("api/restaurants/", "restaurants", type.id); card = index; categoryChosen = true; stage = 1'>
                         <div class="img-container">
-                            <i class="fas fa-pizza-slice"></i>
+                            <img src="https://img.icons8.com/ios-filled/50/ffffff/dressed-fish.png" alt="">
                         </div>
                         <div class="card-title">
                             @{{type.name}}
@@ -111,7 +122,7 @@
     <div class="restaurants-container row" :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
         <div class="col-6" v-for='(restaurant, index) in restaurants'>
             <div class="restaurant-card"
-                @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
+                 @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
                 <div class="restaurant-img">
                     <img :src="'storage/' + restaurant.img_path" :alt="restaurant.name">
                 </div>
@@ -145,7 +156,8 @@
         <!-- Inizio Singolo Ristorante -->
         <div class="single-restaurant row">
             <div class="img-container col-6">
-                <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path" :alt="restaurants[chosenRestaurantIndex].name">
+                <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path"
+                     :alt="restaurants[chosenRestaurantIndex].name">
             </div>
 
             <div class="single-restaurant-info col-6">
@@ -192,12 +204,13 @@
                             <!-- Ricorda di settare il più e il meno -->
                             <div class="number-input">
                                 <button @click="setQuantity($('#quantity-'+ index ), '-')"></button>
-                                <input min="1" :id="'quantity-' + index" type="number" name="quantita" value="1"
+                                <input disabled readonly min="1" :id="'quantity-' + index" type="number" name="quantita"
+                                       value="1"
                                        class="quantity">
                                 <button @click="setQuantity($('#quantity-'+ index ), '+')" class="plus"></button>
                             </div>
                             <div class="cart-button"
-                                @click="insertBasket(index,$('#quantity-'+ index ).val()); openBasket = true; stage = 3">
+                                 @click="insertBasket(index,$('#quantity-'+ index ).val()); openBasket = true; stage = 3">
                                 <i class="fas fa-shopping-cart"></i>
                                 <div class="plus-icon">
                                     <i class="fas fa-plus"></i>
@@ -221,7 +234,7 @@
                 Carrello
             </div>
             <div class="closing-icon">
-                <i class="fas fa-times" @click="openBasket = false; stage == 3 ? stage = 2 : stage = stage"></i>
+                <i class="fas fa-times" @click="openBasket = false; stage === 3 ? stage = 2 : stage"></i>
             </div>
         </div>
         <div class="cart-subtitle">
@@ -236,7 +249,7 @@
             </div>
             <div class="form-group">
                 <label for="client_number">Recapito Telefonico</label>
-                <input type="number" class="form-control" id="client_number"
+                <input type="phone" class="form-control" id="client_number"
                        v-model="order.client_number" required name="client_number"
                        placeholder="es. 3249065865">
             </div>
@@ -276,10 +289,22 @@
 
         <div class="order-items">
             <ul v-if="order.dishes.length > 0">
-                <li v-for="dish in  order.dishes">
+                <li v-for="(dish,index) in  order.dishes">
                     <span class="dish-name">@{{ dish.nome }} <span
                             class="dish-quantity">(x@{{dish.quantita}})</span></span>
-                    <span class="dish-total-price">@{{ dish.totale_singolo }} € <i class="fas fa-times"></i></span>
+                    <!-- Ricorda di settare il più e il meno -->
+                    <div class="number-input">
+                        <button
+                            @click="setQuantity($('#quantity-basket-'+ index ), '-'); dish.quantita = (dish.quantita - 1) >= 1 ? dish.quantita - 1 : dish.quantita; totalOrderRecalculated(); setDataOrderCookie()"></button>
+                        <input min="1" readonly :id="'quantity-basket-' + index" type="number" name="quantita"
+                               v-model="dish.quantita" :value="dish.quantita"
+                               class="quantity">
+                        <button
+                            @click="setQuantity($('#quantity-basket-'+ index ), '+'); dish.quantita = dish.quantita + 1; totalOrderRecalculated()"
+                            class="plus"></button>
+                    </div>
+                    <span class="dish-total-price">@{{ dish.totale_singolo }} € <i class="fas fa-times"
+                                                                                   @click="removeOrder(index); totalOrderRecalculated(); setDataOrderCookie()"></i></span>
                 </li>
             </ul>
             <ul v-else>
@@ -319,7 +344,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="button_payment" @click="makePayment(); stage=4">Paga
+                        <button type="button" class="btn btn-primary" id="button_payment"
+                                @click="makePayment(); stage=4">Paga
                         </button>
                     </div>
                 </div>
