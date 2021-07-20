@@ -1,7 +1,8 @@
 @extends('layouts.app')
+@section('app_style', 'user')
 @section('content')
-    <div class="container">
-        <img src="{{ asset('storage/' . $dish->img_path) }}" alt="{{ $dish->name}}">
+    <div class="container" style="text-align: center;">
+        <img src="{{ asset('storage/' . $dish->img_path) }}" alt="{{ $dish->name}}" style="width: 600px; height: 420px; margin-top: 25px;">
 
         <h2>{{ $dish->name}}</h2>
 
