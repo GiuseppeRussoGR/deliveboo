@@ -154,6 +154,10 @@
                         background-color: $primary_color;
                         color: #FFFFFF;
                         margin: 0 auto;
+
+                        img {
+                            width: 70%;
+                        }
                     }
 
                     &.active .img-container {

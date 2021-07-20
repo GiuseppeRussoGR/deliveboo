@@ -11194,6 +11194,10 @@ h6 {
   margin: 0 auto;
 }
 
+.client .types-section .container .type-cards .type-card .img-container img {
+  width: 70%;
+}
+
 .client .types-section .container .type-cards .type-card.active .img-container {
   color: #FFA823;
   background-color: #FFFFFF;
