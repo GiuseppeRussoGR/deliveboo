@@ -1,3 +1,8 @@
+Vue.config.devtools = true
+import VueCookies from 'vue-cookies'
+
+Vue.use(VueCookies)
+Vue.$cookies.config('1d', '/', '', true, 'Lax')
 const app = new Vue(
     {
         el: '#root',
@@ -15,9 +20,7 @@ const app = new Vue(
                 client_number: "",
                 dishes: []
             },
-            order_set: {
-                disabled: true
-            },
+            order_set: {},
             braintree_payment: {
                 token: '',
                 payment: true,
@@ -28,7 +31,8 @@ const app = new Vue(
             restaurantChosen: false,
             chosenRestaurantIndex: 0,
             openBasket: false,
-            stage: 0
+            stage: 0,
+            card: false
         },
         methods: {
             /**
@@ -76,12 +80,12 @@ const app = new Vue(
                             totale_singolo: parseInt(quantity) * parseFloat(select_dish.price)
                         })
                     }
+                    this.order.total_price += select_dish.price * parseInt(quantity);
                 } else {
                     //TODO inserire errore da visualizzare in caso si tenti di inserire un altro ristorante
                     console.log('non puoi inserirlo')
                 }
-                this.order.total_price += select_dish.price * parseInt(quantity);
-
+                this.setDataOrderCookie()
             },
             /**
              * Funzione che permette di aumentare o diminuire il valore di input
@@ -96,6 +100,22 @@ const app = new Vue(
                     value_select--;
                 }
                 input_type.val(value_select);
+            },
+            /**
+             * Funzione per rimuovere elementi nel carrello
+             * @param index indice dell'elemento nella'array
+             */
+            removeOrder(index) {
+                this.order.dishes.splice(index, 1);
+            },
+            /**
+             * Funzione per ricalcolare il totale dell'ordine
+             */
+            totalOrderRecalculated(){
+                this.order.total_price = 0;
+                this.order.dishes.forEach(element => {
+                    this.order.total_price += element.prezzo_singolo * element.quantita;
+                })
             },
             /**
              * Funzione che permette di inserire l'ordine nel DB
@@ -116,6 +136,12 @@ const app = new Vue(
                     $('#my_form').addClass('was-validated');
                     console.log('error')
                 }
+            },
+            /**
+             * Funzione per settare un valore nei cookie
+             */
+            setDataOrderCookie() {
+                this.$cookies.set('client_order', this.order)
             },
             /**
              * Funzione che permette di creare il token da inviare ai servizi di braintree
@@ -157,22 +183,7 @@ const app = new Vue(
                         array_value.push(true);
                     }
                 }
-                this.order_set.disabled = array_value.includes(false);
-
                 return !array_value.includes(false);
-
-
-                // if (this.order.client_address !== '' &&
-                //     this.order.client_name !== '' &&
-                //     this.order.client_city_cap !== '' &&
-                //     this.order.client_city !== '' &&
-                //     this.order.client_civic_number !== '' &&
-                //     this.order.client_number !== '') {
-                //     this.order_set.disabled = false;
-                //     return true
-                // } else {
-                //     return false
-                // }
             },
             /**
              * Funzione che invia il pagamento verso i servizi di braintree e
@@ -192,6 +203,7 @@ const app = new Vue(
                             //TODO da aggiungere funzioni nella risposta
                             console.log(response.data)
                             if (response.data.success) {
+                                $cookies.remove('client_order');
                                 $('#payment').modal('hide');
                                 $('#button_payment').attr('disabled', 'true');
                             } else {
@@ -205,6 +217,16 @@ const app = new Vue(
         },
         mounted() {
             this.getApi('api/types/', 'types', '')
+        },
+        created() {
+            if (this.$cookies.isKey('client_order')) {
+                this.order = {
+                    total_price: $cookies.get('client_order').total_price,
+                    dishes: $cookies.get('client_order').dishes
+                }
+            }
         }
+
     });
-Vue.config.devtools = true
+
+

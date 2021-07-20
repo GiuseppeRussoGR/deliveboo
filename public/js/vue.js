@@ -857,6 +857,157 @@ try {
 
 /***/ }),
 
+/***/ "./node_modules/vue-cookies/vue-cookies.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue-cookies/vue-cookies.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Vue Cookies v1.7.4
+ * https://github.com/cmp-cc/vue-cookies
+ *
+ * Copyright 2016, cmp-cc
+ * Released under the MIT license
+ */
+
+(function () {
+
+  var defaultConfig = {
+    expires: '1d',
+    path: '; path=/',
+    domain: '',
+    secure: '',
+    sameSite: '; SameSite=Lax'
+  };
+
+  var VueCookies = {
+    // install of Vue
+    install: function (Vue) {
+      Vue.prototype.$cookies = this;
+      Vue.$cookies = this;
+    },
+    config: function (expireTimes, path, domain, secure, sameSite) {
+      defaultConfig.expires = expireTimes ? expireTimes : '1d';
+      defaultConfig.path = path ? '; path=' + path : '; path=/';
+      defaultConfig.domain = domain ? '; domain=' + domain : '';
+      defaultConfig.secure = secure ? '; Secure' : '';
+      defaultConfig.sameSite = sameSite ? '; SameSite=' + sameSite : '; SameSite=Lax';
+    },
+    get: function (key) {
+      var value = decodeURIComponent(document.cookie.replace(new RegExp('(?:(?:^|.*;)\\s*' + encodeURIComponent(key).replace(/[\-\.\+\*]/g, '\\$&') + '\\s*\\=\\s*([^;]*).*$)|^.*$'), '$1')) || null;
+
+      if (value && value.substring(0, 1) === '{' && value.substring(value.length - 1, value.length) === '}') {
+        try {
+          value = JSON.parse(value);
+        } catch (e) {
+          return value;
+        }
+      }
+      return value;
+    },
+    set: function (key, value, expireTimes, path, domain, secure, sameSite) {
+      if (!key) {
+        throw new Error('Cookie name is not find in first argument.');
+      } else if (/^(?:expires|max\-age|path|domain|secure|SameSite)$/i.test(key)) {
+        throw new Error('Cookie key name illegality, Cannot be set to ["expires","max-age","path","domain","secure","SameSite"]\t current key name: ' + key);
+      }
+      // support json object
+      if (value && value.constructor === Object) {
+        value = JSON.stringify(value);
+      }
+      var _expires = '';
+      expireTimes = expireTimes == undefined ? defaultConfig.expires : expireTimes;
+      if (expireTimes && expireTimes != 0) {
+        switch (expireTimes.constructor) {
+          case Number:
+            if (expireTimes === Infinity || expireTimes === -1) _expires = '; expires=Fri, 31 Dec 9999 23:59:59 GMT';
+            else _expires = '; max-age=' + expireTimes;
+            break;
+          case String:
+            if (/^(?:\d+(y|m|d|h|min|s))$/i.test(expireTimes)) {
+              // get capture number group
+              var _expireTime = expireTimes.replace(/^(\d+)(?:y|m|d|h|min|s)$/i, '$1');
+              // get capture type group , to lower case
+              switch (expireTimes.replace(/^(?:\d+)(y|m|d|h|min|s)$/i, '$1').toLowerCase()) {
+                  // Frequency sorting
+                case 'm':
+                  _expires = '; max-age=' + +_expireTime * 2592000;
+                  break; // 60 * 60 * 24 * 30
+                case 'd':
+                  _expires = '; max-age=' + +_expireTime * 86400;
+                  break; // 60 * 60 * 24
+                case 'h':
+                  _expires = '; max-age=' + +_expireTime * 3600;
+                  break; // 60 * 60
+                case 'min':
+                  _expires = '; max-age=' + +_expireTime * 60;
+                  break; // 60
+                case 's':
+                  _expires = '; max-age=' + _expireTime;
+                  break;
+                case 'y':
+                  _expires = '; max-age=' + +_expireTime * 31104000;
+                  break; // 60 * 60 * 24 * 30 * 12
+                default:
+                  new Error('unknown exception of "set operation"');
+              }
+            } else {
+              _expires = '; expires=' + expireTimes;
+            }
+            break;
+          case Date:
+            _expires = '; expires=' + expireTimes.toUTCString();
+            break;
+        }
+      }
+      document.cookie =
+          encodeURIComponent(key) + '=' + encodeURIComponent(value) +
+          _expires +
+          (domain ? '; domain=' + domain : defaultConfig.domain) +
+          (path ? '; path=' + path : defaultConfig.path) +
+          (secure == undefined ? defaultConfig.secure : secure ? '; Secure' : '') +
+          (sameSite == undefined ? defaultConfig.sameSite : (sameSite ? '; SameSite=' + sameSite : ''));
+      return this;
+    },
+    remove: function (key, path, domain) {
+      if (!key || !this.isKey(key)) {
+        return false;
+      }
+      document.cookie = encodeURIComponent(key) +
+          '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' +
+          (domain ? '; domain=' + domain : defaultConfig.domain) +
+          (path ? '; path=' + path : defaultConfig.path) +
+          '; SameSite=Lax';
+      return this;
+    },
+    isKey: function (key) {
+      return (new RegExp('(?:^|;\\s*)' + encodeURIComponent(key).replace(/[\-\.\+\*]/g, '\\$&') + '\\s*\\=')).test(document.cookie);
+    },
+    keys: function () {
+      if (!document.cookie) return [];
+      var _keys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, '').split(/\s*(?:\=[^;]*)?;\s*/);
+      for (var _index = 0; _index < _keys.length; _index++) {
+        _keys[_index] = decodeURIComponent(_keys[_index]);
+      }
+      return _keys;
+    }
+  };
+
+  if (true) {
+    module.exports = VueCookies;
+  } else {}
+  // vue-cookies can exist independently,no dependencies library
+  if (typeof window !== 'undefined') {
+    window.$cookies = VueCookies;
+  }
+
+})();
+
+
+/***/ }),
+
 /***/ "./resources/js/vue.js":
 /*!*****************************!*\
   !*** ./resources/js/vue.js ***!
@@ -868,6 +1019,8 @@ try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -880,6 +1033,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+Vue.config.devtools = true;
+
+Vue.use(vue_cookies__WEBPACK_IMPORTED_MODULE_1___default.a);
+Vue.$cookies.config('1d', '/', '', true, 'Lax');
 var app = new Vue({
   el: '#root',
   data: {
@@ -896,9 +1053,7 @@ var app = new Vue({
       client_number: "",
       dishes: []
     },
-    order_set: {
-      disabled: true
-    },
+    order_set: {},
     braintree_payment: {
       token: '',
       payment: true,
@@ -909,7 +1064,8 @@ var app = new Vue({
     restaurantChosen: false,
     chosenRestaurantIndex: 0,
     openBasket: false,
-    stage: 0
+    stage: 0,
+    card: false
   },
   methods: {
     /**
@@ -963,12 +1119,14 @@ var app = new Vue({
             totale_singolo: parseInt(quantity) * parseFloat(select_dish.price)
           });
         }
+
+        this.order.total_price += select_dish.price * parseInt(quantity);
       } else {
         //TODO inserire errore da visualizzare in caso si tenti di inserire un altro ristorante
         console.log('non puoi inserirlo');
       }
 
-      this.order.total_price += select_dish.price * parseInt(quantity);
+      this.setDataOrderCookie();
     },
 
     /**
@@ -989,10 +1147,30 @@ var app = new Vue({
     },
 
     /**
+     * Funzione per rimuovere elementi nel carrello
+     * @param index indice dell'elemento nella'array
+     */
+    removeOrder: function removeOrder(index) {
+      this.order.dishes.splice(index, 1);
+    },
+
+    /**
+     * Funzione per ricalcolare il totale dell'ordine
+     */
+    totalOrderRecalculated: function totalOrderRecalculated() {
+      var _this2 = this;
+
+      this.order.total_price = 0;
+      this.order.dishes.forEach(function (element) {
+        _this2.order.total_price += element.prezzo_singolo * element.quantita;
+      });
+    },
+
+    /**
      * Funzione che permette di inserire l'ordine nel DB
      */
     setOrder: function setOrder() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var response, value;
@@ -1000,13 +1178,13 @@ var app = new Vue({
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!_this2.requireFormData()) {
+                if (!_this3.requireFormData()) {
                   _context.next = 16;
                   break;
                 }
 
                 _context.next = 3;
-                return axios.post('api/order', _objectSpread({}, _this2.order));
+                return axios.post('api/order', _objectSpread({}, _this3.order));
 
               case 3:
                 response = _context.sent;
@@ -1015,18 +1193,18 @@ var app = new Vue({
 
               case 6:
                 value = _context.sent;
-                _this2.order_set = {
+                _this3.order_set = {
                   success: value.success,
                   id: value.order_number,
                   client_code: value.client_code
                 };
                 _context.next = 10;
-                return _this2.getToken();
+                return _this3.getToken();
 
               case 10:
-                _this2.braintree_payment.token = _context.sent;
+                _this3.braintree_payment.token = _context.sent;
                 _context.next = 13;
-                return _this2.getDataPayment();
+                return _this3.getDataPayment();
 
               case 13:
                 $('#payment').modal('show');
@@ -1044,6 +1222,13 @@ var app = new Vue({
           }
         }, _callee);
       }))();
+    },
+
+    /**
+     * Funzione per settare un valore nei cookie
+     */
+    setDataOrderCookie: function setDataOrderCookie() {
+      this.$cookies.set('client_order', this.order);
     },
 
     /**
@@ -1082,7 +1267,7 @@ var app = new Vue({
      * @returns {Promise<void>}
      */
     getDataPayment: function getDataPayment() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var externVue;
@@ -1090,10 +1275,10 @@ var app = new Vue({
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                externVue = _this3;
+                externVue = _this4;
                 _context4.next = 3;
                 return braintree.dropin.create({
-                  authorization: _this3.braintree_payment.token,
+                  authorization: _this4.braintree_payment.token,
                   selector: '#dropin-container'
                 }, /*#__PURE__*/function () {
                   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(err, instance) {
@@ -1146,18 +1331,7 @@ var app = new Vue({
         }
       }
 
-      this.order_set.disabled = array_value.includes(false);
-      return !array_value.includes(false); // if (this.order.client_address !== '' &&
-      //     this.order.client_name !== '' &&
-      //     this.order.client_city_cap !== '' &&
-      //     this.order.client_city !== '' &&
-      //     this.order.client_civic_number !== '' &&
-      //     this.order.client_number !== '') {
-      //     this.order_set.disabled = false;
-      //     return true
-      // } else {
-      //     return false
-      // }
+      return !array_value.includes(false);
     },
 
     /**
@@ -1180,6 +1354,7 @@ var app = new Vue({
             console.log(response.data);
 
             if (response.data.success) {
+              $cookies.remove('client_order');
               $('#payment').modal('hide');
               $('#button_payment').attr('disabled', 'true');
             } else {
@@ -1192,9 +1367,16 @@ var app = new Vue({
   },
   mounted: function mounted() {
     this.getApi('api/types/', 'types', '');
+  },
+  created: function created() {
+    if (this.$cookies.isKey('client_order')) {
+      this.order = {
+        total_price: $cookies.get('client_order').total_price,
+        dishes: $cookies.get('client_order').dishes
+      };
+    }
   }
 });
-Vue.config.devtools = true;
 
 /***/ }),
 
@@ -1205,7 +1387,7 @@ Vue.config.devtools = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\BOOLEAN\PROGETTO FINALE\deliveboo\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })
