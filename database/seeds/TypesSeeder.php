@@ -18,7 +18,7 @@ class TypesSeeder extends Seeder
             'Cinese' => 'types-cover/icons8-chinese-noodle-50.png',
             'Giapponese' => 'types-cover/icons8-sushi-50.png',
             'Messicano' => 'types-cover/icons8-burrito-50.png',
-            'Indiano' => 'types-cover/icons8-elephant-50.png',
+            'Indiano' => 'types-cover/icons8-naan-50.png',
             'Vegetariano' => 'types-cover/icons8-vegetarian-food-50.png',
             'Thailandese' => 'types-cover/icons8-piatto-di-zuppa-50.png',
             'Greco' => 'types-cover/icons8-greek-pillar-50.png',
