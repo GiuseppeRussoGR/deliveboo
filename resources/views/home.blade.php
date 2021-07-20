@@ -25,7 +25,8 @@
 
 
 @section('content')
-    <div v-if="notify.message !== undefined" :class="'alert alert-dismissible fade show alert-'+ notify.style"
+    <div v-if="notify.message !== undefined"
+         :class="'position-absolute alert alert-warning bg-warning border-0 text-white mx-3 animated flipInX delay-04s alert-'+ notify.style"
          role="alert">
         @{{ notify.message }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="notify = {}">
@@ -60,12 +61,30 @@
         </div>
         <div class="col-9">
             <div class="login">
-                <a class="float-right" href="{{ route('register') }}">
+                @guest
+                    <a class="float-right" href="{{ route('register') }}">
                     <span class="subtext">
                         Sei un ristoratore? Collabora con noi.
                     </span>
-                    <i class="fas fa-user-circle icon"></i>
-                </a>
+                        <i class="fas fa-user-circle icon"></i>
+                    </a>
+                    <a class="float-right" href="{{ route('login') }}">
+                    <span class="subtext">
+                        Login
+                    </span>
+                        <i class="fas fa-user-circle icon"></i>
+                    </a>
+                @else
+                    <a class="float-right" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                    <span class="subtext">
+                        Logout
+                    </span>
+                        <i class="fas fa-user-circle icon"></i>
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                @endguest
             </div>
         </div>
     </nav>
