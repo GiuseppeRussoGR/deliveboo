@@ -1,0 +1,32 @@
+/*css pagina login*/
+.user.login {
+    
+    .container {        
+        .row {
+            padding-top: 15px;
+            justify-content: center;
+            .card {
+                border: 1px solid $primary-color;
+                .card-header {
+                    background-color: $primary-color;
+                }
+            }
+        }
+    }
+
+}
+
+/*css pagina register*/
+.user.register {
+    .row {
+        padding-top: 10px;
+        
+        .card {
+            border: 1px solid $primary-color;
+            .card-header {
+                background-color: $primary-color;
+            }
+        }
+    }
+
+}

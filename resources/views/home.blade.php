@@ -25,6 +25,13 @@
 
 
 @section('content')
+    <div v-if="notify.message !== undefined" :class="'alert alert-dismissible fade show alert-'+ notify.style"
+         role="alert">
+        @{{ notify.message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="notify = {}">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <!-- {{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

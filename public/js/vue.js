@@ -1065,7 +1065,8 @@ var app = new Vue({
     chosenRestaurantIndex: 0,
     openBasket: false,
     stage: 0,
-    card: false
+    card: false,
+    notify: {}
   },
   methods: {
     /**
@@ -1122,8 +1123,10 @@ var app = new Vue({
 
         this.order.total_price += select_dish.price * parseInt(quantity);
       } else {
-        //TODO inserire errore da visualizzare in caso si tenti di inserire un altro ristorante
-        console.log('non puoi inserirlo');
+        this.notify = {
+          style: 'danger',
+          message: 'Si può fare l\'ordine soltanto da un ristorante alla volta'
+        };
       }
 
       this.setDataOrderCookie();
@@ -1213,7 +1216,10 @@ var app = new Vue({
 
               case 16:
                 $('#my_form').addClass('was-validated');
-                console.log('error');
+                _this3.notify = {
+                  style: 'danger',
+                  message: 'Non tutti i campi sono stati compilati correttamente'
+                };
 
               case 18:
               case "end":
@@ -1287,7 +1293,10 @@ var app = new Vue({
                         switch (_context3.prev = _context3.next) {
                           case 0:
                             if (!instance) {
-                              console.log('richiesta di pagamento non riuscita, riprovare');
+                              externVue.notify = {
+                                style: false,
+                                message: 'Errore durante la richiesta di pagamento. Provare ad reinserire l\'ordine'
+                              };
                             }
 
                             externVue.braintree_payment.instance = instance;
@@ -1320,7 +1329,6 @@ var app = new Vue({
      * @returns {boolean}
      */
     requireFormData: function requireFormData() {
-      //TODO da rivedere la validazione
       var array_value = [];
 
       for (var element in this.order) {
@@ -1346,19 +1354,26 @@ var app = new Vue({
         $('#payment').modal('hide');
       } else {
         this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
+          var _this5 = this;
+
           axios.post('api/order/payment', {
             token: payload.nonce,
             amount: price
           }).then(function (response) {
-            //TODO da aggiungere funzioni nella risposta
-            console.log(response.data);
+            _this5.notify = {
+              style: 'success',
+              message: response.data.message
+            };
 
             if (response.data.success) {
-              $cookies.remove('client_order');
+              Vue.$cookies.remove('client_order');
               $('#payment').modal('hide');
               $('#button_payment').attr('disabled', 'true');
             } else {
-              console.log('pagamento non riuscito');
+              _this5.notify = {
+                style: 'danger',
+                message: response.data.message
+              };
             }
           });
         });
@@ -1367,13 +1382,12 @@ var app = new Vue({
   },
   mounted: function mounted() {
     this.getApi('api/types/', 'types', '');
+    console.log(this.notify.message);
   },
   created: function created() {
     if (this.$cookies.isKey('client_order')) {
-      this.order = {
-        total_price: $cookies.get('client_order').total_price,
-        dishes: $cookies.get('client_order').dishes
-      };
+      this.order.total_price = $cookies.get('client_order').total_price;
+      this.order.dishes = $cookies.get('client_order').dishes;
     }
   }
 });

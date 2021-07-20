@@ -11727,3 +11727,32 @@ h6 {
   }
 }
 
+/*css pagina login*/
+
+.user.login .container .row {
+  padding-top: 15px;
+  justify-content: center;
+}
+
+.user.login .container .row .card {
+  border: 1px solid #FFA823;
+}
+
+.user.login .container .row .card .card-header {
+  background-color: #FFA823;
+}
+
+/*css pagina register*/
+
+.user.register .row {
+  padding-top: 10px;
+}
+
+.user.register .row .card {
+  border: 1px solid #FFA823;
+}
+
+.user.register .row .card .card-header {
+  background-color: #FFA823;
+}
+
