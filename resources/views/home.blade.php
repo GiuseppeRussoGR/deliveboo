@@ -103,8 +103,8 @@
                     <div class="type-card" :class="{active : card === index}"
                          @click='getApi("api/restaurants/", "restaurants", type.id); card = index; categoryChosen = true; stage = 1'>
                         <div class="img-container">
-                            <img :src="'storage/'+ type.img_path"/> alt="">
-                           
+                            <img :src="'storage/'+ type.img_path" alt=""/>
+
                         </div>
                         <div class="card-title">
                             @{{type.name}}

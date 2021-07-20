@@ -36,6 +36,7 @@
             }
         }
     }
+
     //Fine Menu Verticale
 
     //Inizio Navigator
@@ -67,6 +68,7 @@
             }
         }
     }
+
     //Fine Navigator
 
     //Inizio Jumbotron
@@ -89,6 +91,7 @@
             }
         }
     }
+
     //Fine Jumbotron
 
     //Inizio Cards Tipologie
@@ -114,9 +117,9 @@
                 padding-right: 1rem;
                 scrollbar-width: none;
 
-                    &::-webkit-scrollbar {
-                        display: none;
-                    }
+                &::-webkit-scrollbar {
+                    display: none;
+                }
 
 
                 & > div {
@@ -163,6 +166,11 @@
                     &.active .img-container {
                         color: $primary_color;
                         background-color: #FFFFFF;
+
+                        img {
+                            filter: invert(100%);
+                            opacity: 50%;
+                        }
                     }
 
                     .card-icon {
@@ -192,6 +200,7 @@
             }
         }
     }
+
     //Fine Cards Tipologie
 
     //Inizio Ristoranti
@@ -290,6 +299,7 @@
             }
         }
     }
+
     //Fine Ristoranti
 
     //Inizio Pagina Ristorante Singolo
@@ -412,7 +422,7 @@
                         }
 
                         .number-input button {
-                            outline:none;
+                            outline: none;
                             -webkit-appearance: none;
                             background-color: transparent;
                             border: none;
@@ -467,14 +477,14 @@
                             align-items: center;
                             justify-content: center;
                             border-radius: 5px;
-                            background: rgb(255,217,158);
-                            background: linear-gradient(180deg, rgba(255,217,158,1) 0%, rgba(255,168,35,1) 100%);
+                            background: rgb(255, 217, 158);
+                            background: linear-gradient(180deg, rgba(255, 217, 158, 1) 0%, rgba(255, 168, 35, 1) 100%);
                             position: relative;
                             box-shadow: 0 0 3px rgba($color: #000000, $alpha: 0.2);
 
                             &:hover {
-                                background: rgb(255,217,158);
-                                background: linear-gradient(90deg, rgba(255,217,158,1) 0%, rgba(255,168,35,1) 100%);
+                                background: rgb(255, 217, 158);
+                                background: linear-gradient(90deg, rgba(255, 217, 158, 1) 0%, rgba(255, 168, 35, 1) 100%);
                             }
 
                             i {
@@ -504,6 +514,7 @@
             }
         }
     }
+
     //Fine Pagina Ristorante Singolo
 
     //Inizio Carrello
@@ -595,7 +606,7 @@
             .btn-checkout {
                 padding: 10px 40px;
                 background: rgb(3, 3, 3);
-                background: linear-gradient(180deg, rgba(255,217,158,1) 0%, rgba(255,168,35,1) 100%);
+                background: linear-gradient(180deg, rgba(255, 217, 158, 1) 0%, rgba(255, 168, 35, 1) 100%);
                 color: #FFFFFF;
                 font-size: 1.2rem;
                 font-weight: 600;
@@ -607,14 +618,15 @@
                 text-shadow: 0 0 3px rgba($color: #000000, $alpha: 0.25);
 
                 &:hover {
-                    background: rgb(255,217,158);
-                    background: linear-gradient(90deg, rgba(255,217,158,1) 0%, rgba(255,168,35,1) 100%);
+                    background: rgb(255, 217, 158);
+                    background: linear-gradient(90deg, rgba(255, 217, 158, 1) 0%, rgba(255, 168, 35, 1) 100%);
                 }
             }
 
         }
 
     }
+
     //Fine Carrello
 
     .show {

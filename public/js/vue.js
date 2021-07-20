@@ -1382,7 +1382,6 @@ var app = new Vue({
   },
   mounted: function mounted() {
     this.getApi('api/types/', 'types', '');
-    console.log(this.notify.message);
   },
   created: function created() {
     if (this.$cookies.isKey('client_order')) {
@@ -1401,7 +1400,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\danie\Downloads\Progetto finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

@@ -229,7 +229,6 @@ const app = new Vue(
         },
         mounted() {
             this.getApi('api/types/', 'types', '')
-            console.log(this.notify.message)
         },
         created() {
             if (this.$cookies.isKey('client_order')) {

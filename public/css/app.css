@@ -11203,6 +11203,11 @@ h6 {
   background-color: #FFFFFF;
 }
 
+.client .types-section .container .type-cards .type-card.active .img-container img {
+  filter: invert(100%);
+  opacity: 50%;
+}
+
 .client .types-section .container .type-cards .type-card .card-icon i {
   color: #FFFFFF;
   background-color: #FFA823;
