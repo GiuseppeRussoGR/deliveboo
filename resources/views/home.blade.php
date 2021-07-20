@@ -120,7 +120,7 @@ openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
 
         <div class="container">
             <div class="type-cards">
-                <div class="" v-for="(type,index) in types">
+                <div class="col-4 col-md-3 col-lg-2" v-for="(type,index) in types">
                     <div class="type-card" :class="{active : card === index}"
                          @click='getApi("api/restaurants/", "restaurants", type.id); card = index; categoryChosen = true; stage = 1'>
                         <div class="img-container">
