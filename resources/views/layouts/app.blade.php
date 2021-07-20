@@ -41,7 +41,7 @@
 
                 <!-- Inizio App Content -->
                 <!-- ATTENZIONE: Mentre si struttura il carrello metti col-8 -->
-                <div class="app-content" :class="openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'">
+                <div class="app-content" :class="@yield('app-content-class')" >
                     @yield('content')
                 </div>
                 <!-- Fine App Content -->

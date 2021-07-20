@@ -23,6 +23,9 @@
     <!-- Fine Menu Verticale -->
 @endsection
 
+@section('app-content-class')
+openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
+@endsection
 
 @section('content')
     <div v-if="notify.message !== undefined" :class="'position-fixed border-warning border-left border-width-4 px-4 py-3 mx-3 mb-3 bg-white text-black shadow-sm alert-'+ notify.style" role="alert">
@@ -139,7 +142,7 @@
 
     <!-- Inizio Ristoranti -->
     <div class="restaurants-container row" :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
-        <div class="col-6" v-for='(restaurant, index) in restaurants'>
+        <div class="col-12 col-lg-6" v-for='(restaurant, index) in restaurants'>
             <div class="restaurant-card"
                  @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
                 <div class="restaurant-img">
@@ -208,7 +211,7 @@
         <!-- Inizio Dishes -->
         <div class="dishes row">
 
-            <div :class="openBasket ? 'col-4' : 'col-3'" v-for="(dish, index) in dishes">
+            <div :class="openBasket ? 'col-12 col-md-6 col-lg-4' : 'col-6 col-md-3'" v-for="(dish, index) in dishes">
                 <div class="dish-card" :class="{'cart-open' : openBasket}">
                     <img :src="'storage/' + dish.img_path" :alt="dish.name">
                     <div class="dish-content">

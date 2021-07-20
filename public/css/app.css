@@ -11734,30 +11734,36 @@ h6 {
 
 /*css pagina login*/
 
-.user .container .row {
-  padding-top: 15px;
+.user .row {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.user .row .form-container {
   justify-content: center;
 }
 
-.user .container .row .card {
-  border: 1px solid #FFA823;
+.user .row .form-container .card {
+  justify-content: center;
+  border: 1px solid #24A1FF;
 }
 
-.user .container .row .card .card-header {
-  background-color: #FFA823;
+.user .row .form-container .card .card-header {
+  background-color: #24A1FF;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.user .row .form-container .card .btn-primary {
+  background-color: #24A1FF;
+  transition: all 0.4s;
+}
+
+.user .row .form-container .card .btn-primary:hover {
+  background-color: #0089f0;
 }
 
 /*css pagina register*/
-
-.user .row {
-  padding-top: 10px;
-}
-
-.user .row .card {
-  border: 1px solid #FFA823;
-}
-
-.user .row .card .card-header {
-  background-color: #FFA823;
-}
 

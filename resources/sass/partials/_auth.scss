@@ -1,32 +1,49 @@
 /*css pagina login*/
 .user {
     
-    .container {        
-        .row {
-            padding-top: 15px;
+    .row {
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+
+        .form-container {
             justify-content: center;
+
             .card {
-                border: 1px solid $primary-color;
+                justify-content: center;
+                border: 1px solid $secondary_color;
+    
                 .card-header {
-                    background-color: $primary-color;
+                    background-color: $secondary_color;
+                    color: #FFFFFF;
+                    text-transform: uppercase;
+                    font-weight: 500;
+                }
+    
+                .btn-primary {
+                    background-color: $secondary_color;
+                    transition: all .4s;
+
+                    &:hover {
+                        background-color: $secondary_dark;
+                    }
                 }
             }
         }
     }
-
 }
 
 /*css pagina register*/
-.user {
-    .row {
-        padding-top: 10px;
+// .user {
+//     .row {
+//         padding-top: 10px;
         
-        .card {
-            border: 1px solid $primary-color;
-            .card-header {
-                background-color: $primary-color;
-            }
-        }
-    }
+//         .card {
+//             border: 1px solid $primary-color;
+//             .card-header {
+//                 background-color: $primary-color;
+//             }
+//         }
+//     }
 
-}
+// }

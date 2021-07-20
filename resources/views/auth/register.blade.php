@@ -7,12 +7,18 @@
 @endsection
 
 
-@section('app_style', 'user register')
+@section('app_style', 'user')
+
+@section('vertical-nav-class', '')
+
+@section('app-content-class')
+'col-12'
+@endsection
 
 @section('content')
 <div class="row">
-        <div class="col-md-8 m-auto ">
-            <div class="card ">
+        <div class="col-md-6 form-container">
+            <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
