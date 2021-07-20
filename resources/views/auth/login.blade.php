@@ -6,7 +6,9 @@
     <script src="https://js.braintreegateway.com/web/dropin/1.31.0/js/dropin.js"></script>
 @endsection
 
-@section('app_style', 'user login')
+@section('app_style', 'user')
+
+@section('vertical-nav-class', 'col-3') 
 
 @section('content')
 <div class="container ">
@@ -84,4 +86,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('footer_script')
+    <script src="{{ asset('js/vue.js') }}" charset="utf-8"></script>
 @endsection

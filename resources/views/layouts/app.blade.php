@@ -34,7 +34,7 @@
         <div id="root" class="container">
             <div class="row">
                 <!-- Inizio Sezione Verticale -->
-                <div class="col-2 col-md-1 vertical-nav">
+                <div class="@yield('vertical-nav-class', 'col-2 col-md-1') vertical-nav">
                     @yield('vertical-nav')
                 </div>
                 <!-- Fine Sezione Verticale -->
