@@ -25,10 +25,10 @@
 
 
 @section('content')
-    <div v-if="notify.message !== undefined" :class="'border-warning border-left border-width-4 px-4 py-3 mx-3 mb-3 bg-white text-black shadow-sm animated flipInX delay-02s alert-'+ notify.style" role="alert">
+    <div v-if="notify.message !== undefined" :class="'position-fixed border-warning border-left border-width-4 px-4 py-3 mx-3 mb-3 bg-white text-black shadow-sm alert-'+ notify.style" role="alert">
         <i class="fas fa-exclamation opacity-05 mr-3"></i>
         @{{ notify.message }}
-        <button type="button" class="close" aria-label="Close">
+        <button type="button" class="close" aria-label="Close" @click="notify = {}">
             <span aria-hidden="true" style="text-shadow: none;">&times;</span>
         </button>
     </div>
