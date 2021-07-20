@@ -1,9 +1,17 @@
 @extends('layouts.app')
 
+@section('header_script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://js.braintreegateway.com/web/dropin/1.31.0/js/dropin.js"></script>
+@endsection
+
+
+@section('app_style', 'user')
+
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="row">
+        <div class="col-md-8 m-auto">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
@@ -132,6 +140,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    
 </div>
+@endsection
+
+@section('footer_script')
+    <script src="{{ asset('js/vue.js') }}" charset="utf-8"></script>
 @endsection

@@ -27,7 +27,8 @@ const app = new Vue(
             categoryChosen: false,
             restaurantChosen: false,
             chosenRestaurantIndex: 0,
-            openBasket: false
+            openBasket: false,
+            stage: 0
         },
         methods: {
             /**
@@ -112,6 +113,7 @@ const app = new Vue(
                     await this.getDataPayment();
                     $('#payment').modal('show');
                 } else {
+                    $('#my_form').addClass('was-validated');
                     console.log('error')
                 }
             },
@@ -149,12 +151,14 @@ const app = new Vue(
                 let array_value = [];
                 for (const element in this.order) {
                     if (this.order[element] === '') {
+
                         array_value.push(false);
                     } else {
                         array_value.push(true);
                     }
                 }
                 this.order_set.disabled = array_value.includes(false);
+
                 return !array_value.includes(false);
 
 

@@ -1,0 +1,112 @@
+// SMARTPHONE 
+@include media-sm {
+    #root {
+        max-width: 600px;
+    }
+
+    .client {
+        height: 100%;
+        overflow: hidden;
+
+        // jumbotron 
+        .jumbotron-text {
+            h2 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+        }
+        // end jumbotron
+
+        // tipologie
+        .container {
+            .types-section {
+                height: auto;
+                margin-top: 20px;
+    
+                h6 {
+                    margin-bottom: 11px;
+                }
+    
+                .type-cards {
+                    flex-wrap: wrap;
+                    height: 165px;
+                    overflow-y: auto;
+                    scrollbar-width: none;
+    
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+    
+                    & > div {
+                        width: calc(100% / 3 - 1rem);
+    
+                        .type-card {
+                            margin-bottom: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+        // end tipologie 
+    
+    }
+    
+}
+
+// TABLET 
+@include media-md {
+   
+    .client {
+        height: 100%;
+        overflow: hidden;
+
+        // jumbotron 
+        .jumbotron-text {
+            h2 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+        }
+        // end jumbotron 
+
+        // tipologie
+        .container {
+            .types-section {
+                height: auto;
+                margin-top: 20px;
+    
+                h6 {
+                    margin-bottom: 11px;
+                }
+    
+                .type-cards {
+                    flex-wrap: wrap;
+                    height: 165px;
+                    overflow-y: auto;
+                    scrollbar-width: none;
+    
+                    &::-webkit-scrollbar {
+                        display: none;
+                    }
+    
+                    & > div {
+                        width: calc(100% / 4 - 1rem);
+    
+                        .type-card {
+                            margin-bottom: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+   
+        // end tipologie
+    }
+    
+}

@@ -87,7 +87,6 @@ class OrderController extends Controller
      */
     public function getToken(Gateway $gateway): JsonResponse
     {
-
         try {
             //Creo istanza di Braintree dove eseguo la richiesta di generazione di un Token
             $token = $gateway->clientToken()->generate();

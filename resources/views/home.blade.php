@@ -10,11 +10,11 @@
 @section('vertical-nav')
     <!-- Inizio Menu Verticale -->
     <div class="icons-container">
-        <i class="fas fa-home icon active"></i>
-        <i class="fas fa-search icon"></i>
-        <i class="fas fa-utensils icon"></i>
-        <i class="fas fa-wallet icon"></i>
-        <i class="far fa-heart icon"></i>
+        <i class="fas fa-home icon home-icon" :class="stage == 0 ? 'active' : '' " @click="categoryChosen = false, restaurantChosen = false, stage = 0, openBasket = false"></i>
+        <i class="fas fa-search icon" :class="stage == 1 ? 'active' : '' " @click="restaurantChosen = false, stage > 1 ? stage = 1 : '' "></i>
+        <i class="fas fa-utensils icon" :class="stage == 2 ? 'active' : '' " @click="stage == 3 ? openBasket = false : ''; stage == 3 ? stage = 2 : '' "></i>
+        <i class="fas fa-wallet icon" :class="stage == 3 ? 'active' : '' "  @click="stage > 1 ? openBasket = true : '', stage > 1 ? stage = 3 : '' "></i>
+        <i class="far fa-heart icon" :class="stage == 4 ? 'active' : '' "></i>
     </div>
     <!-- Fine Menu Verticale -->
 @endsection
@@ -62,7 +62,8 @@
 
     <!-- Inizio Jumbotron -->
     <div class="my-jumbotron row" :class="{hide : categoryChosen}">
-        <div class="col-7 jumbotron-text">
+
+        <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 jumbotron-text">
             <h2>Ordina cibo della tua zona con l'app</h2>
 
             <div class="subtitle">
@@ -70,9 +71,9 @@
             </div>
         </div>
 
-        <div class="col-5 banner-image">
+        <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 banner-image">
             <img
-                src="https://st.depositphotos.com/1008939/1376/i/950/depositphotos_13766635-stock-photo-eating-pizza.jpg"
+                src="https://thumbs.dreamstime.com/b/beautiful-woman-smile-her-face-eyes-closed-enjoying-eating-carrot-healthy-organic-food-concept-beautiful-woman-171667781.jpg"
                 alt="">
         </div>
 
@@ -89,7 +90,7 @@
             <div class="type-cards">
                 <div class="" v-for="type in types">
                     <div class="type-card"
-                         @click='getApi("api/restaurants/", "restaurants", type.id); categoryChosen = true'>
+                        @click='getApi("api/restaurants/", "restaurants", type.id); categoryChosen = true; stage = 1'>
                         <div class="img-container">
                             <i class="fas fa-pizza-slice"></i>
                         </div>
@@ -110,9 +111,9 @@
     <div class="restaurants-container row" :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
         <div class="col-6" v-for='(restaurant, index) in restaurants'>
             <div class="restaurant-card"
-                 @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index">
+                @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
                 <div class="restaurant-img">
-                    <img :src="'storage/' + restaurant.img_path" alt="#">
+                    <img :src="'storage/' + restaurant.img_path" :alt="restaurant.name">
                 </div>
 
                 <div class="restaurant-infos">
@@ -144,7 +145,7 @@
         <!-- Inizio Singolo Ristorante -->
         <div class="single-restaurant row">
             <div class="img-container col-6">
-                <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path" alt="">
+                <img :src="'storage/' + restaurants[chosenRestaurantIndex].img_path" :alt="restaurants[chosenRestaurantIndex].name">
             </div>
 
             <div class="single-restaurant-info col-6">
@@ -196,7 +197,7 @@
                                 <button @click="setQuantity($('#quantity-'+ index ), '+')" class="plus"></button>
                             </div>
                             <div class="cart-button"
-                                 @click="insertBasket(index,$('#quantity-'+ index ).val()); openBasket = true">
+                                @click="insertBasket(index,$('#quantity-'+ index ).val()); openBasket = true; stage = 3">
                                 <i class="fas fa-shopping-cart"></i>
                                 <div class="plus-icon">
                                     <i class="fas fa-plus"></i>
@@ -220,28 +221,28 @@
                 Carrello
             </div>
             <div class="closing-icon">
-                <i class="fas fa-times"></i>
+                <i class="fas fa-times" @click="openBasket = false; stage == 3 ? stage = 2 : stage = stage"></i>
             </div>
         </div>
         <div class="cart-subtitle">
             Dati di consegna
         </div>
-        <form class="my_form" method="post" action="#">
+        <form class="my_form" action="#" id="my_form">
             <div class="form-group">
                 <label for="client_name">Nome</label>
-                <input type="text" class="form-control" @change="requireFormData()" id="client_name"
-                       v-model="order.client_name" required name="client_name"
+                <input type="text" class="form-control" id="client_name"
+                       v-model="order.client_name" :value="order.client_name" required name="client_name"
                        placeholder="Mario Rossi">
             </div>
             <div class="form-group">
                 <label for="client_number">Recapito Telefonico</label>
-                <input type="number" class="form-control" id="client_number" @change="requireFormData()"
+                <input type="number" class="form-control" id="client_number"
                        v-model="order.client_number" required name="client_number"
                        placeholder="es. 3249065865">
             </div>
             <div class="form-group">
                 <label for="client_address">Address</label>
-                <input type="text" class="form-control" id="client_address" @change="requireFormData()"
+                <input type="text" class="form-control" id="client_address"
                        v-model="order.client_address" required name="client_address"
                        placeholder="via Giuseppe Garibaldi">
             </div>
@@ -249,7 +250,7 @@
                 <div class="form-group col-md-6">
                     <label for="client_civic_number">Civico</label>
                     <input type="number" class="form-control" v-model="order.client_civic_number"
-                           id="client_civic_number" @change="requireFormData()"
+                           id="client_civic_number"
                            required
                            name="civic_number"
                            placeholder="31">
@@ -257,14 +258,13 @@
                 <div class="form-group col-md-6">
                     <label for="client_city_cap">CAP</label>
                     <input type="text" class="form-control" v-model="order.client_city_cap" id="client_city_cap"
-                           @change="requireFormData()" required
+                           required
                            name="city_cap" placeholder="20123">
                 </div>
             </div>
             <div class="form-group">
                 <label for="client_city">Città</label>
                 <input type="text" class="form-control" v-model="order.client_city" id="client_city" required
-                       @change="requireFormData()"
                        name="client_city"
                        placeholder="Milano">
             </div>
@@ -298,13 +298,13 @@
                 @{{ order.total_price }} €
                 </span>
             </div>
-            <button class="btn-checkout" type="submit" :disabled="order_set.disabled" @click="setOrder()">
+            <button class="btn-checkout" @click="setOrder()">
                 CHECKOUT
             </button>
         </div>
 
         <!-- Inizio Modale -->
-        <div class="modal fade" id="payment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="payment" tabindex="-1" role="dialog" aria-labelledby="payment"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -319,7 +319,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="button_payment" @click="makePayment()">Paga
+                        <button type="button" class="btn btn-primary" id="button_payment" @click="makePayment(); stage=4">Paga
                         </button>
                     </div>
                 </div>
@@ -333,3 +333,4 @@
 @section('footer_script')
     <script src="{{ asset('js/vue.js') }}" charset="utf-8"></script>
 @endsection
+
