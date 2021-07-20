@@ -198,6 +198,8 @@ const app = new Vue(
              */
             makePayment() {
                 const price = this.order.total_price;
+                let notify = this.notify;
+                let order = this.order;
                 if (!this.braintree_payment.instance) {
                     //TODO da sistemare, in caso si procede a pagare due volte
                     $('#payment').modal('hide');
@@ -207,16 +209,19 @@ const app = new Vue(
                             token: payload.nonce,
                             amount: price
                         }).then(response => {
-                            this.notify = {
-                                style: 'success',
-                                message: response.data.message
-                            }
                             if (response.data.success) {
+                                //TODO risolvere questo errore che non si vede
+                                notify = {
+                                    style: 'success',
+                                    message: response.data.message
+                                }
+                                //TODO pulire il carrello
                                 Vue.$cookies.remove('client_order');
                                 $('#payment').modal('hide');
                                 $('#button_payment').attr('disabled', 'true');
+                                order = {};
                             } else {
-                                this.notify = {
+                                notify = {
                                     style: 'danger',
                                     message: response.data.message
                                 }
