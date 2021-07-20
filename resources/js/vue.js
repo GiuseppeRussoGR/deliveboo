@@ -108,6 +108,9 @@ const app = new Vue(
             removeOrder(index) {
                 this.order.dishes.splice(index, 1);
             },
+            /**
+             * Funzione per ricalcolare il totale dell'ordine
+             */
             totalOrderRecalculated(){
                 this.order.total_price = 0;
                 this.order.dishes.forEach(element => {
@@ -134,6 +137,9 @@ const app = new Vue(
                     console.log('error')
                 }
             },
+            /**
+             * Funzione per settare un valore nei cookie
+             */
             setDataOrderCookie() {
                 this.$cookies.set('client_order', this.order)
             },
