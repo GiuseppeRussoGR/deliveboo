@@ -25,6 +25,13 @@
 
 
 @section('content')
+    <div v-if="notify.message !== undefined" :class="'alert alert-dismissible fade show alert-'+ notify.style"
+         role="alert">
+        @{{ notify.message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="notify = {}">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <!-- {{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -96,7 +103,7 @@
                     <div class="type-card" :class="{active : card === index}"
                          @click='getApi("api/restaurants/", "restaurants", type.id); card = index; categoryChosen = true; stage = 1'>
                         <div class="img-container">
-                            <img src="https://img.icons8.com/ios-filled/50/ffffff/dressed-fish.png"/> alt="">
+                            <img src="https://img.icons8.com/ios-filled/50/ffffff/dressed-fish.png" alt="">
                         </div>
                         <div class="card-title">
                             @{{type.name}}

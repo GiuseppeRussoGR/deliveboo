@@ -1019,8 +1019,8 @@ try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
-/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
@@ -1035,7 +1035,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 Vue.config.devtools = true;
 
-Vue.use(vue_cookies__WEBPACK_IMPORTED_MODULE_2___default.a);
+Vue.use(vue_cookies__WEBPACK_IMPORTED_MODULE_1___default.a);
 Vue.$cookies.config(60 * 60, '/', '', true, 'Lax');
 var app = new Vue({
   el: '#root',
@@ -1065,7 +1065,8 @@ var app = new Vue({
     chosenRestaurantIndex: 0,
     openBasket: false,
     stage: 0,
-    card: false
+    card: false,
+    notify: {}
   },
   methods: {
     /**
@@ -1122,8 +1123,10 @@ var app = new Vue({
 
         this.order.total_price += select_dish.price * parseInt(quantity);
       } else {
-        //TODO inserire errore da visualizzare in caso si tenti di inserire un altro ristorante
-        console.log('non puoi inserirlo');
+        this.notify = {
+          style: 'danger',
+          message: 'Si può fare l\'ordine soltanto da un ristorante alla volta'
+        };
       }
 
       this.setDataOrderCookie();
@@ -1213,7 +1216,10 @@ var app = new Vue({
 
               case 16:
                 $('#my_form').addClass('was-validated');
-                console.log('error');
+                _this3.notify = {
+                  style: 'danger',
+                  message: 'Non tutti i campi sono stati compilati correttamente'
+                };
 
               case 18:
               case "end":
@@ -1287,7 +1293,10 @@ var app = new Vue({
                         switch (_context3.prev = _context3.next) {
                           case 0:
                             if (!instance) {
-                              console.log('richiesta di pagamento non riuscita, riprovare');
+                              externVue.notify = {
+                                style: false,
+                                message: 'Errore durante la richiesta di pagamento. Provare ad reinserire l\'ordine'
+                              };
                             }
 
                             externVue.braintree_payment.instance = instance;
@@ -1320,7 +1329,6 @@ var app = new Vue({
      * @returns {boolean}
      */
     requireFormData: function requireFormData() {
-      //TODO da rivedere la validazione
       var array_value = [];
 
       for (var element in this.order) {
@@ -1346,19 +1354,26 @@ var app = new Vue({
         $('#payment').modal('hide');
       } else {
         this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
+          var _this5 = this;
+
           axios.post('api/order/payment', {
             token: payload.nonce,
             amount: price
           }).then(function (response) {
-            //TODO da aggiungere funzioni nella risposta
-            console.log(response.data);
+            _this5.notify = {
+              style: 'success',
+              message: response.data.message
+            };
 
             if (response.data.success) {
-              $cookies.remove('client_order');
+              Vue.$cookies.remove('client_order');
               $('#payment').modal('hide');
               $('#button_payment').attr('disabled', 'true');
             } else {
-              console.log('pagamento non riuscito');
+              _this5.notify = {
+                style: 'danger',
+                message: response.data.message
+              };
             }
           });
         });
@@ -1367,13 +1382,12 @@ var app = new Vue({
   },
   mounted: function mounted() {
     this.getApi('api/types/', 'types', '');
+    console.log(this.notify.message);
   },
   created: function created() {
     if (this.$cookies.isKey('client_order')) {
-      this.order = {
-        total_price: $cookies.get('client_order').total_price,
-        dishes: $cookies.get('client_order').dishes
-      };
+      this.order.total_price = $cookies.get('client_order').total_price;
+      this.order.dishes = $cookies.get('client_order').dishes;
     }
   }
 });
@@ -1387,7 +1401,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\danie\Downloads\Progetto finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

@@ -2,7 +2,7 @@ Vue.config.devtools = true
 import VueCookies from 'vue-cookies'
 
 Vue.use(VueCookies)
-Vue.$cookies.config(60*60, '/', '', true, 'Lax')
+Vue.$cookies.config(60 * 60, '/', '', true, 'Lax')
 const app = new Vue(
     {
         el: '#root',
@@ -32,7 +32,8 @@ const app = new Vue(
             chosenRestaurantIndex: 0,
             openBasket: false,
             stage: 0,
-            card: false
+            card: false,
+            notify: {}
         },
         methods: {
             /**
@@ -82,8 +83,10 @@ const app = new Vue(
                     }
                     this.order.total_price += select_dish.price * parseInt(quantity);
                 } else {
-                    //TODO inserire errore da visualizzare in caso si tenti di inserire un altro ristorante
-                    console.log('non puoi inserirlo')
+                    this.notify = {
+                        style: 'danger',
+                        message: 'Si può fare l\'ordine soltanto da un ristorante alla volta'
+                    }
                 }
                 this.setDataOrderCookie()
             },
@@ -111,7 +114,7 @@ const app = new Vue(
             /**
              * Funzione per ricalcolare il totale dell'ordine
              */
-            totalOrderRecalculated(){
+            totalOrderRecalculated() {
                 this.order.total_price = 0;
                 this.order.dishes.forEach(element => {
                     this.order.total_price += element.prezzo_singolo * element.quantita;
@@ -134,7 +137,10 @@ const app = new Vue(
                     $('#payment').modal('show');
                 } else {
                     $('#my_form').addClass('was-validated');
-                    console.log('error')
+                    this.notify = {
+                        style: 'danger',
+                        message: 'Non tutti i campi sono stati compilati correttamente'
+                    }
                 }
             },
             /**
@@ -162,7 +168,10 @@ const app = new Vue(
                     selector: '#dropin-container'
                 }, async function (err, instance) {
                     if (!instance) {
-                        console.log('richiesta di pagamento non riuscita, riprovare');
+                        externVue.notify = {
+                            style: false,
+                            message: 'Errore durante la richiesta di pagamento. Provare ad reinserire l\'ordine'
+                        }
                     }
                     externVue.braintree_payment.instance = instance;
                     externVue.braintree_payment.error = err;
@@ -173,11 +182,9 @@ const app = new Vue(
              * @returns {boolean}
              */
             requireFormData() {
-                //TODO da rivedere la validazione
                 let array_value = [];
                 for (const element in this.order) {
                     if (this.order[element] === '') {
-
                         array_value.push(false);
                     } else {
                         array_value.push(true);
@@ -200,14 +207,19 @@ const app = new Vue(
                             token: payload.nonce,
                             amount: price
                         }).then(response => {
-                            //TODO da aggiungere funzioni nella risposta
-                            console.log(response.data)
+                            this.notify = {
+                                style: 'success',
+                                message: response.data.message
+                            }
                             if (response.data.success) {
-                                $cookies.remove('client_order');
+                                Vue.$cookies.remove('client_order');
                                 $('#payment').modal('hide');
                                 $('#button_payment').attr('disabled', 'true');
                             } else {
-                                console.log('pagamento non riuscito')
+                                this.notify = {
+                                    style: 'danger',
+                                    message: response.data.message
+                                }
                             }
                         })
                     });
@@ -217,13 +229,12 @@ const app = new Vue(
         },
         mounted() {
             this.getApi('api/types/', 'types', '')
+            console.log(this.notify.message)
         },
         created() {
             if (this.$cookies.isKey('client_order')) {
-                this.order = {
-                    total_price: $cookies.get('client_order').total_price,
-                    dishes: $cookies.get('client_order').dishes
-                }
+                this.order.total_price = $cookies.get('client_order').total_price;
+                this.order.dishes = $cookies.get('client_order').dishes;
             }
         }
 
