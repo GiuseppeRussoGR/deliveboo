@@ -1036,7 +1036,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 Vue.config.devtools = true;
 
 Vue.use(vue_cookies__WEBPACK_IMPORTED_MODULE_1___default.a);
-Vue.$cookies.config('1d', '/', '', true, 'Lax');
+Vue.$cookies.config(60 * 60, '/', '', true, 'Lax');
 var app = new Vue({
   el: '#root',
   data: {

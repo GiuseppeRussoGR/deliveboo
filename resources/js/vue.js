@@ -2,7 +2,7 @@ Vue.config.devtools = true
 import VueCookies from 'vue-cookies'
 
 Vue.use(VueCookies)
-Vue.$cookies.config('1d', '/', '', true, 'Lax')
+Vue.$cookies.config(60*60, '/', '', true, 'Lax')
 const app = new Vue(
     {
         el: '#root',
