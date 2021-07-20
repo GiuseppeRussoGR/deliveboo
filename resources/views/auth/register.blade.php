@@ -7,12 +7,12 @@
 @endsection
 
 
-@section('app_style', 'user')
+@section('app_style', 'user register')
 
 @section('content')
 <div class="row">
-        <div class="col-md-8 m-auto">
-            <div class="card">
+        <div class="col-md-8 m-auto ">
+            <div class="card ">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
