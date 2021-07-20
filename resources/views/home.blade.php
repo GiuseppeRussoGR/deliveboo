@@ -96,7 +96,8 @@
                     <div class="type-card" :class="{active : card === index}"
                          @click='getApi("api/restaurants/", "restaurants", type.id); card = index; categoryChosen = true; stage = 1'>
                         <div class="img-container">
-                            <img src="https://img.icons8.com/ios-filled/50/ffffff/dressed-fish.png"/> alt="">
+                            <img :src="'storage/'+ type.img_path"/> alt="">
+                           
                         </div>
                         <div class="card-title">
                             @{{type.name}}

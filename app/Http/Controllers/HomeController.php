@@ -15,6 +15,6 @@ class HomeController extends Controller
     public function index(Type $type): View
     {
         $types = $type->all();
-        return view('home', compact('types'));
+       return view('home', compact('types'));
     }
 }

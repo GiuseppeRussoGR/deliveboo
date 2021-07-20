@@ -22,10 +22,13 @@ class UsersController extends Controller
         $type_result = [];
 
         foreach ($types_all as $type) {
+            if($type->image_path === null){
+                $type->image_path = '';
+            }
             $type_result[] = [
                 'name' => $type->name,
                 'id' => $type->id,
-                'img_path' => $type->img_path ? $type->img_path : ''
+                'img_path' => $type->image_path
             ];
         }
 
