@@ -1,7 +1,8 @@
 @extends('layouts.app')
+@section('app_style', 'user')
 @section('content')
 
-<div class="container">
+<div>
     <h1>Aggiungi un piatto</h1>
 
     <form action=" {{ route('admin.user.update', [ 'user' => $dish->id ]) }} " method="post" enctype="multipart/form-data">
@@ -51,8 +52,8 @@
 
         <div class="form-group">
             <div>
-                <img src="{{ asset('storage/' . $dish->img_path) }}" alt="{{ $dish->name }}">
-                <label for="img_path">Inserisci un'immagine di copertina</label>
+                <img src="{{ asset('storage/' . $dish->img_path) }}" alt="{{ $dish->name }}" style="width: 200px;">
+                <label for="img_path" style="display: block;">Inserisci un'immagine di copertina</label>
                 <input type="file" class="form-control-file" id="img_path" name="img_path">
             </div>
         </div>

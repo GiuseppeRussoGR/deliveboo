@@ -1205,7 +1205,11 @@ Vue.config.devtools = true;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! C:\Users\danie\Downloads\Progetto finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+=======
+module.exports = __webpack_require__(/*! D:\BOOLEAN\PROGETTO FINALE\deliveboo\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+>>>>>>> f940f6aa99b13c05acc53890dec51ad4aa8aafcb
 
 
 /***/ })
