@@ -1153,6 +1153,10 @@ var app = new Vue({
     removeOrder: function removeOrder(index) {
       this.order.dishes.splice(index, 1);
     },
+
+    /**
+     * Funzione per ricalcolare il totale dell'ordine
+     */
     totalOrderRecalculated: function totalOrderRecalculated() {
       var _this2 = this;
 
@@ -1219,6 +1223,10 @@ var app = new Vue({
         }, _callee);
       }))();
     },
+
+    /**
+     * Funzione per settare un valore nei cookie
+     */
     setDataOrderCookie: function setDataOrderCookie() {
       this.$cookies.set('client_order', this.order);
     },
