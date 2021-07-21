@@ -23,7 +23,7 @@ const app = new Vue(
             order_set: {},
             braintree_payment: {
                 token: '',
-                payment: true,
+                payment: false,
                 instance: '',
                 error: ''
             },
@@ -33,7 +33,7 @@ const app = new Vue(
             openBasket: false,
             stage: 0,
             card: false,
-            notify: {}
+            notify: {},
         },
         methods: {
             /**
@@ -87,6 +87,7 @@ const app = new Vue(
                         style: 'danger',
                         message: 'Si può fare l\'ordine soltanto da un ristorante alla volta'
                     }
+                    $('#error_modal').modal('show');
                 }
                 this.setDataOrderCookie()
             },
@@ -123,24 +124,38 @@ const app = new Vue(
             /**
              * Funzione che permette di inserire l'ordine nel DB
              */
-            async setOrder() {
-                if (this.requireFormData()) {
-                    const response = await axios.post('api/order', {...this.order});
-                    const value = await response.data;
-                    this.order_set = {
-                        success: value.success,
-                        id: value.order_number,
-                        client_code: value.client_code
+            setOrder() {
+                if (this.requireFormData() && !this.notify.hasOwnProperty('message')) {
+                    axios.post('api/order', {...this.order}).then(async response => {
+                        this.order_set = {
+                            success: response.data.success,
+                            id: response.data.order_number,
+                            client_code: response.data.client_code
+                        }
+                        this.braintree_payment.token = await this.getToken();
+                        await this.getDataPayment();
+                        $('#payment').modal('show');
+                    }).catch(error => {
+                        this.notify = {
+                            style: 'danger',
+                            message: error.response.data.errors
+                        }
+                        $('#error_modal').modal('show');
+                    });
+
+                } else if (this.braintree_payment.payment) {
+                    this.notify = {
+                        style: 'warning',
+                        message: 'Ordine già inviato, attendi che venga evaso l\'ordine'
                     }
-                    this.braintree_payment.token = await this.getToken();
-                    await this.getDataPayment();
-                    $('#payment').modal('show');
+                    $('#error_modal').modal('show');
                 } else {
                     $('#my_form').addClass('was-validated');
                     this.notify = {
                         style: 'danger',
                         message: 'Non tutti i campi sono stati compilati correttamente'
                     }
+                    $('#error_modal').modal('show');
                 }
             },
             /**
@@ -161,20 +176,21 @@ const app = new Vue(
              * Funzione che prende i dati di pagamento dall'utente e genero l'istanza di braintree
              * @returns {Promise<void>}
              */
-            async getDataPayment() {
-                const externVue = this;
-                await braintree.dropin.create({
+            getDataPayment() {
+                braintree.dropin.create({
                     authorization: this.braintree_payment.token,
-                    selector: '#dropin-container'
-                }, async function (err, instance) {
+                    selector: '#dropin-container',
+                    vaultManager: true
+                }, (err, instance) => {
                     if (!instance) {
-                        externVue.notify = {
+                        this.notify = {
                             style: false,
-                            message: 'Errore durante la richiesta di pagamento. Provare ad reinserire l\'ordine'
+                            message: 'Errore durante la richiesta di pagamento. Provare a ricaricare la pagina ed effettuare di nuovo il pagamento'
                         }
+                        $('#error_modal').modal('show');
                     }
-                    externVue.braintree_payment.instance = instance;
-                    externVue.braintree_payment.error = err;
+                    this.braintree_payment.instance = instance;
+                    this.braintree_payment.error = err;
                 });
             },
             /**
@@ -198,38 +214,43 @@ const app = new Vue(
              */
             makePayment() {
                 const price = this.order.total_price;
-                let notify = this.notify;
-                let order = this.order;
-                if (!this.braintree_payment.instance) {
-                    //TODO da sistemare, in caso si procede a pagare due volte
-                    $('#payment').modal('hide');
-                } else {
-                    this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
+                //if (!this.braintree_payment.instance) {
+                //} else {
+                    this.braintree_payment.instance.requestPaymentMethod((err, payload) => {
                         axios.post('api/order/payment', {
                             token: payload.nonce,
                             amount: price
                         }).then(response => {
                             if (response.data.success) {
-                                //TODO risolvere questo errore che non si vede
-                                notify = {
-                                    style: 'success',
-                                    message: response.data.message
-                                }
-                                //TODO pulire il carrello
-                                Vue.$cookies.remove('client_order');
-                                $('#payment').modal('hide');
-                                $('#button_payment').attr('disabled', 'true');
-                                order = {};
+                                this.braintree_payment.payment = true;
+                                this.$cookies.remove('client_order');
+                                this.openBasket = false;
+                                this.order = {
+                                    dishes: []
+                                };
+                                $('#dropin-container').hide();
+                                $('#message_payment').html('Grazie');
+                                $('#button_payment').hide();
                             } else {
-                                notify = {
+                                this.notify = {
                                     style: 'danger',
                                     message: response.data.message
                                 }
+                                //TODO da sistemare in caso di errore di pagamento
+                                $('#dropin-container').hide();
+                                $('#message_payment').html('Il tuo ordine verrà evaso il prima possibile');
+                                $('#button_payment').hide();
                             }
                         })
                     });
-                }
+                //}
 
+            },
+            /**
+             * Funzione che in caso di chiusura della modale cancella l'istanza di braintree
+             */
+            teardownBraintree() {
+                this.braintree_payment.instance.teardown();
             }
         },
         mounted() {

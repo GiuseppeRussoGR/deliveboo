@@ -147,7 +147,7 @@ class UserController extends Controller
      * Make an array with all data about user from orders table
      * @return View
      */
-    public function statistics(): View
+    public function statistics(Request $request): View
     {
         $array_statistic = [];
         $user = User::find(Auth::user()->id);

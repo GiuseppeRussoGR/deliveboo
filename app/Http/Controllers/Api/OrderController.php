@@ -53,6 +53,7 @@ class OrderController extends Controller
                 ]);
             }
         }
+
         $order_insert = [
             'success' => $success,
             'order_number' => $new_order->id,

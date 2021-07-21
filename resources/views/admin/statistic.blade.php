@@ -1,14 +1,28 @@
 @extends('layouts.app')
+@section('header_script')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@endsection
 @section('app_style', 'user')
 @section('content')
-    <h1>Tutti gli ordini</h1>
+    <div id="canvas_container">
+        <canvas id="myChart"></canvas>
+    </div>
+    <button onclick=" window.resetCanvas(true)">Cambia</button>
+@endsection
+@section('footer_script')
+    <script>
+        let statistics = [];
+    </script>
+    <script src="{{ asset('js/statistic.js') }}" charset="utf-8"></script>
     @foreach($array_statistic as $element)
-        <ul>
-            <li>id piatto: {{$element->dish_id}}</li>
-            <li>id ordine: {{$element->order_id}}</li>
-            <li>Nome piatto: {{$element->name_dish}}</li>
-            <li>Prezzo totale ordine: {{$element->total_price}}</li>
-            <li>inserito il: {{$element->created_at}}</li>
-        </ul>
+        <script>
+            statistics.push({
+                id_piatto: '{{$element->dish_id}}',
+                id_ordine: '{{$element->order_id}}',
+                nome_piatto: '{{$element->name_dish}}',
+                prezzo_totale: '{{$element->total_price}}',
+                inserito: '{{$element->created_at}}'
+            });
+        </script>
     @endforeach
 @endsection
