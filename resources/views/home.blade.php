@@ -23,12 +23,15 @@
     <!-- Fine Menu Verticale -->
 @endsection
 
+@section('app-content-class')
+openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
+@endsection
 
 @section('content')
-    <div v-if="notify.message !== undefined" :class="'border-warning border-left border-width-4 px-4 py-3 mx-3 mb-3 bg-white text-black shadow-sm animated flipInX delay-02s alert-'+ notify.style" role="alert">
+    <div v-if="notify.message !== undefined" :class="'position-fixed border-warning border-left border-width-4 px-4 py-3 mx-3 mb-3 bg-white text-black shadow-sm alert-'+ notify.style" role="alert">
         <i class="fas fa-exclamation opacity-05 mr-3"></i>
         @{{ notify.message }}
-        <button type="button" class="close" aria-label="Close">
+        <button type="button" class="close" aria-label="Close" @click="notify = {}">
             <span aria-hidden="true" style="text-shadow: none;">&times;</span>
         </button>
     </div>
@@ -117,7 +120,7 @@
 
         <div class="container">
             <div class="type-cards">
-                <div class="" v-for="(type,index) in types">
+                <div class="col-4 col-md-3 col-lg-2" v-for="(type,index) in types">
                     <div class="type-card" :class="{active : card === index}"
                          @click='getApi("api/restaurants/", "restaurants", type.id); card = index; categoryChosen = true; stage = 1'>
                         <div class="img-container">
@@ -139,7 +142,7 @@
 
     <!-- Inizio Ristoranti -->
     <div class="restaurants-container row" :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
-        <div class="col-6" v-for='(restaurant, index) in restaurants'>
+        <div class="col-12 col-lg-6" v-for='(restaurant, index) in restaurants'>
             <div class="restaurant-card"
                  @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
                 <div class="restaurant-img">
@@ -208,7 +211,7 @@
         <!-- Inizio Dishes -->
         <div class="dishes row">
 
-            <div :class="openBasket ? 'col-4' : 'col-3'" v-for="(dish, index) in dishes">
+            <div :class="openBasket ? 'col-12 col-md-6 col-lg-4' : 'col-6 col-md-3'" v-for="(dish, index) in dishes">
                 <div class="dish-card" :class="{'cart-open' : openBasket}">
                     <img :src="'storage/' + dish.img_path" :alt="dish.name">
                     <div class="dish-content">

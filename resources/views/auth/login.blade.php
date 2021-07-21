@@ -6,12 +6,17 @@
     <script src="https://js.braintreegateway.com/web/dropin/1.31.0/js/dropin.js"></script>
 @endsection
 
-@section('app_style', 'user login')
+@section('app_style', 'user')
+
+@section('vertical-nav-class', '')
+
+@section('app-content-class')
+'col-12'
+@endsection
 
 @section('content')
-<div class="container ">
     <div class="row ">
-        <div class="col-md-12 d-flex ">
+        <div class="col-md-12 d-flex form-container">
             <div class="card ">
                 <div class="card-header">{{ __('Login') }}</div>
 
@@ -20,7 +25,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-12 col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-12 col-md-6 col-form-label text-md-left">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-12">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
@@ -83,5 +88,9 @@
             </div>
         </div>
     </div>
-</div>
+
+@endsection
+
+@section('footer_script')
+    <script src="{{ asset('js/vue.js') }}" charset="utf-8"></script>
 @endsection

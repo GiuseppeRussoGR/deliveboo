@@ -34,14 +34,14 @@
         <div id="root" class="container">
             <div class="row">
                 <!-- Inizio Sezione Verticale -->
-                <div class="col-2 col-md-1 vertical-nav">
+                <div class="@yield('vertical-nav-class', 'col-2 col-md-1') vertical-nav">
                     @yield('vertical-nav')
                 </div>
                 <!-- Fine Sezione Verticale -->
 
                 <!-- Inizio App Content -->
                 <!-- ATTENZIONE: Mentre si struttura il carrello metti col-8 -->
-                <div class="app-content" :class="openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'">
+                <div class="app-content" :class="@yield('app-content-class')" >
                     @yield('content')
                 </div>
                 <!-- Fine App Content -->

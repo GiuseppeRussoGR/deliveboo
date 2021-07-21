@@ -11026,7 +11026,7 @@ h6 {
 
 #app > .container {
   background-color: #FFFFFF;
-  height: 80%;
+  height: 85%;
   border-radius: 30px;
   overflow: hidden;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
@@ -11761,30 +11761,36 @@ h6 {
 
 /*css pagina login*/
 
-.user.login .container .row {
-  padding-top: 15px;
+.user .row {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.user .row .form-container {
   justify-content: center;
 }
 
-.user.login .container .row .card {
-  border: 1px solid #FFA823;
+.user .row .form-container .card {
+  justify-content: center;
+  border: 1px solid #24A1FF;
 }
 
-.user.login .container .row .card .card-header {
-  background-color: #FFA823;
+.user .row .form-container .card .card-header {
+  background-color: #24A1FF;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.user .row .form-container .card .btn-primary {
+  background-color: #24A1FF;
+  transition: all 0.4s;
+}
+
+.user .row .form-container .card .btn-primary:hover {
+  background-color: #0089f0;
 }
 
 /*css pagina register*/
-
-.user.register .row {
-  padding-top: 10px;
-}
-
-.user.register .row .card {
-  border: 1px solid #FFA823;
-}
-
-.user.register .row .card .card-header {
-  background-color: #FFA823;
-}
 
