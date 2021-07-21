@@ -50,7 +50,45 @@
                 }
             }
         }
-        // end tipologie 
+        // end tipologie
+
+        // ristoranti
+        .restaurant-card {
+            .restaurant-infos {
+                .card-title {
+                    font-size: 12px;
+                }
+
+                .restaurant-location {
+                    .restaurant-address {
+                        padding-left: 0;
+
+                        i {
+                            display: none;
+                        }
+
+                        font-size: 9px;
+                    }
+
+                    .restaurant-city {
+                        margin-left: 0;
+                        font-size: 11px;
+                    }
+                }
+
+                .restaurant-rate {
+
+                    i {
+                        display: none;
+                    }
+
+                    font-size: 10px;
+                }
+
+
+            }
+        }
+        // end ristoranti
     
     }
     

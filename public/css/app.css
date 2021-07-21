@@ -11294,6 +11294,7 @@ h6 {
 
 .client .restaurants-container .restaurant-card .restaurant-infos .card-title {
   margin-left: 1px;
+  font-weight: bold;
 }
 
 .client .restaurants-container .restaurant-card .restaurant-infos .restaurant-address {
@@ -11686,6 +11687,32 @@ h6 {
 
   .client .container .types-section .type-cards > div .type-card {
     margin-bottom: 1rem;
+  }
+
+  .client .restaurant-card .restaurant-infos .card-title {
+    font-size: 12px;
+  }
+
+  .client .restaurant-card .restaurant-infos .restaurant-location .restaurant-address {
+    padding-left: 0;
+    font-size: 9px;
+  }
+
+  .client .restaurant-card .restaurant-infos .restaurant-location .restaurant-address i {
+    display: none;
+  }
+
+  .client .restaurant-card .restaurant-infos .restaurant-location .restaurant-city {
+    margin-left: 0;
+    font-size: 11px;
+  }
+
+  .client .restaurant-card .restaurant-infos .restaurant-rate {
+    font-size: 10px;
+  }
+
+  .client .restaurant-card .restaurant-infos .restaurant-rate i {
+    display: none;
   }
 }
 
