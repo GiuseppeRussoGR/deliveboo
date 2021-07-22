@@ -2,15 +2,14 @@
 @section('header_script')
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 @endsection
-@section('app_style', 'user detail')
+@section('app_style', 'user list')
 
 @section('vertical-nav')
     <!-- Inizio Menu Verticale -->
     <div class="icons-container">
         <a href="{{route('admin.user.index')}}"><i class="fas fa-home icon home-icon"></i></a>
-        <a href="#"><i class="fas fa-info-circle icon active"></i></a>
         <a href="{{route('admin.user.create')}}"><i class="fas fa-plus icon"></i></a>
-        <a href="{{route('admin.restaurant-listOrder')}}"><i class="fas fa-shopping-cart icon" ></i></a>
+        <a href="{{route('admin.restaurant-listOrder')}}"><i class="fas fa-shopping-cart icon active"></i></a>
         <a href="{{route('admin.restaurant-statistics', ['id' => Illuminate\Support\Facades\Auth::user()->id])}}"><i
                 class="fas fa-chart-line icon"></i></a>
     </div>
@@ -42,44 +41,31 @@
     </nav>
     <div class="row">
         <div class="col-12">
-            <h3>Dettaglio del piatto</h3>
+            <h3>Elenco ordini ricevuti</h3>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12">
-
-            <!-- here -->
-            <div class="mx-auto col-md-10">
+    <div class="row" style="height: 100%; overflow: auto">
+        @foreach($array_list as $element)
+            <div class="col-12 col-md-3">
                 <div class="card">
-                    <div class="card-image">
-                        <img class="card-img-top img-fluid" src="{{ asset('storage/' . $dish->img_path) }}"
-                             alt="{{ $dish->name}}">
-                    </div>
-                    <div class="card-body mx-auto">
-                        <h5 class="card-title">{{ $dish->name}}</h5>
-                        <p class="card-text">{{ $dish->description}}</p>
-                        <form action="{{ route('admin.user.destroy', ['user' => $dish->id]) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <input type="submit" class="btn btn-danger bottom" value="Elimina">
-                        </form>
-                        <p class="card-text">
-                            <small class="text-muted">prezzo: {{ $dish->price}}€
-                            </small>
-                        </p>
+                    <div class="card-body">
+                        <h5 class="card-title">Ordine n°{{$element->order_id}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Fatto il {{$element->created_at}}</h6>
+                        <p class="card-text">Totale: {{$element->total_price}}€</p>
                     </div>
                 </div>
             </div>
-        </div>
-        @endsection
+        @endforeach
+    </div>
+@endsection
 
-        @section('footer_script')
-            <script>
-                const user = new Vue({
-                    el: '#root',
-                    data: {
-                        openBasket: false
-                    }
-                })
-            </script>
+@section('footer_script')
+    <script>
+        const user = new Vue({
+            el: '#root',
+            data: {
+                openBasket: false
+            }
+        })
+    </script>
 @endsection

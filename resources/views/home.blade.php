@@ -26,6 +26,9 @@
 @section('app-content-class')
     openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
 @endsection
+@section('app-side-class')
+    openBasket ? 'col-2 col-md-3' : ''
+@endsection
 
 @section('content')
     <!-- The Modal -->
@@ -107,7 +110,7 @@
                     </form>
                  @endguest
                 </div>
-                
+
                 <button class="btn burger" type="button" @click="showMenu">
                     <i class="fas fa-user-circle icon"></i>
                 </button>

@@ -11269,7 +11269,6 @@ h6 {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  display: none;
   transition: display 0.4s;
   height: calc(100% - 100px - 220px);
   overflow-y: auto;
@@ -11679,6 +11678,363 @@ h6 {
   display: none;
 }
 
+.user .icons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.user .icons-container .home-icon {
+  margin-top: 19px;
+}
+
+.user .icons-container .home-icon.active {
+  margin-top: 0;
+}
+
+.user .icons-container .icon {
+  font-size: 1.3rem;
+  margin-bottom: 2.5rem;
+  transition: color 0.4s, background-color 0.4s, font-size 0.4s;
+  cursor: pointer;
+}
+
+.user .icons-container .icon:hover {
+  color: #FFA823;
+}
+
+.user .icons-container .icon.active {
+  font-size: 1.7rem;
+  color: #FFFFFF;
+  background-color: #FFA823;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 3.5rem;
+}
+
+.user nav {
+  padding: 1.7rem 0 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user nav .logo h5 {
+  margin-bottom: 0;
+}
+
+.user nav .logo h5 span {
+  color: #FFA823;
+}
+
+.user nav a {
+  background-color: #FFA823;
+  border-color: white;
+  border-radius: 10px;
+}
+
+.user nav a span {
+  color: white;
+}
+
+.user nav a .icon {
+  font-size: 2rem;
+  vertical-align: middle;
+  margin-left: 1rem;
+  color: #381d0b;
+}
+
+.user nav a:hover {
+  background-color: white;
+  border-color: #FFA823;
+}
+
+.user nav a:hover span {
+  color: #381d0b;
+}
+
+.user nav .login-button {
+  margin-right: 10px;
+}
+
+.user .dishes-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  transition: display 0.4s;
+  height: calc(100% - 100px - 220px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.user .dishes-container::-webkit-scrollbar {
+  display: none;
+}
+
+.user .dishes-container .dishes-card {
+  position: relative;
+  display: flex;
+  height: 132px;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  box-shadow: 3px 2px 5px 0 rgba(0, 0, 0, 0.15), -3px -3px 7px #FFFFFF;
+  transition: all 0.4s;
+}
+
+.user .dishes-container .dishes-card:hover {
+  box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.1), -3px -3px 7px #fff, inset 3px 3px 5px 0 rgba(0, 0, 0, 0.1), inset -3px -3px 7px #FFFFFF;
+}
+
+.user .dishes-container .dishes-card.active {
+  background-color: #FFA823;
+  color: white;
+  box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.1), -3px -3px 7px #fff, inset 3px 3px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.user .dishes-container .dishes-card .dish-img {
+  width: 50%;
+}
+
+.user .dishes-container .dishes-card .dish-img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.user .dishes-container .dishes-card .dish-location {
+  font-size: 1rem;
+}
+
+.user .dishes-container .dishes-card .dish-infos {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  color: #381d0b;
+  padding: 10px;
+}
+
+.user .dishes-container .dishes-card .dish-infos .card-title {
+  margin-left: 1px;
+  font-weight: bold;
+}
+
+.user .dishes-container .dishes-card .dish-infos .button_user {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.user.detail .card {
+  border: 0;
+  margin: 5px auto;
+  display: flex;
+}
+
+.user.detail .card .card-body {
+  z-index: 2;
+  margin-top: -1rem;
+  background-color: #fff;
+  width: 80%;
+  position: relative;
+}
+
+.user.detail .card .card-image {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 450px;
+}
+
+.user.detail .card .card-image > a > h3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 5px 0 0;
+  z-index: 2;
+  background: rgba(60, 48, 48, 0.6);
+  color: #d6e3df;
+  font-size: 1.5em;
+  padding: 3px;
+  transition: all 0.5s ease;
+  transform: translateX(-100%);
+}
+
+.user.detail .card .card-image img {
+  position: relative;
+  opacity: 1;
+  width: 100%;
+  opacity: 0.85;
+  transition: 0.5s ease;
+}
+
+.user.detail .card:hover img {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.user.detail .card:hover .card-image > a > h3 {
+  transform: translateX(0%);
+}
+
+.user.detail .card .card-body,
+.user.detail .card .card-image {
+  border-radius: 5px;
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+.user.detail .card .card-badge-left {
+  position: absolute;
+  z-index: 3;
+  margin-top: 5px;
+}
+
+.user.detail .card .card-badge-left .badge {
+  border-radius: 0;
+  color: #f37272;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8px;
+}
+
+.user.detail .card .bottom {
+  float: right;
+}
+
+.user.statistics .lds-roller {
+  display: inline-block;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.user.statistics .lds-roller div {
+  -webkit-animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+          animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 40px 40px;
+}
+
+.user.statistics .lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: orange;
+  margin: -4px 0 0 -4px;
+}
+
+.user.statistics .lds-roller div:nth-child(1) {
+  -webkit-animation-delay: -0.036s;
+          animation-delay: -0.036s;
+}
+
+.user.statistics .lds-roller div:nth-child(1):after {
+  top: 63px;
+  left: 63px;
+}
+
+.user.statistics .lds-roller div:nth-child(2) {
+  -webkit-animation-delay: -0.072s;
+          animation-delay: -0.072s;
+}
+
+.user.statistics .lds-roller div:nth-child(2):after {
+  top: 68px;
+  left: 56px;
+}
+
+.user.statistics .lds-roller div:nth-child(3) {
+  -webkit-animation-delay: -0.108s;
+          animation-delay: -0.108s;
+}
+
+.user.statistics .lds-roller div:nth-child(3):after {
+  top: 71px;
+  left: 48px;
+}
+
+.user.statistics .lds-roller div:nth-child(4) {
+  -webkit-animation-delay: -0.144s;
+          animation-delay: -0.144s;
+}
+
+.user.statistics .lds-roller div:nth-child(4):after {
+  top: 72px;
+  left: 40px;
+}
+
+.user.statistics .lds-roller div:nth-child(5) {
+  -webkit-animation-delay: -0.18s;
+          animation-delay: -0.18s;
+}
+
+.user.statistics .lds-roller div:nth-child(5):after {
+  top: 71px;
+  left: 32px;
+}
+
+.user.statistics .lds-roller div:nth-child(6) {
+  -webkit-animation-delay: -0.216s;
+          animation-delay: -0.216s;
+}
+
+.user.statistics .lds-roller div:nth-child(6):after {
+  top: 68px;
+  left: 24px;
+}
+
+.user.statistics .lds-roller div:nth-child(7) {
+  -webkit-animation-delay: -0.252s;
+          animation-delay: -0.252s;
+}
+
+.user.statistics .lds-roller div:nth-child(7):after {
+  top: 63px;
+  left: 17px;
+}
+
+.user.statistics .lds-roller div:nth-child(8) {
+  -webkit-animation-delay: -0.288s;
+          animation-delay: -0.288s;
+}
+
+.user.statistics .lds-roller div:nth-child(8):after {
+  top: 56px;
+  left: 12px;
+}
+
+@-webkit-keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media screen and (min-width: 576px) and (max-width: 767px) {
   #root {
     max-width: 600px;
@@ -11789,34 +12145,40 @@ h6 {
 
 /*css pagina login*/
 
-.user .row {
+.user.login .row,
+.user.register .row {
   justify-content: center;
   align-items: center;
   height: 100%;
 }
 
-.user .row .form-container {
+.user.login .row .form-container,
+.user.register .row .form-container {
   justify-content: center;
 }
 
-.user .row .form-container .card {
+.user.login .row .form-container .card,
+.user.register .row .form-container .card {
   justify-content: center;
   border: 1px solid #24A1FF;
 }
 
-.user .row .form-container .card .card-header {
+.user.login .row .form-container .card .card-header,
+.user.register .row .form-container .card .card-header {
   background-color: #24A1FF;
   color: #FFFFFF;
   text-transform: uppercase;
   font-weight: 500;
 }
 
-.user .row .form-container .card .btn-primary {
+.user.login .row .form-container .card .btn-primary,
+.user.register .row .form-container .card .btn-primary {
   background-color: #24A1FF;
   transition: all 0.4s;
 }
 
-.user .row .form-container .card .btn-primary:hover {
+.user.login .row .form-container .card .btn-primary:hover,
+.user.register .row .form-container .card .btn-primary:hover {
   background-color: #0089f0;
 }
 

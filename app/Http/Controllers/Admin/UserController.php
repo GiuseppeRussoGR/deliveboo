@@ -147,9 +147,24 @@ class UserController extends Controller
      * Make an array with all data about user from orders table
      * @return View
      */
-    public function statistics($id): View
+    public function listOrder(): View
     {
-        return view('admin.statistic',compact('id'));
+        $array_list = [];
+        $user = Auth::user();
+        $order_collection = $user->dishes()->join('dish_order', 'id', '=', 'dish_order.dish_id')->join('orders', 'order_id', '=', 'orders.id')->get();
+        foreach ($order_collection as $single_order) {
+            $order = new stdClass();
+            $order->order_id = $single_order->order_id;
+            $order->total_price = $single_order->total_price;
+            $order->created_at = date_format(date_create($single_order->created_at), 'Y-m-d');
+            $array_list[] = $order;
+        }
+        return view('admin.list_order', compact('array_list'));
+    }
+
+    public function statistic(){
+        $id = Auth::user()->id;
+        return view('admin.statistic', compact('id'));
     }
 
     /**

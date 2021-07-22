@@ -1,6 +1,6 @@
 /*css pagina login*/
-.user {
-    
+.user.login,
+.user.register{
     .row {
         justify-content: center;
         align-items: center;
@@ -12,14 +12,14 @@
             .card {
                 justify-content: center;
                 border: 1px solid $secondary_color;
-    
+
                 .card-header {
                     background-color: $secondary_color;
                     color: #FFFFFF;
                     text-transform: uppercase;
                     font-weight: 500;
                 }
-    
+
                 .btn-primary {
                     background-color: $secondary_color;
                     transition: all .4s;
@@ -37,7 +37,7 @@
 // .user {
 //     .row {
 //         padding-top: 10px;
-        
+
 //         .card {
 //             border: 1px solid $primary-color;
 //             .card-header {

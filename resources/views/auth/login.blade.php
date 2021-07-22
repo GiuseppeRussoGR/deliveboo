@@ -6,7 +6,7 @@
     <script src="https://js.braintreegateway.com/web/dropin/1.31.0/js/dropin.js"></script>
 @endsection
 
-@section('app_style', 'user')
+@section('app_style', 'user login')
 
 @section('vertical-nav-class', '')
 
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="form-group row">
-                                                        
+
                             <div class="col-md-12 ">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>

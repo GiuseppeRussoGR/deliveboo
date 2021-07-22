@@ -7,7 +7,7 @@
 @endsection
 
 
-@section('app_style', 'user')
+@section('app_style', 'user register')
 
 @section('vertical-nav-class', '')
 
@@ -146,7 +146,7 @@
                 </div>
             </div>
         </div>
-    
+
 </div>
 @endsection
 

@@ -48,7 +48,7 @@
 
                 <!-- Inizio Finestra Laterale -->
                 <!-- ATTENZIONE: Mentre si struttura il carrello metti col-3 -->
-                <div class="side-window" :class="openBasket ? 'col-2 col-md-3' : ''">
+                <div class="side-window" :class="@yield('app-side-class')">
                     @yield('side-window')
                 </div>
                 <!-- Fine Finestra Laterale -->

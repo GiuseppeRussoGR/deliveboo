@@ -135,9 +135,9 @@ Vue.component('year-chart', {
     }
 })
 var vm = new Vue({
-    el: '#statistics',
+    el: '#root',
     data: {
         status: true,
-        visible: true
+        openBasket: false
     }
 })

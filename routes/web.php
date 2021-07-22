@@ -15,5 +15,6 @@ Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
         Route::resource('/user', 'UserController');
-        Route::get('{id}/statistics', [UserController::class, 'statistics'])->name('restaurant-statistics');
+        Route::get('{id}/statistics', [UserController::class, 'statistic'])->name('restaurant-statistics');
+        Route::get('/list-order', [UserController::class, 'listOrder'])->name('restaurant-listOrder');
     });
