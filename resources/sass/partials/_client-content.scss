@@ -56,8 +56,12 @@
         }
 
         a {
+            background-color: $primary_color;
+            border-color: white;
+            border-radius: 10px;
+
             span {
-                color: $text_color;
+                color: white;
             }
 
             .icon {
@@ -67,6 +71,24 @@
                 color: $text_color;
             }
         }
+
+        a:hover {
+            background-color: white;
+            border-color: $primary_color;
+
+            span {
+                color: $text_color;
+            }
+            
+        }
+
+        .login-button {
+            margin-right: 10px;
+        }
+
+        // .burger {
+        //     display: none;
+        // }
     }
 
     //Fine Navigator

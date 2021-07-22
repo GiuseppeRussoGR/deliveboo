@@ -11099,8 +11099,14 @@ h6 {
   color: #FFA823;
 }
 
+.client nav a {
+  background-color: #FFA823;
+  border-color: white;
+  border-radius: 10px;
+}
+
 .client nav a span {
-  color: #381d0b;
+  color: white;
 }
 
 .client nav a .icon {
@@ -11108,6 +11114,19 @@ h6 {
   vertical-align: middle;
   margin-left: 1rem;
   color: #381d0b;
+}
+
+.client nav a:hover {
+  background-color: white;
+  border-color: #FFA823;
+}
+
+.client nav a:hover span {
+  color: #381d0b;
+}
+
+.client nav .login-button {
+  margin-right: 10px;
 }
 
 .client .my-jumbotron {

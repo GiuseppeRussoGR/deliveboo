@@ -64,17 +64,15 @@ openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
         <div class="col-9">
             <div class="login">
                 @guest
-                    <a class="float-right" href="{{ route('register') }}">
+                    <a class="btn float-right" href="{{ route('register') }}">
                     <span class="subtext">
-                        Sei un ristoratore? Collabora con noi.
+                        Sei un ristoratore? Collabora con noi
                     </span>
-                        <i class="fas fa-user-circle icon"></i>
                     </a>
-                    <a class="float-right" href="{{ route('login') }}">
+                    <a class="btn float-right login-button" href="{{ route('login') }}">
                     <span class="subtext">
                         Login
                     </span>
-                        <i class="fas fa-user-circle icon"></i>
                     </a>
                 @else
                     <a class="float-right" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -87,6 +85,11 @@ openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
                         @csrf
                     </form>
                 @endguest
+
+                {{-- <button class="btn burger" type="button" data-toggle="collapse" >
+                    <i class="fas fa-hamburger"></i>
+                </button> --}}
+                
             </div>
         </div>
     </nav>
