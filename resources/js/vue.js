@@ -251,6 +251,11 @@ const app = new Vue(
              */
             teardownBraintree() {
                 this.braintree_payment.instance.teardown();
+            },
+
+            // burger-menu
+            showMenu() {
+                $(".burger-content").fadeToggle("fast"); 
             }
         },
         mounted() {
