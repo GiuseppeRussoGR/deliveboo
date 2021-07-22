@@ -58,6 +58,16 @@ class DishSeeder extends Seeder
                 'img_path' => 'dishes-cover/polpette-di-zucchine.jpg',
                 'user_id' => 1
             ],
+            // avo brothers
+            [
+                'name' => 'Pink Burger',
+                'description' => 'Avocado, lattuga, barbabietola e maionese',
+                'price' => 15.00,
+                'visibility' => 1,
+                'category_id' => 4,
+                'img_path' => 'dishes-cover/pink-burger.jpeg',
+                'user_id' => 13
+            ],
         ];
         foreach ($dishes as $dish) {
             $new_dish = new Dish();
