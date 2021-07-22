@@ -24,16 +24,36 @@
 @endsection
 
 @section('app-content-class')
-openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
+    openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
 @endsection
 
 @section('content')
-    <div v-if="notify.message !== undefined" :class="'position-fixed border-warning border-left border-width-4 px-4 py-3 mx-3 mb-3 bg-white text-black shadow-sm alert-'+ notify.style" role="alert">
-        <i class="fas fa-exclamation opacity-05 mr-3"></i>
-        @{{ notify.message }}
-        <button type="button" class="close" aria-label="Close" @click="notify = {}">
-            <span aria-hidden="true" style="text-shadow: none;">&times;</span>
-        </button>
+    <!-- The Modal -->
+    <div class="modal fade" id="error_modal">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div :class="'modal-header alert-'+ notify.style">
+                    <h4 class="modal-title">Errore</h4>
+                    <button type="button" class="close" data-dismiss="modal" @click="notify = {}">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <span v-if="typeof notify.message === 'string'">
+                     @{{ notify.message }}<br>
+                    </span>
+                    <span v-else v-for="message in notify.message">
+                     @{{message}}<br>
+                        </span>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="notify = {}">Chiudi
+                    </button>
+                </div>
+
+            </div>
+        </div>
     </div>
     <!-- {{-- <div class="container">
     <div class="row justify-content-center">
@@ -75,7 +95,8 @@ openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
                     </span>
                     </a>
                 @else
-                    <a class="float-right" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                    <a class="float-right" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                     <span class="subtext">
                         Logout
                     </span>
@@ -269,7 +290,7 @@ openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
             <div class="form-group">
                 <label for="client_name">Nome</label>
                 <input type="text" class="form-control" id="client_name"
-                       v-model="order.client_name" :value="order.client_name" required name="client_name"
+                       v-model="order.client_name" required name="client_name"
                        placeholder="Mario Rossi">
             </div>
             <div class="form-group">
@@ -279,7 +300,7 @@ openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
                        placeholder="es. 3249065865">
             </div>
             <div class="form-group">
-                <label for="client_address">Address</label>
+                <label for="client_address">Indirizzo</label>
                 <input type="text" class="form-control" id="client_address"
                        v-model="order.client_address" required name="client_address"
                        placeholder="via Giuseppe Garibaldi">
@@ -353,32 +374,36 @@ openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
             </button>
         </div>
 
-        <!-- Inizio Modale -->
-        <div class="modal fade" id="payment" tabindex="-1" role="dialog" aria-labelledby="payment"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Pagamento</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="dropin-container"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="button_payment"
-                                @click="makePayment(); stage=4">Paga
-                        </button>
-                    </div>
+    </div>
+    <!-- Fine Carrello -->
+    <!-- Inizio Modale -->
+    <div class="modal fade" id="payment" tabindex="-1" role="dialog" aria-labelledby="payment"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pagamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            @click="teardownBraintree()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="dropin-container"></div>
+                    <div id="message_payment"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="teardownBraintree()">
+                        Chiudi
+                    </button>
+                    <button type="button" class="btn btn-primary" id="button_payment"
+                            @click="makePayment(); stage=4">Paga
+                    </button>
                 </div>
             </div>
         </div>
-        <!-- Fine Modale -->
     </div>
-    <!-- Fine Carrello -->
+    <!-- Fine Modale -->
 @endsection
 
 @section('footer_script')

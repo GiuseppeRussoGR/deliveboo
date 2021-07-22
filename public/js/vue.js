@@ -1023,15 +1023,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_1__);
 
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 Vue.config.devtools = true;
 
@@ -1056,7 +1056,7 @@ var app = new Vue({
     order_set: {},
     braintree_payment: {
       token: '',
-      payment: true,
+      payment: false,
       instance: '',
       error: ''
     },
@@ -1127,6 +1127,7 @@ var app = new Vue({
           style: 'danger',
           message: 'Si può fare l\'ordine soltanto da un ristorante alla volta'
         };
+        $('#error_modal').modal('show');
       }
 
       this.setDataOrderCookie();
@@ -1175,59 +1176,61 @@ var app = new Vue({
     setOrder: function setOrder() {
       var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, value;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                if (!_this3.requireFormData()) {
-                  _context.next = 16;
-                  break;
+      if (this.requireFormData() && !this.notify.hasOwnProperty('message')) {
+        axios.post('api/order', _objectSpread({}, this.order)).then( /*#__PURE__*/function () {
+          var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(response) {
+            return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    _this3.order_set = {
+                      success: response.data.success,
+                      id: response.data.order_number,
+                      client_code: response.data.client_code
+                    };
+                    _context.next = 3;
+                    return _this3.getToken();
+
+                  case 3:
+                    _this3.braintree_payment.token = _context.sent;
+                    _context.next = 6;
+                    return _this3.getDataPayment();
+
+                  case 6:
+                    $('#payment').modal('show');
+
+                  case 7:
+                  case "end":
+                    return _context.stop();
                 }
+              }
+            }, _callee);
+          }));
 
-                _context.next = 3;
-                return axios.post('api/order', _objectSpread({}, _this3.order));
-
-              case 3:
-                response = _context.sent;
-                _context.next = 6;
-                return response.data;
-
-              case 6:
-                value = _context.sent;
-                _this3.order_set = {
-                  success: value.success,
-                  id: value.order_number,
-                  client_code: value.client_code
-                };
-                _context.next = 10;
-                return _this3.getToken();
-
-              case 10:
-                _this3.braintree_payment.token = _context.sent;
-                _context.next = 13;
-                return _this3.getDataPayment();
-
-              case 13:
-                $('#payment').modal('show');
-                _context.next = 18;
-                break;
-
-              case 16:
-                $('#my_form').addClass('was-validated');
-                _this3.notify = {
-                  style: 'danger',
-                  message: 'Non tutti i campi sono stati compilati correttamente'
-                };
-
-              case 18:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+          return function (_x) {
+            return _ref.apply(this, arguments);
+          };
+        }())["catch"](function (error) {
+          _this3.notify = {
+            style: 'danger',
+            message: error.response.data.errors
+          };
+          $('#error_modal').modal('show');
+        });
+      } else if (this.braintree_payment.payment) {
+        this.notify = {
+          style: 'warning',
+          message: 'Ordine già inviato, attendi che venga evaso l\'ordine'
+        };
+        $('#error_modal').modal('show');
+      } else {
+        $('#my_form').addClass('was-validated');
+        this.notify = {
+          style: 'danger',
+          message: 'Non tutti i campi sono stati compilati correttamente'
+        };
+        $('#error_modal').modal('show');
+      }
     },
 
     /**
@@ -1275,53 +1278,22 @@ var app = new Vue({
     getDataPayment: function getDataPayment() {
       var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var externVue;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                externVue = _this4;
-                _context4.next = 3;
-                return braintree.dropin.create({
-                  authorization: _this4.braintree_payment.token,
-                  selector: '#dropin-container'
-                }, /*#__PURE__*/function () {
-                  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(err, instance) {
-                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-                      while (1) {
-                        switch (_context3.prev = _context3.next) {
-                          case 0:
-                            if (!instance) {
-                              externVue.notify = {
-                                style: false,
-                                message: 'Errore durante la richiesta di pagamento. Provare ad reinserire l\'ordine'
-                              };
-                            }
+      braintree.dropin.create({
+        authorization: this.braintree_payment.token,
+        selector: '#dropin-container',
+        vaultManager: true
+      }, function (err, instance) {
+        if (!instance) {
+          _this4.notify = {
+            style: false,
+            message: 'Errore durante la richiesta di pagamento. Provare a ricaricare la pagina ed effettuare di nuovo il pagamento'
+          };
+          $('#error_modal').modal('show');
+        }
 
-                            externVue.braintree_payment.instance = instance;
-                            externVue.braintree_payment.error = err;
-
-                          case 3:
-                          case "end":
-                            return _context3.stop();
-                        }
-                      }
-                    }, _callee3);
-                  }));
-
-                  return function (_x, _x2) {
-                    return _ref.apply(this, arguments);
-                  };
-                }());
-
-              case 3:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
-      }))();
+        _this4.braintree_payment.instance = instance;
+        _this4.braintree_payment.error = err;
+      });
     },
 
     /**
@@ -1347,39 +1319,47 @@ var app = new Vue({
      * ne riceve il risultato
      */
     makePayment: function makePayment() {
-      var price = this.order.total_price;
-      var notify = this.notify;
-      var order = this.order;
+      var _this5 = this;
 
-      if (!this.braintree_payment.instance) {
-        //TODO da sistemare, in caso si procede a pagare due volte
-        $('#payment').modal('hide');
-      } else {
-        this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
-          axios.post('api/order/payment', {
-            token: payload.nonce,
-            amount: price
-          }).then(function (response) {
-            if (response.data.success) {
-              //TODO risolvere questo errore che non si vede
-              notify = {
-                style: 'success',
-                message: response.data.message
-              }; //TODO pulire il carrello
+      var price = this.order.total_price; //if (!this.braintree_payment.instance) {
+      //} else {
 
-              Vue.$cookies.remove('client_order');
-              $('#payment').modal('hide');
-              $('#button_payment').attr('disabled', 'true');
-              order = {};
-            } else {
-              notify = {
-                style: 'danger',
-                message: response.data.message
-              };
-            }
-          });
+      this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
+        axios.post('api/order/payment', {
+          token: payload.nonce,
+          amount: price
+        }).then(function (response) {
+          if (response.data.success) {
+            _this5.braintree_payment.payment = true;
+
+            _this5.$cookies.remove('client_order');
+
+            _this5.openBasket = false;
+            _this5.order = {
+              dishes: []
+            };
+            $('#dropin-container').hide();
+            $('#message_payment').html('Grazie');
+            $('#button_payment').hide();
+          } else {
+            _this5.notify = {
+              style: 'danger',
+              message: response.data.message
+            }; //TODO da sistemare in caso di errore di pagamento
+
+            $('#dropin-container').hide();
+            $('#message_payment').html('Il tuo ordine verrà evaso il prima possibile');
+            $('#button_payment').hide();
+          }
         });
-      }
+      }); //}
+    },
+
+    /**
+     * Funzione che in caso di chiusura della modale cancella l'istanza di braintree
+     */
+    teardownBraintree: function teardownBraintree() {
+      this.braintree_payment.instance.teardown();
     }
   },
   mounted: function mounted() {
