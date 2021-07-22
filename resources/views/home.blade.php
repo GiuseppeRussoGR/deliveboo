@@ -99,6 +99,9 @@
                         </span>
                     </a>
                     @else
+                    <a class="btn float-right" href="{{ route('admin.user.index')}}">
+                        Gestisci i tuoi piatti
+                    </a>
                     <a class="btn float-right logout-button" href="{{ route('logout') }}"
                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                         <span class="subtext">

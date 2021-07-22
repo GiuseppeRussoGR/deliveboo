@@ -25,8 +25,8 @@
         </div>
         <div class="col-9">
             <div class="login">
-                <a class="float-right" href="{{ route('logout') }}"
-                   onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                <a class="btn float-right logout-button" href="{{ route('logout') }}"
+                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                     <span class="subtext">
                         Logout
                     </span>
@@ -36,6 +36,7 @@
                     @csrf
                 </form>
             </div>
+
         </div>
     </nav>
     <div class="row">
