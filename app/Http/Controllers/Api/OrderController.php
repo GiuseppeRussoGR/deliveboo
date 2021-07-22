@@ -10,6 +10,8 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderShipped;
 
 class OrderController extends Controller
 {
@@ -129,6 +131,8 @@ class OrderController extends Controller
             $success = true;
             $message = 'Transazione eseguita';
             $status = 200;
+            //invio email
+            Mail::to('silvio@email.it')->send(new OrderShipped());
         } else {
             $success = false;
             $message = 'Transazione non eseguita';
