@@ -11101,8 +11101,9 @@ h6 {
 
 .client nav a {
   background-color: #FFA823;
-  border-color: white;
+  border-color: #FFA823;
   border-radius: 10px;
+  box-shadow: 2px 2px 5px;
 }
 
 .client nav a span {
@@ -11127,6 +11128,22 @@ h6 {
 
 .client nav .login-button {
   margin-right: 10px;
+}
+
+.client nav .burger {
+  float: right;
+}
+
+.client nav .burger i {
+  color: #FFA823;
+  font-size: 30px;
+}
+
+.client nav .burger-content {
+  display: none;
+  position: absolute;
+  top: 3px;
+  right: 80px;
 }
 
 .client .my-jumbotron {
@@ -11670,6 +11687,24 @@ h6 {
   .client {
     height: 100%;
     overflow: hidden;
+  }
+
+  .client .login {
+    position: relative;
+  }
+
+  .client .login .burger-content {
+    margin: 10px 0;
+    position: absolute;
+    top: 42px;
+    right: 10px;
+    z-index: 1;
+  }
+
+  .client .login .logout-button {
+    position: absolute;
+    bottom: 13px;
+    right: 57px;
   }
 
   .client .jumbotron-text h2 {

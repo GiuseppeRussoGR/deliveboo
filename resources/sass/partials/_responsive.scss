@@ -8,6 +8,28 @@
         height: 100%;
         overflow: hidden;
 
+        // navigator
+        .login {
+            position: relative;
+
+            .burger-content {
+                margin: 10px 0;
+                position: absolute;
+                top: 42px;
+                right: 10px;
+                z-index: 1;
+            }
+
+            .logout-button {
+                position: absolute;
+                bottom: 13px;
+                right: 57px;
+            }
+
+        }
+        
+        // end navigator
+
         // jumbotron 
         .jumbotron-text {
             h2 {

@@ -83,34 +83,35 @@
         </div>
         <div class="col-9">
             <div class="login">
-                @guest
-                    <a class="btn float-right" href="{{ route('register') }}">
-                    <span class="subtext">
-                        Sei un ristoratore? Collabora con noi
-                    </span>
+                <div class="burger-content">
+                    @guest
+                    <a class="btn float-right register-button" href="{{ route('register') }}">
+                        <span class="subtext">
+                            Sei un ristoratore? Collabora con noi
+                        </span>
                     </a>
                     <a class="btn float-right login-button" href="{{ route('login') }}">
-                    <span class="subtext">
-                        Login
-                    </span>
+                        <span class="subtext">
+                            Login
+                        </span>
                     </a>
-                @else
-                    <a class="float-right" href="{{ route('logout') }}"
+                    @else
+                    <a class="btn float-right logout-button" href="{{ route('logout') }}"
                        onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                    <span class="subtext">
-                        Logout
-                    </span>
-                        <i class="fas fa-user-circle icon"></i>
+                        <span class="subtext">
+                            Logout
+                        </span>
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
-                @endguest
-
-                {{-- <button class="btn burger" type="button" data-toggle="collapse" >
-                    <i class="fas fa-hamburger"></i>
-                </button> --}}
+                 @endguest
+                </div>
                 
+                <button class="btn burger" type="button" @click="showMenu">
+                    <i class="fas fa-user-circle icon"></i>
+                </button>
+
             </div>
         </div>
     </nav>

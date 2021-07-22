@@ -57,8 +57,9 @@
 
         a {
             background-color: $primary_color;
-            border-color: white;
+            border-color: $primary_color;
             border-radius: 10px;
+            box-shadow: 2px 2px 5px;
 
             span {
                 color: white;
@@ -86,9 +87,21 @@
             margin-right: 10px;
         }
 
-        // .burger {
-        //     display: none;
-        // }
+        .burger {
+            float: right;
+
+            i {
+                color: $primary_color;
+                font-size: 30px;
+            }
+        }
+
+        .burger-content {
+            display: none;
+            position: absolute;
+            top: 3px;
+            right: 80px;
+        }
     }
 
     //Fine Navigator

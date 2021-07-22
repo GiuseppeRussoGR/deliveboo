@@ -1360,6 +1360,10 @@ var app = new Vue({
      */
     teardownBraintree: function teardownBraintree() {
       this.braintree_payment.instance.teardown();
+    },
+    // burger-menu
+    showMenu: function showMenu() {
+      $(".burger-content").fadeToggle("fast");
     }
   },
   mounted: function mounted() {
