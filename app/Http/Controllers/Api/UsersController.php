@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use \Illuminate\Http\JsonResponse;
 use App\Type;
 use App\User;
+use stdClass;
 
 class UsersController extends Controller
 {
@@ -83,5 +84,26 @@ class UsersController extends Controller
         }
 
         return response()->json($dishes_result);
+    }
+
+    /**
+     * Make an array with all data about user from orders table
+     * @return
+     */
+    public function statistics($id)
+    {
+        $array_statistic = [];
+        $user = User::find($id);
+        $collection_base = $user->dishes()->join('dish_order', 'id', '=', 'dish_order.dish_id')->join('orders', 'order_id', '=', 'orders.id')->get();
+        foreach ($collection_base as $single_order) {
+            $order_statistic = new stdClass();
+            $order_statistic->dish_id = $single_order->dish_id;
+            $order_statistic->order_id = $single_order->order_id;
+            $order_statistic->name_dish = $single_order->name;
+            $order_statistic->total_price = $single_order->total_price;
+            $order_statistic->created_at = date_format(date_create($single_order->created_at), 'Y-m');
+            $array_statistic[] = $order_statistic;
+        }
+        return response()->json($array_statistic);
     }
 }
