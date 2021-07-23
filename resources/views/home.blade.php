@@ -153,7 +153,7 @@
     </div>
     <!-- Fine Tipologie -->
 
-    <div v-if="categoryChosen">
+    <div v-if="categoryChosen && !restaurantChosen">
         <div class="card-title type-indicator">
             I nostri risultati per la Tipologia: @{{ types[card].name }}
         </div>
@@ -341,13 +341,13 @@
                     <div class="bottom-order-item">
                         <div class="number-input">
                             <button
-                                @click="setQuantity($('#quantity-basket-'+ index ), '-'); dish.quantita = (dish.quantita - 1) >= 1 ? dish.quantita - 1 : dish.quantita; totalOrderRecalculated(); setDataOrderCookie()"></button>
+                                @click="setQuantity($('#quantity-basket-'+ index ), '-'); dish.quantita = (dish.quantita - 1) >= 1 ? dish.quantita - 1 : dish.quantita; totalOrderRecalculated(index); setDataOrderCookie()"></button>
                             <input min="1" disabled readonly :id="'quantity-basket-' + index" type="number"
                                    name="quantita"
                                    v-model="dish.quantita" :value="dish.quantita"
                                    class="quantity">
                             <button
-                                @click="setQuantity($('#quantity-basket-'+ index ), '+'); dish.quantita = dish.quantita + 1; totalOrderRecalculated()"
+                                @click="setQuantity($('#quantity-basket-'+ index ), '+'); dish.quantita = dish.quantita + 1; totalOrderRecalculated(index)"
                                 class="plus"></button>
                         </div>
                         <span class="dish-total-price">@{{ dish.totale_singolo }} € <i class="fas fa-times"

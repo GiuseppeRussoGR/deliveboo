@@ -115,7 +115,8 @@ const app = new Vue(
             /**
              * Funzione per ricalcolare il totale dell'ordine
              */
-            totalOrderRecalculated() {
+            totalOrderRecalculated(index) {
+                this.order.dishes[index].totale_singolo = this.order.dishes[index].quantita * this.order.dishes[index].prezzo_singolo;
                 this.order.total_price = 0;
                 this.order.dishes.forEach(element => {
                     this.order.total_price += element.prezzo_singolo * element.quantita;
@@ -133,7 +134,6 @@ const app = new Vue(
                             client_code: response.data.client_code
                         }
                         this.braintree_payment.token = await this.getToken();
-                        console.log(this.braintree_payment.token)
                         await this.getDataPayment();
                         $('#payment').modal('show');
                     }).catch(error => {
@@ -215,36 +215,35 @@ const app = new Vue(
              */
             makePayment() {
                 const price = this.order.total_price;
-                //if (!this.braintree_payment.instance) {
-                //} else {
-                    this.braintree_payment.instance.requestPaymentMethod((err, payload) => {
-                        axios.post('api/order/payment', {
-                            token: payload.nonce,
-                            amount: price
-                        }).then(response => {
-                            if (response.data.success) {
-                                this.braintree_payment.payment = true;
-                                this.$cookies.remove('client_order');
-                                this.openBasket = false;
-                                this.order = {
-                                    dishes: []
-                                };
-                                //TODO cambiare pending nel DB in caso di riuscita
-                                $('#dropin-container').hide();
-                                $('#message_payment').html('Grazie per aver scelto noi');
-                                $('#button_payment').hide();
-                            } else {
-                                this.notify = {
-                                    style: 'danger',
-                                    message: response.data.message
-                                }
-                                //TODO da sistemare in caso di errore di pagamento
-                                $('#dropin-container').hide();
-                                $('#message_payment').html('Il tuo ordine verrà evaso il prima possibile');
-                                $('#button_payment').hide();
+                $('#my_form').removeClass('was-validated');
+                this.braintree_payment.instance.requestPaymentMethod((err, payload) => {
+                    axios.post('api/order/payment', {
+                        token: payload.nonce,
+                        amount: price,
+                        id_order: this.order_set.id
+                    }).then(response => {
+                        if (response.data.success) {
+                            this.braintree_payment.payment = true;
+                            this.$cookies.remove('client_order');
+                            this.openBasket = false;
+                            this.order = {
+                                dishes: []
+                            };
+                            $('#dropin-container').hide();
+                            $('#message_payment').html('Grazie per aver acquistato da noi');
+                            $('#button_payment').hide();
+                        } else {
+                            this.notify = {
+                                style: 'danger',
+                                message: response.data.message
                             }
-                        })
-                    });
+                            $('#error_modal').modal('show');
+                            // $('#dropin-container').hide();
+                            // $('#message_payment').html('Il tuo ordine verrà evaso il prima possibile');
+                            // $('#button_payment').hide();
+                        }
+                    })
+                });
                 //}
 
             },

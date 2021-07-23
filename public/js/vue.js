@@ -1161,9 +1161,10 @@ var app = new Vue({
     /**
      * Funzione per ricalcolare il totale dell'ordine
      */
-    totalOrderRecalculated: function totalOrderRecalculated() {
+    totalOrderRecalculated: function totalOrderRecalculated(index) {
       var _this2 = this;
 
+      this.order.dishes[index].totale_singolo = this.order.dishes[index].quantita * this.order.dishes[index].prezzo_singolo;
       this.order.total_price = 0;
       this.order.dishes.forEach(function (element) {
         _this2.order.total_price += element.prezzo_singolo * element.quantita;
@@ -1193,14 +1194,13 @@ var app = new Vue({
 
                   case 3:
                     _this3.braintree_payment.token = _context.sent;
-                    console.log(_this3.braintree_payment.token);
-                    _context.next = 7;
+                    _context.next = 6;
                     return _this3.getDataPayment();
 
-                  case 7:
+                  case 6:
                     $('#payment').modal('show');
 
-                  case 8:
+                  case 7:
                   case "end":
                     return _context.stop();
                 }
@@ -1322,13 +1322,13 @@ var app = new Vue({
     makePayment: function makePayment() {
       var _this5 = this;
 
-      var price = this.order.total_price; //if (!this.braintree_payment.instance) {
-      //} else {
-
+      var price = this.order.total_price;
+      $('#my_form').removeClass('was-validated');
       this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
         axios.post('api/order/payment', {
           token: payload.nonce,
-          amount: price
+          amount: price,
+          id_order: _this5.order_set.id
         }).then(function (response) {
           if (response.data.success) {
             _this5.braintree_payment.payment = true;
@@ -1338,20 +1338,18 @@ var app = new Vue({
             _this5.openBasket = false;
             _this5.order = {
               dishes: []
-            }; //TODO cambiare pending nel DB in caso di riuscita
-
+            };
             $('#dropin-container').hide();
-            $('#message_payment').html('Grazie per aver scelto noi');
+            $('#message_payment').html('Grazie per aver acquistato da noi');
             $('#button_payment').hide();
           } else {
             _this5.notify = {
               style: 'danger',
               message: response.data.message
-            }; //TODO da sistemare in caso di errore di pagamento
-
-            $('#dropin-container').hide();
-            $('#message_payment').html('Il tuo ordine verrà evaso il prima possibile');
-            $('#button_payment').hide();
+            };
+            $('#error_modal').modal('show'); // $('#dropin-container').hide();
+            // $('#message_payment').html('Il tuo ordine verrà evaso il prima possibile');
+            // $('#button_payment').hide();
           }
         });
       }); //}

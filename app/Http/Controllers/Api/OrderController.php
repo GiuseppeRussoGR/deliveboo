@@ -64,25 +64,6 @@ class OrderController extends Controller
         return response()->json($order_insert, 200);
     }
 
-//    /**
-//     * Get Order from DB
-//     * @param Request $request instance of Request
-//     * @return JsonResponse
-//     */
-//    public function getOrder(Request $request): JsonResponse
-//    {
-//        $order = Order::where('id', '=', $request->id)->where('client_code', '=', $request->value)->get();
-//        $status = 200;
-//
-//        if (empty($order)) {
-//            $order = 'Ordine non trovato';
-//            $status = 404;
-//        }
-//
-//        return response()->json($order, $status);
-//
-//    }
-
     /**
      * Generate token for Braintree Service
      * @param Gateway $gateway instance of Bentree Gateway Service
@@ -118,7 +99,13 @@ class OrderController extends Controller
      */
     public function makePayment(Request $request, Gateway $gateway): JsonResponse
     {
-        //TODO fare verifica prezzo db
+        $verify = '';
+        $order = Order::find($request->id_order);
+        if ($request->amount != $order->total_price) {
+            $verify = 'Rilevato prezzo modificato';
+            $request->amount = $order->total_price;
+        }
+
         $payment = $gateway->transaction()->sale([
             'amount' => $request->amount,
             'paymentMethodNonce' => $request->token,
@@ -132,7 +119,8 @@ class OrderController extends Controller
             $message = 'Transazione eseguita';
             $status = 200;
             //invio email
-            Mail::to('silvio@email.it')->send(new OrderShipped());
+            Mail::to('cliente@email.it')->send(new OrderShipped());
+            $order->update(['payment_status' => 'accepted']);
         } else {
             $success = false;
             $message = 'Transazione non eseguita';
@@ -141,7 +129,8 @@ class OrderController extends Controller
 
         $data = [
             'success' => $success,
-            'message' => $message
+            'message' => $message,
+            'verify' => $verify
         ];
         return response()->json($data, $status);
     }
