@@ -59,10 +59,12 @@
             background-color: $primary_color;
             border-color: $primary_color;
             border-radius: 10px;
-            box-shadow: 2px 2px 5px;
+            box-shadow: $secondary_dark 2px 2px 5px;
+            font-weight: 600;
 
             span {
                 color: white;
+
             }
 
             .icon {
@@ -71,17 +73,19 @@
                 margin-left: 1rem;
                 color: $text_color;
             }
-        }
 
-        a:hover {
-            background-color: white;
-            border-color: $primary_color;
+            &:hover {
+                background-color: white;
+                border-color: white;
+                box-shadow: $primary_dark 2px 2px 5px;
 
-            span {
-                color: $text_color;
+                span {
+                    color: $primary_color;
+                }
+
             }
-
         }
+
 
         .login-button {
             margin-right: 10px;
@@ -103,8 +107,12 @@
         .burger-content {
             display: none;
             position: absolute;
-            top: 3px;
-            right: 80px;
+            top: 20px;
+            right: 120px;
+
+            a:hover {
+                border-color: white;
+            }
         }
     }
 
@@ -239,6 +247,7 @@
             }
         }
     }
+
     //Fine Cards Tipologie
 
     .type-indicator {
@@ -691,14 +700,14 @@
 
                         .dish-total-price {
                             font-size: 14px;
-    
+
                             i {
                                 font-size: 12px;
                                 position: relative;
                                 bottom: 1px;
                                 margin-left: 5px;
                                 cursor: pointer;
-    
+
                                 &:hover {
                                     color: red;
                                 }

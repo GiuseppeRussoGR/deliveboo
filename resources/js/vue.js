@@ -133,6 +133,7 @@ const app = new Vue(
                             client_code: response.data.client_code
                         }
                         this.braintree_payment.token = await this.getToken();
+                        console.log(this.braintree_payment.token)
                         await this.getDataPayment();
                         $('#payment').modal('show');
                     }).catch(error => {
@@ -228,8 +229,9 @@ const app = new Vue(
                                 this.order = {
                                     dishes: []
                                 };
+                                //TODO cambiare pending nel DB in caso di riuscita
                                 $('#dropin-container').hide();
-                                $('#message_payment').html('Grazie');
+                                $('#message_payment').html('Grazie per aver scelto noi');
                                 $('#button_payment').hide();
                             } else {
                                 this.notify = {
@@ -255,7 +257,7 @@ const app = new Vue(
 
             // burger-menu
             showMenu() {
-                $(".burger-content").fadeToggle("fast"); 
+                $(".burger-content").fadeToggle("fast");
             }
         },
         mounted() {

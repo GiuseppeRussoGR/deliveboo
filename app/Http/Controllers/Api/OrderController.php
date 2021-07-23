@@ -132,7 +132,7 @@ class OrderController extends Controller
             $message = 'Transazione eseguita';
             $status = 200;
             //invio email
-            Mail::to('silvio@email.it')->send(new OrderShipped());
+            //Mail::to('silvio@email.it')->send(new OrderShipped());
         } else {
             $success = false;
             $message = 'Transazione non eseguita';
@@ -143,7 +143,6 @@ class OrderController extends Controller
             'success' => $success,
             'message' => $message
         ];
-
         return response()->json($data, $status);
     }
 

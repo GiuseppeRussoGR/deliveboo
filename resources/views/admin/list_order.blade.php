@@ -43,13 +43,12 @@
             <h3>Elenco ordini ricevuti</h3>
         </div>
     </div>
-    <div class="row" style="height: 100%; overflow: auto">
+    <div class="row" style="{{count($array_list) > 16 ? 'height: 100%;' : ''}} overflow: auto">
         @foreach($array_list as $element)
-            <div class="col-12 col-md-3">
+            <div class="col-12 col-md-3" style="padding-bottom: 20px">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Ordine n°{{$element->order_id}}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Fatto il {{$element->created_at}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Ordine fatto il {{$element->created_at}}</h6>
                         <p class="card-text">Totale: {{$element->total_price}}€</p>
                     </div>
                 </div>

@@ -8,7 +8,7 @@ Vue.component('month-chart', {
             count: [],
             data_ordini: [],
             data_totale: [],
-            structure: {}
+            structure: {},
         }
     },
     mounted() {
@@ -51,17 +51,37 @@ Vue.component('month-chart', {
                 datasets: [
                     {
                         label: 'Ordini',
-                        backgroundColor: 'red',
+                        backgroundColor: '#FFA823',
                         data: this.data_ordini
                     },
                     {
                         label: 'Totale in Euro',
-                        backgroundColor: 'yellow',
+                        backgroundColor: '#24A1FF',
                         data: this.data_totale
                     }
 
                 ]
-            }, {responsive: true, maintainAspectRatio: false, scales: {yAxes: [{ticks: {beginAtZero: true}}]}})
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes:
+                        [
+                            {
+                                ticks:
+                                    {
+                                        beginAtZero: true
+                                    }
+                            }
+                        ]
+                },
+                title: {
+                    display: true,
+                    text: 'Statistiche per mese',
+                    font: {weight: 'bold'},
+                    fontSize: 40
+                }
+            })
         }
     }
 })
@@ -74,7 +94,7 @@ Vue.component('year-chart', {
             count: [],
             data_ordini: [],
             data_totale: [],
-            structure: {}
+            structure: {},
         }
     },
     mounted() {
@@ -120,17 +140,35 @@ Vue.component('year-chart', {
                 datasets: [
                     {
                         label: 'Ordini',
-                        backgroundColor: 'red',
+                        backgroundColor: '#FFA823',
                         data: this.data_ordini
                     },
                     {
                         label: 'Totale in Euro',
-                        backgroundColor: 'yellow',
+                        backgroundColor: '#24A1FF',
                         data: this.data_totale
                     }
 
                 ]
-            }, {responsive: true, maintainAspectRatio: false, scales: {yAxes: [{ticks: {beginAtZero: true}}]}})
+            }, {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks:
+                                {
+                                    beginAtZero: true
+                                }
+                        }]
+                },
+                title: {
+                    display: true,
+                    text: 'Statistiche per anno',
+                    font: {weight: 'bold'},
+                    fontSize: 40
+                }
+            })
         }
     }
 })

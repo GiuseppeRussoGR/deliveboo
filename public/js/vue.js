@@ -1193,13 +1193,14 @@ var app = new Vue({
 
                   case 3:
                     _this3.braintree_payment.token = _context.sent;
-                    _context.next = 6;
+                    console.log(_this3.braintree_payment.token);
+                    _context.next = 7;
                     return _this3.getDataPayment();
 
-                  case 6:
+                  case 7:
                     $('#payment').modal('show');
 
-                  case 7:
+                  case 8:
                   case "end":
                     return _context.stop();
                 }
@@ -1337,9 +1338,10 @@ var app = new Vue({
             _this5.openBasket = false;
             _this5.order = {
               dishes: []
-            };
+            }; //TODO cambiare pending nel DB in caso di riuscita
+
             $('#dropin-container').hide();
-            $('#message_payment').html('Grazie');
+            $('#message_payment').html('Grazie per aver scelto noi');
             $('#button_payment').hide();
           } else {
             _this5.notify = {
@@ -1386,7 +1388,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Endrit Morina\github\progetto-finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

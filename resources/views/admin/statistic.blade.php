@@ -11,7 +11,7 @@
     <div class="icons-container">
         <a href="{{route('admin.user.index')}}"><i class="fas fa-home icon home-icon"></i></a>
         <a href="{{route('admin.user.create')}}"><i class="fas fa-plus icon"></i></a>
-        <a href="{{route('admin.restaurant-listOrder')}}"><i class="fas fa-shopping-cart icon" ></i></a>
+        <a href="{{route('admin.restaurant-listOrder')}}"><i class="fas fa-shopping-cart icon"></i></a>
         <a href="{{route('admin.restaurant-statistics', ['id' => Illuminate\Support\Facades\Auth::user()->id])}}"><i
                 class="fas fa-chart-line icon active"></i></a>
     </div>
@@ -55,7 +55,7 @@
                 </div>
                 <month-chart v-if="status" :id="{{$id}}"></month-chart>
                 <year-chart v-else :id="{{$id}}"></year-chart>
-                <button class="btn btn-warning" id="change_visual" @click="status = !status">Cambia visuale</button>
+                <button class="btn btn-primary" id="change_visual" @click="status = !status">Cambia visuale</button>
             </div>
         </div>
     </div>

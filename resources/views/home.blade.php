@@ -58,26 +58,6 @@
             </div>
         </div>
     </div>
-    <!-- {{-- <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}} -->
-
 
     <!-- Inizio Navigator -->
     <nav class="row">
@@ -88,32 +68,34 @@
             <div class="login">
                 <div class="burger-content">
                     @guest
-                    <a class="btn float-right register-button" href="{{ route('register') }}">
+                        <a class="btn float-right register-button" href="{{ route('register') }}">
                         <span class="subtext">
                             Sei un ristoratore? Collabora con noi
                         </span>
-                    </a>
-                    <a class="btn float-right login-button" href="{{ route('login') }}">
+                        </a>
+                        <a class="btn float-right login-button" href="{{ route('login') }}">
                         <span class="subtext">
                             Login
                         </span>
-                    </a>
+                        </a>
                     @else
-                    <a class="btn float-right" href="{{ route('admin.user.index')}}">
-                        Gestisci i tuoi piatti
-                    </a>
-                    <a class="btn float-right logout-button" href="{{ route('logout') }}"
-                       onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                        <a class="btn float-right" href="{{ route('admin.user.index')}}">
+                            Gestisci i tuoi piatti
+                        </a>
+                        <a class="btn float-right logout-button" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                         <span class="subtext">
                             Logout
                         </span>
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                 @endguest
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    @endguest
                 </div>
-
+                <button v-if="!openBasket" class="btn burger" type="button" @click="openBasket = !openBasket">
+                    <i class="fas fa-shopping-basket icon"></i>
+                </button>
                 <button class="btn burger" type="button" @click="showMenu">
                     <i class="fas fa-user-circle icon"></i>
                 </button>
@@ -173,12 +155,13 @@
 
     <div v-if="categoryChosen">
         <div class="card-title type-indicator">
-            Tipologia: 
+            I nostri risultati per la Tipologia: @{{ types[card].name }}
         </div>
     </div>
 
     <!-- Inizio Ristoranti -->
-    <div class="restaurants-container row" :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
+    <div v-if="restaurants.length > 0" class="restaurants-container row"
+         :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
         <div class="col-12 col-lg-6" v-for='(restaurant, index) in restaurants'>
             <div class="restaurant-card"
                  @click="getApi('api/dishes/','dishes',restaurant.id); restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
@@ -209,6 +192,10 @@
         </div>
     </div>
     <!-- Fine Ristoranti -->
+    <div v-else-if="categoryChosen" class="restaurants-container row"
+         :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
+        Al momento non ci sono elementi in questa tipologia
+    </div>
 
     <div v-if="restaurantChosen" class="single-restaurant-page">
 
@@ -248,7 +235,8 @@
         <!-- Inizio Dishes -->
         <div class="dishes row">
 
-            <div :class="openBasket ? 'col-12 col-md-6 col-xl-4' : 'col-6 col-lg-4 col-xl-3'" v-for="(dish, index) in dishes">
+            <div :class="openBasket ? 'col-12 col-md-6 col-xl-4' : 'col-6 col-lg-4 col-xl-3'"
+                 v-for="(dish, index) in dishes">
                 <div class="dish-card" :class="{'cart-open' : openBasket}">
                     <img :src="'storage/' + dish.img_path" :alt="dish.name">
                     <div class="dish-content">
@@ -351,24 +339,26 @@
                 <li v-for="(dish,index) in  order.dishes">
                     <span class="dish-name">@{{ dish.nome }}</span>
                     <!-- Ricorda di settare il più e il meno -->
-                   <div class="bottom-order-item">
+                    <div class="bottom-order-item">
                         <div class="number-input">
                             <button
                                 @click="setQuantity($('#quantity-basket-'+ index ), '-'); dish.quantita = (dish.quantita - 1) >= 1 ? dish.quantita - 1 : dish.quantita; totalOrderRecalculated(); setDataOrderCookie()"></button>
-                            <input min="1" readonly :id="'quantity-basket-' + index" type="number" name="quantita"
-                                v-model="dish.quantita" :value="dish.quantita"
-                                class="quantity">
+                            <input min="1" disabled readonly :id="'quantity-basket-' + index" type="number"
+                                   name="quantita"
+                                   v-model="dish.quantita" :value="dish.quantita"
+                                   class="quantity">
                             <button
                                 @click="setQuantity($('#quantity-basket-'+ index ), '+'); dish.quantita = dish.quantita + 1; totalOrderRecalculated()"
                                 class="plus"></button>
                         </div>
-                        <span class="dish-total-price">@{{ dish.totale_singolo }} € <i class="fas fa-times"                                                     @click="removeOrder(index); totalOrderRecalculated(); setDataOrderCookie()"></i></span>
-                   </div>
+                        <span class="dish-total-price">@{{ dish.totale_singolo }} € <i class="fas fa-times"
+                                                                                       @click="removeOrder(index); totalOrderRecalculated(); setDataOrderCookie()"></i></span>
+                    </div>
                 </li>
             </ul>
             <ul v-else>
                 <li>
-                    Empty
+                    Al momento il carrello è vuoto
                 </li>
             </ul>
         </div>

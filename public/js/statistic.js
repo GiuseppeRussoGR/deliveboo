@@ -152,11 +152,11 @@ Vue.component('month-chart', {
         labels: this.periodo,
         datasets: [{
           label: 'Ordini',
-          backgroundColor: 'red',
+          backgroundColor: '#FFA823',
           data: this.data_ordini
         }, {
           label: 'Totale in Euro',
-          backgroundColor: 'yellow',
+          backgroundColor: '#24A1FF',
           data: this.data_totale
         }]
       }, {
@@ -168,6 +168,14 @@ Vue.component('month-chart', {
               beginAtZero: true
             }
           }]
+        },
+        title: {
+          display: true,
+          text: 'Statistiche per mese',
+          font: {
+            weight: 'bold'
+          },
+          fontSize: 40
         }
       });
     }
@@ -235,11 +243,11 @@ Vue.component('year-chart', {
         labels: this.periodo,
         datasets: [{
           label: 'Ordini',
-          backgroundColor: 'red',
+          backgroundColor: '#FFA823',
           data: this.data_ordini
         }, {
           label: 'Totale in Euro',
-          backgroundColor: 'yellow',
+          backgroundColor: '#24A1FF',
           data: this.data_totale
         }]
       }, {
@@ -251,6 +259,14 @@ Vue.component('year-chart', {
               beginAtZero: true
             }
           }]
+        },
+        title: {
+          display: true,
+          text: 'Statistiche per anno',
+          font: {
+            weight: 'bold'
+          },
+          fontSize: 40
         }
       });
     }
@@ -273,7 +289,7 @@ var vm = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Endrit Morina\github\progetto-finale\deliveboo\resources\js\statistic.js */"./resources/js/statistic.js");
+module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\statistic.js */"./resources/js/statistic.js");
 
 
 /***/ })
