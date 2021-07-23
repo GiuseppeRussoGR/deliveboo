@@ -11024,15 +11024,30 @@ h6 {
   background: linear-gradient(180deg, #ffc875 0%, #FFA823 75%, #ffb442 100%);
 }
 
-#app > .container {
+#app > .my_container {
   background-color: #FFFFFF;
   height: 85%;
+  width: 75%;
+  max-width: 1280px;
+  margin: 0 auto;
   border-radius: 30px;
   overflow: hidden;
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-#app > .container > .row {
+#app > .my_container > .container-fluid,
+#app > .my_container > .container-sm,
+#app > .my_container > .container-md,
+#app > .my_container > .container-lg,
+#app > .my_container > .container-xl {
+  height: 100%;
+}
+
+#app > .my_container > .container-fluid > .row,
+#app > .my_container > .container-sm > .row,
+#app > .my_container > .container-md > .row,
+#app > .my_container > .container-lg > .row,
+#app > .my_container > .container-xl > .row {
   height: 100%;
 }
 
@@ -11134,6 +11149,10 @@ h6 {
   float: right;
 }
 
+.client nav .burger:focus {
+  box-shadow: none;
+}
+
 .client nav .burger i {
   color: #FFA823;
   font-size: 30px;
@@ -11147,7 +11166,7 @@ h6 {
 }
 
 .client .my-jumbotron {
-  height: calc(100% - 220px - 85px);
+  height: calc(100% - 218px - 96px);
   padding-bottom: 1rem;
   transition: all 0.5s;
   overflow: hidden;
@@ -11165,7 +11184,7 @@ h6 {
 }
 
 .client .types-section {
-  margin-bottom: 30px;
+  margin-bottom: 5px;
 }
 
 .client .types-section h6 {
@@ -11176,16 +11195,15 @@ h6 {
 }
 
 .client .types-section .container {
-  padding-right: 0;
+  padding: 0;
 }
 
 .client .types-section .container .type-cards {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  height: 179px;
+  height: 157px;
   overflow-x: auto;
-  padding-right: 1rem;
   scrollbar-width: none;
 }
 
@@ -11205,7 +11223,7 @@ h6 {
   cursor: pointer;
   box-shadow: 3px 2px 5px 0 rgba(0, 0, 0, 0.15), -3px -3px 7px #FFFFFF;
   transition: all 0.4s;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .client .types-section .container .type-cards .type-card:hover {
@@ -11232,6 +11250,8 @@ h6 {
 
 .client .types-section .container .type-cards .type-card .img-container img {
   width: 70%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .client .types-section .container .type-cards .type-card.active .img-container {
@@ -11265,13 +11285,20 @@ h6 {
   margin: 0.6rem 0;
 }
 
+.client .type-indicator {
+  margin-bottom: 5px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
 .client .restaurants-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   transition: display 0.4s;
-  height: calc(100% - 100px - 220px);
+  height: calc(100% - 96px - 201px - 48px);
   overflow-y: auto;
+  margin-bottom: 15px;
   scrollbar-width: none;
 }
 
@@ -11362,13 +11389,7 @@ h6 {
 }
 
 .client .single-restaurant-page {
-  overflow-y: auto;
-  height: 100%;
-  scrollbar-width: none;
-}
-
-.client .single-restaurant-page::-webkit-scrollbar {
-  display: none;
+  height: calc(100% - 96px);
 }
 
 .client .single-restaurant-page .single-restaurant {
@@ -11406,6 +11427,13 @@ h6 {
 
 .client .single-restaurant-page .dishes {
   margin-bottom: 1rem;
+  max-height: calc(100% - 230px);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.client .single-restaurant-page .dishes::-webkit-scrollbar {
+  display: none;
 }
 
 .client .single-restaurant-page .dishes .dish-card {
@@ -11428,6 +11456,8 @@ h6 {
   width: 100%;
   height: 112px;
   border-radius: 10px 10px 0px 0px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .client .single-restaurant-page .dishes .dish-card .dish-content {
@@ -11510,7 +11540,6 @@ h6 {
 }
 
 .client .single-restaurant-page .dishes .dish-card .dish-content .dish-controls .number-input input[type=number] {
-  font-family: sans-serif;
   max-width: 2.3rem;
   padding: 0.5rem;
   border: none;
@@ -11581,8 +11610,12 @@ h6 {
   cursor: pointer;
 }
 
+.client .cart .title .closing-icon:hover i {
+  color: #FFA823;
+}
+
 .client .cart .cart-subtitle {
-  margin: 1rem 0 5px;
+  margin: 1.5rem 0 10px;
   font-weight: 600;
 }
 
@@ -11605,24 +11638,92 @@ h6 {
 }
 
 .client .cart .order-items ul li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   font-size: 13px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   font-weight: 500;
 }
 
-.client .cart .order-items ul li .dish-quantity {
-  font-weight: 400;
-  font-size: 12px;
+.client .cart .order-items ul li .bottom-order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.client .cart .order-items ul li .dish-total-price {
-  font-size: 15px;
+.client .cart .order-items ul li .bottom-order-item input[type=number] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
-.client .cart .order-items ul li .dish-total-price i {
+.client .cart .order-items ul li .bottom-order-item input[type=number]::-webkit-inner-spin-button,
+.client .cart .order-items ul li .bottom-order-item input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.client .cart .order-items ul li .bottom-order-item .number-input {
+  border: 0;
+  display: flex;
+  align-items: center;
+}
+
+.client .cart .order-items ul li .bottom-order-item .number-input,
+.client .cart .order-items ul li .bottom-order-item .number-input * {
+  box-sizing: border-box;
+}
+
+.client .cart .order-items ul li .bottom-order-item .number-input button {
+  outline: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+  border-radius: 50%;
+}
+
+.client .cart .order-items ul li .bottom-order-item .number-input button:hover:after,
+.client .cart .order-items ul li .bottom-order-item .number-input button:hover::before {
+  background-color: #FFA823;
+}
+
+.client .cart .order-items ul li .bottom-order-item .number-input button:before,
+.client .cart .order-items ul li .bottom-order-item .number-input button:after {
+  display: inline-block;
+  position: absolute;
+  content: "";
+  width: 9px;
+  height: 2px;
+  background-color: #381d0b;
+  transform: translate(-50%, -50%);
+}
+
+.client .cart .order-items ul li .bottom-order-item .number-input button.plus:after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.client .cart .order-items ul li .bottom-order-item .number-input input[type=number] {
+  max-width: 2.5rem;
+  padding: 0.5rem;
+  border: none;
+  border-width: 0 2px;
+  font-size: 14px;
+  height: 1rem;
+  font-weight: bold;
+  text-align: center;
+  color: #FFA823;
+  background-color: transparent;
+}
+
+.client .cart .order-items ul li .bottom-order-item .dish-total-price {
+  font-size: 14px;
+}
+
+.client .cart .order-items ul li .bottom-order-item .dish-total-price i {
   font-size: 12px;
   position: relative;
   bottom: 1px;
@@ -11630,7 +11731,7 @@ h6 {
   cursor: pointer;
 }
 
-.client .cart .order-items ul li .dish-total-price i:hover {
+.client .cart .order-items ul li .bottom-order-item .dish-total-price i:hover {
   color: red;
 }
 
@@ -11701,13 +11802,13 @@ h6 {
 }
 
 .user .icons-container .icon:hover {
-  color: #FFA823;
+  color: #24A1FF;
 }
 
 .user .icons-container .icon.active {
   font-size: 1.7rem;
   color: #FFFFFF;
-  background-color: #FFA823;
+  background-color: #24A1FF;
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
@@ -11727,37 +11828,39 @@ h6 {
 }
 
 .user nav .logo h5 span {
-  color: #FFA823;
+  color: #24A1FF;
 }
 
 .user nav a {
-  background-color: #FFA823;
-  border-color: white;
+  background-color: transparent;
+  border: 1px solid #24A1FF;
   border-radius: 10px;
+  padding: 5px 15px;
+  text-decoration: none;
+  transition: all 0.4s;
 }
 
 .user nav a span {
-  color: white;
-}
-
-.user nav a .icon {
-  font-size: 2rem;
-  vertical-align: middle;
-  margin-left: 1rem;
-  color: #381d0b;
+  color: #24A1FF;
+  font-size: 1rem;
+  transition: all 0.4s;
+  font-weight: 600;
 }
 
 .user nav a:hover {
-  background-color: white;
-  border-color: #FFA823;
+  background-color: #24A1FF;
 }
 
 .user nav a:hover span {
-  color: #381d0b;
+  color: #FFFFFF;
 }
 
 .user nav .login-button {
   margin-right: 10px;
+}
+
+.user .homepage-title h6 {
+  font-weight: 600;
 }
 
 .user .dishes-container {
@@ -11765,7 +11868,7 @@ h6 {
   justify-content: space-between;
   flex-wrap: wrap;
   transition: display 0.4s;
-  height: calc(100% - 100px - 220px);
+  max-height: calc(100% - 85px - 60px);
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -11781,7 +11884,7 @@ h6 {
   border-radius: 5px;
   overflow: hidden;
   background-color: #FFFFFF;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   cursor: pointer;
   box-shadow: 3px 2px 5px 0 rgba(0, 0, 0, 0.15), -3px -3px 7px #FFFFFF;
   transition: all 0.4s;
@@ -12036,6 +12139,23 @@ h6 {
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
+  #app .my_container {
+    width: 100%;
+  }
+
+  #app .my_container > .container-fluid,
+  #app .my_container > .container-sm,
+  #app .my_container > .container-md,
+  #app .my_container > .container-lg,
+  #app .my_container > .container-xl {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .types-section .container {
+    max-width: 100%;
+  }
+
   #root {
     max-width: 600px;
   }
@@ -12101,6 +12221,14 @@ h6 {
 }
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
+  #app .my_container {
+    width: 90%;
+  }
+
+  .types-section .container {
+    max-width: 100%;
+  }
+
   .client {
     height: 100%;
     overflow: hidden;
@@ -12140,6 +12268,12 @@ h6 {
 
   .client .container .types-section .type-cards > div .type-card {
     margin-bottom: 1rem;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  #app .my_container {
+    width: 90%;
   }
 }
 

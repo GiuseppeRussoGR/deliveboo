@@ -31,27 +31,29 @@
 
 <body>
     <div id="app" class="@yield('app_style')">
-        <div id="root" class="container">
-            <div class="row">
-                <!-- Inizio Sezione Verticale -->
-                <div class="@yield('vertical-nav-class', 'col-2 col-md-1') vertical-nav">
-                    @yield('vertical-nav')
-                </div>
-                <!-- Fine Sezione Verticale -->
+        <div class="my_container">
+            <div id="root" class="container-fluid">
+                <div class="row">
+                    <!-- Inizio Sezione Verticale -->
+                    <div class="@yield('vertical-nav-class', 'col-2 col-md-1') vertical-nav">
+                        @yield('vertical-nav')
+                    </div>
+                    <!-- Fine Sezione Verticale -->
 
-                <!-- Inizio App Content -->
-                <!-- ATTENZIONE: Mentre si struttura il carrello metti col-8 -->
-                <div class="app-content" :class="@yield('app-content-class')" >
-                    @yield('content')
-                </div>
-                <!-- Fine App Content -->
+                    <!-- Inizio App Content -->
+                    <!-- ATTENZIONE: Mentre si struttura il carrello metti col-8 -->
+                    <div class="app-content" :class="@yield('app-content-class')" >
+                        @yield('content')
+                    </div>
+                    <!-- Fine App Content -->
 
-                <!-- Inizio Finestra Laterale -->
-                <!-- ATTENZIONE: Mentre si struttura il carrello metti col-3 -->
-                <div class="side-window" :class="@yield('app-side-class')">
-                    @yield('side-window')
+                    <!-- Inizio Finestra Laterale -->
+                    <!-- ATTENZIONE: Mentre si struttura il carrello metti col-3 -->
+                    <div class="side-window" :class="@yield('app-side-class')">
+                        @yield('side-window')
+                    </div>
+                    <!-- Fine Finestra Laterale -->
                 </div>
-                <!-- Fine Finestra Laterale -->
             </div>
         </div>
     </div>

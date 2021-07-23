@@ -151,7 +151,7 @@
 
         <div class="container">
             <div class="type-cards">
-                <div class="col-4 col-md-3 col-lg-2" v-for="(type,index) in types">
+                <div class="col-6 col-md-3 col-lg-2" v-for="(type,index) in types">
                     <div class="type-card" :class="{active : card === index}"
                          @click='getApi("api/restaurants/", "restaurants", type.id); card = index; categoryChosen = true; stage = 1'>
                         <div class="img-container">
@@ -170,6 +170,12 @@
         </div>
     </div>
     <!-- Fine Tipologie -->
+
+    <div v-if="categoryChosen">
+        <div class="card-title type-indicator">
+            Tipologia: 
+        </div>
+    </div>
 
     <!-- Inizio Ristoranti -->
     <div class="restaurants-container row" :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
@@ -242,7 +248,7 @@
         <!-- Inizio Dishes -->
         <div class="dishes row">
 
-            <div :class="openBasket ? 'col-12 col-md-6 col-lg-4' : 'col-6 col-md-3'" v-for="(dish, index) in dishes">
+            <div :class="openBasket ? 'col-12 col-md-6 col-xl-4' : 'col-6 col-lg-4 col-xl-3'" v-for="(dish, index) in dishes">
                 <div class="dish-card" :class="{'cart-open' : openBasket}">
                     <img :src="'storage/' + dish.img_path" :alt="dish.name">
                     <div class="dish-content">
@@ -343,21 +349,21 @@
         <div class="order-items">
             <ul v-if="order.dishes.length > 0">
                 <li v-for="(dish,index) in  order.dishes">
-                    <span class="dish-name">@{{ dish.nome }} <span
-                            class="dish-quantity">(x@{{dish.quantita}})</span></span>
+                    <span class="dish-name">@{{ dish.nome }}</span>
                     <!-- Ricorda di settare il più e il meno -->
-                    <div class="number-input">
-                        <button
-                            @click="setQuantity($('#quantity-basket-'+ index ), '-'); dish.quantita = (dish.quantita - 1) >= 1 ? dish.quantita - 1 : dish.quantita; totalOrderRecalculated(); setDataOrderCookie()"></button>
-                        <input min="1" readonly :id="'quantity-basket-' + index" type="number" name="quantita"
-                               v-model="dish.quantita" :value="dish.quantita"
-                               class="quantity">
-                        <button
-                            @click="setQuantity($('#quantity-basket-'+ index ), '+'); dish.quantita = dish.quantita + 1; totalOrderRecalculated()"
-                            class="plus"></button>
-                    </div>
-                    <span class="dish-total-price">@{{ dish.totale_singolo }} € <i class="fas fa-times"
-                                                                                   @click="removeOrder(index); totalOrderRecalculated(); setDataOrderCookie()"></i></span>
+                   <div class="bottom-order-item">
+                        <div class="number-input">
+                            <button
+                                @click="setQuantity($('#quantity-basket-'+ index ), '-'); dish.quantita = (dish.quantita - 1) >= 1 ? dish.quantita - 1 : dish.quantita; totalOrderRecalculated(); setDataOrderCookie()"></button>
+                            <input min="1" readonly :id="'quantity-basket-' + index" type="number" name="quantita"
+                                v-model="dish.quantita" :value="dish.quantita"
+                                class="quantity">
+                            <button
+                                @click="setQuantity($('#quantity-basket-'+ index ), '+'); dish.quantita = dish.quantita + 1; totalOrderRecalculated()"
+                                class="plus"></button>
+                        </div>
+                        <span class="dish-total-price">@{{ dish.totale_singolo }} € <i class="fas fa-times"                                                     @click="removeOrder(index); totalOrderRecalculated(); setDataOrderCookie()"></i></span>
+                   </div>
                 </li>
             </ul>
             <ul v-else>

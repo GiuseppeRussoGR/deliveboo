@@ -14,15 +14,22 @@
         background: linear-gradient(180deg, lighten($primary_color, 16%) 0%, $primary_color 75%, lighten($primary_color, 6%) 100%);
     }
 
-    & > .container {
+    & > .my_container {
         background-color: $background_light;
         height: 85%;
+        width: 75%;
+        max-width: 1280px;
+        margin: 0 auto;
         border-radius: 30px;
         overflow: hidden;
         @include shadow-standard;
 
-        & > .row {
+        & > .container-fluid {
             height: 100%;
+
+            & > .row {
+                height: 100%;
+            }
         }
     }
 

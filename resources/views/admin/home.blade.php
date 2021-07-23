@@ -30,7 +30,6 @@
                     <span class="subtext">
                         Logout
                     </span>
-                    <i class="fas fa-user-circle icon"></i>
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
@@ -40,8 +39,8 @@
         </div>
     </nav>
     <div class="row">
-        <div class="col-12">
-            <h3>Elenco piatti</h3>
+        <div class="homepage-title col-12">
+            <h6>Elenco piatti</h6>
         </div>
     </div>
     <div class="dishes-container row">

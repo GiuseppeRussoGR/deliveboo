@@ -31,7 +31,6 @@
                     <span class="subtext">
                         Logout
                     </span>
-                    <i class="fas fa-user-circle icon"></i>
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf

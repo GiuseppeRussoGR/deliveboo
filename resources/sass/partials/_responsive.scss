@@ -1,5 +1,20 @@
 // SMARTPHONE 
 @include media-sm {
+    #app .my_container {
+        width: 100%;
+
+        & > .container-fluid {
+            max-width: 100%;
+            margin: 0;
+        }
+    } 
+
+    .types-section {
+        .container {
+            max-width: 100%;
+        }
+    }
+
     #root {
         max-width: 600px;
     }
@@ -80,6 +95,17 @@
 
 // TABLET 
 @include media-md {
+
+    #app .my_container {
+        width: 90%;
+    }
+
+    .types-section {
+        .container {
+            max-width: 100%;
+        }
+    }
+
    
     .client {
         height: 100%;
@@ -130,5 +156,15 @@
    
         // end tipologie
     }
+    
+}
+
+// TABLET
+@include media-lg {
+
+    #app .my_container {
+        width: 90%;
+    }
+   
     
 }
