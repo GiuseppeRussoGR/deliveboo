@@ -6,7 +6,6 @@ use App\Category;
 use App\Dish;
 use App\Http\Controllers\Controller;
 use App\User;
-use DateTime;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -38,7 +37,15 @@ class UserController extends Controller
     public function create(): View
     {
         $categories = Category::all();
-        return view('admin.create', compact('categories'));
+        $user = Auth::user();
+        $array_type = [];
+        foreach ($user->types as $type) {
+            $types = new stdClass();
+            $types->id = $type->id;
+            $types->name = $type->name;
+            $array_type[] = $types;
+        }
+        return view('admin.create', compact('categories', 'array_type'));
     }
 
     /**
@@ -96,8 +103,16 @@ class UserController extends Controller
     {
         $dish = Dish::findOrFail($id);
         $categories = Category::all();
+        $user = Auth::user();
+        $array_type = [];
+        foreach ($user->types as $type) {
+            $types = new stdClass();
+            $types->id = $type->id;
+            $types->name = $type->name;
+            $array_type[] = $types;
+        }
 
-        return view('admin.edit', compact('dish', 'categories'));
+        return view('admin.edit', compact('dish', 'categories', 'array_type'));
     }
 
     /**
@@ -162,7 +177,8 @@ class UserController extends Controller
         return view('admin.list_order', compact('array_list'));
     }
 
-    public function statistic(){
+    public function statistic()
+    {
         $id = Auth::user()->id;
         return view('admin.statistic', compact('id'));
     }

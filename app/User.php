@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-       'email', 'password', 'company_name', 'address', 'city', 'p_iva', 'img_path', 'type_id'
+       'email', 'password', 'company_name', 'address', 'city', 'p_iva', 'img_path'
     ];
 
     /**
@@ -28,9 +28,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function type()
+    public function types()
     {
-        return $this->belongsTo('App\Type');
+        return $this->belongsToMany('App\Type');
     }
     public function dishes()
     {

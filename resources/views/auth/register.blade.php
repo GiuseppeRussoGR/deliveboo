@@ -126,7 +126,7 @@
 
                         <div class="form-group">
                             <label for="type">Indica la tipologia del tuo ristorante</label>
-                            <select class="form-control" name="type_id">
+                            <select id="type" class="form-control" multiple name="type_id[]">
                                 <option value="">Scegli</option>
                                     @foreach ($types as $type)
                                         <!-- il ternario fa in modo che la option rimanga selezionata in caso non vada a buon fine la creazione del nuovo post -->

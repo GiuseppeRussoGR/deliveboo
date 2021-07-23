@@ -8,8 +8,8 @@ class Type extends Model
 {
     protected $fillable = ['name'];
 
-    public function type()
+    public function users()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsToMany('App\User');
     }
 }

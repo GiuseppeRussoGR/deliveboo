@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use \Illuminate\Http\JsonResponse;
 use App\Type;
 use App\User;
+use Illuminate\Http\Request;
 use stdClass;
 
 class UsersController extends Controller
@@ -23,7 +24,7 @@ class UsersController extends Controller
         $type_result = [];
 
         foreach ($types_all as $type) {
-            if($type->image_path === null){
+            if ($type->image_path === null) {
                 $type->image_path = '';
             }
             $type_result[] = [
@@ -39,22 +40,22 @@ class UsersController extends Controller
     /**
      * This function will return all the Users/Restaurants from a determinated Type
      * @param $id int by restaurant
-     * @param User $user instance of User
+     * @param Type $types istance of Types
      * @return JsonResponse
      */
-    public function index(int $id, User $user): JsonResponse
+    public function index(int $id, Type $types): JsonResponse
     {
-        $restaurants = $user->where('type_id', '=', $id)->get();
+        $restaurants = $types->find($id)->users()->get();
 
         $restaurants_result = [];
-
         foreach ($restaurants as $restaurant) {
             $restaurants_result[] = [
                 'id' => $restaurant->id,
                 'name' => $restaurant->company_name,
                 'address' => $restaurant->address,
                 'city' => $restaurant->city,
-                'img_path' => $restaurant->img_path ? $restaurant->img_path : ''
+                'img_path' => $restaurant->img_path ? $restaurant->img_path : '',
+                'type_id' => $restaurant->pivot->type_id
             ];
         }
 
@@ -67,9 +68,9 @@ class UsersController extends Controller
      * @param Dish $dish instance of Dish
      * @return JsonResponse
      */
-    public function dishes(int $id, Dish $dish): JsonResponse
+    public function dishes(int $id, Request $request, Dish $dish): JsonResponse
     {
-        $dishes = $dish->where('user_id', '=', $id)->get();
+        $dishes = $dish->where('user_id', '=', $id)->where('type_id', '=', $request->value)->get();
 
         $dishes_result = [];
 

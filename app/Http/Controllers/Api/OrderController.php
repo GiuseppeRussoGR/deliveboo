@@ -118,7 +118,7 @@ class OrderController extends Controller
      */
     public function makePayment(Request $request, Gateway $gateway): JsonResponse
     {
-        //TODO fare verifica prezzo db e aggiungere invio mail
+        //TODO fare verifica prezzo db
         $payment = $gateway->transaction()->sale([
             'amount' => $request->amount,
             'paymentMethodNonce' => $request->token,
@@ -132,7 +132,7 @@ class OrderController extends Controller
             $message = 'Transazione eseguita';
             $status = 200;
             //invio email
-            //Mail::to('silvio@email.it')->send(new OrderShipped());
+            Mail::to('silvio@email.it')->send(new OrderShipped());
         } else {
             $success = false;
             $message = 'Transazione non eseguita';

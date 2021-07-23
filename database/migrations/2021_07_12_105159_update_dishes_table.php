@@ -20,6 +20,8 @@ class UpdateDishesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('category_id')->after('visibility')->nullable();
             $table->foreign('category_id')->references('id')->on('categories');
+            $table->unsignedBigInteger('type_id')->after('category_id');
+            $table->foreign('type_id')->references('id')->on('types');
         });
     }
 
@@ -35,8 +37,10 @@ class UpdateDishesTable extends Migration
         Schema::table('dishes', function (Blueprint $table) {
             $table->dropForeign('dishes_user_id_foreign');
             $table->dropForeign('dishes_category_id_foreign');
+            $table->dropForeign('dishes_type_id_foreign');
             $table->dropColumn('category_id');
             $table->dropColumn('user_id');
+            $table->dropColumn('type_id');
         });
     }
 }

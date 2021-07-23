@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+
 //Specifichiamo l'uso della funzione Storage per inserire file nel DB
 use Illuminate\Support\Facades\Storage;
 use App\Type;
@@ -47,7 +48,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
 
@@ -67,15 +68,14 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\User
+     * @param array $data
      */
 
-    //This function will create the new User using the given data in the register page form 
+    //This function will create the new User using the given data in the register page form
     protected function create(array $data)
     {
         //If $data['img_path'] exists, we create the path with the Storage function
-        if(isset($data['img_path'])){
+        if (isset($data['img_path'])) {
             $img_path = Storage::put('users-cover', $data['img_path']);
 
             //If $img_path gets created we set it as value of $data['img_path']
@@ -85,24 +85,22 @@ class RegisterController extends Controller
         } else {
             $data['img_path'] = '';
         }
-        
-        //Transforming $data['type_id'] into an integer
-        $data['type_id'] = intVal($data['type_id']);
-
-        return User::create([
-            'company_name' => $data['company_name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'address' => $data['address'],
-            'city' => $data['city'],
-            'p_iva' => $data['p_iva'],
-            'img_path' => $data['img_path'],
-            'type_id' => $data['type_id']
-        ]);
+        $user = new User();
+        $user->company_name = $data['company_name'];
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
+        $user->address = $data['address'];
+        $user->city = $data['city'];
+        $user->p_iva = $data['p_iva'];
+        $user->img_path = $data['img_path'];
+        $user->save();
+        $user->types()->sync($data['type_id']);
+        return $user;
     }
 
     //With this function we return all the types to the auth.register view
-    public function showRegistrationForm(){
+    public function showRegistrationForm()
+    {
         $types = Type::all();
         return view('auth.register', compact('types'));
     }

@@ -9,8 +9,9 @@
     <div class="icons-container">
         <a href="{{route('admin.user.index')}}"><i class="fas fa-home icon home-icon"></i></a>
         <a href="{{route('admin.user.create')}}"><i class="fas fa-plus icon active"></i></a>
-        <a href="{{route('admin.restaurant-listOrder')}}"><i class="fas fa-shopping-cart icon" ></i></a>
-        <a href="{{route('admin.restaurant-statistics', ['id' => Illuminate\Support\Facades\Auth::user()->id])}}"><i class="fas fa-chart-line icon"></i></a>
+        <a href="{{route('admin.restaurant-listOrder')}}"><i class="fas fa-shopping-cart icon"></i></a>
+        <a href="{{route('admin.restaurant-statistics', ['id' => Illuminate\Support\Facades\Auth::user()->id])}}"><i
+                class="fas fa-chart-line icon"></i></a>
     </div>
     <!-- Fine Menu Verticale -->
 @endsection
@@ -65,23 +66,35 @@
                     <input type="number" step=".01" required class="form-control" id="price" name="price"
                            value="{{ old('price') }}">
                 </div>
+                <div class="form-row">
+                    <div class="form-group col-6">
+                        <p>Visibilità</p>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" required id="visible" name="visibility"
+                                   value="1">
+                            <label for="visible" class="form-check-label">Si</label>
+                        </div>
 
-                <div class="form-group">
-                    <p>Visibilità</p>
-                    <div class="form-check">
-                        <input type="radio" class="form-check-input" required id="visible" name="visibility" value="1">
-                        <label for="visible" class="form-check-label">Si</label>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" required id="not-visible" name="visibility"
+                                   value="0">
+                            <label for="not-visible" class="form-check-label">No</label>
+                        </div>
                     </div>
-
-                    <div class="form-check">
-                        <input type="radio" class="form-check-input" required id="not-visible" name="visibility"
-                               value="0">
-                        <label for="not-visible" class="form-check-label">No</label>
+                    <div class="form-group col-6">
+                        <p>Tipologia</p>
+                        @foreach($array_type as $type)
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="type_id" id="type_{{$type->id}}" value="{{$type->id}}" checked>
+                                <label class="form-check-label" for="type_{{$type->id}}">
+                                    {{$type->name}}
+                                </label>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <label for="category">Indica la tipologia del piatto</label>
+                    <label for="category">Indica la categoria del piatto</label>
                     <select class="form-control" required name="category_id">
                         <option value="">Scegli</option>
                     @foreach ($categories as $category)
