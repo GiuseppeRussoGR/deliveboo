@@ -160,11 +160,11 @@
     </div>
 
     <!-- Inizio Ristoranti -->
-    <div v-if="restaurants.length > 0" class="restaurants-container row"
+    <div v-if="restaurants.length > 0 && categoryChosen" class="restaurants-container row"
          :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
         <div class="col-12 col-lg-6" v-for='(restaurant, index) in restaurants'>
             <div class="restaurant-card"
-                 @click="getApi('api/dishes/','dishes',restaurant.id, restaurant.type_id); restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
+                 @click="getApi('api/dishes/','dishes',restaurant.id, restaurant.type_id);restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
                 <div class="restaurant-img">
                     <img :src="'storage/' + restaurant.img_path" :alt="restaurant.name">
                 </div>
