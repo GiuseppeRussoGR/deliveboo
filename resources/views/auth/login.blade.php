@@ -61,13 +61,13 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link text-md-left" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
+{{--                            <div class="col-md-12">--}}
+{{--                                @if (Route::has('password.request'))--}}
+{{--                                    <a class="btn btn-link text-md-left" href="{{ route('password.request') }}">--}}
+{{--                                        {{ __('Forgot Your Password?') }}--}}
+{{--                                    </a>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
                         </div>
 
                         <div class="form-group row ">

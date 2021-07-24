@@ -11,7 +11,7 @@
     <!-- Inizio Menu Verticale -->
     <div class="icons-container">
         <i class="fas fa-home icon home-icon" :class="stage === 0 ? 'active' : '' "
-           @click="categoryChosen = false; restaurantChosen = false; stage = 0;openBasket = false; card = false"></i>
+           @click="categoryChosen = false; restaurantChosen = false; stage = 0;openBasket = false; card = false;"></i>
         <i class="fas fa-search icon" :class="stage === 1 ? 'active' : '' "
            @click="restaurantChosen = false; stage > 1 ? stage = 1 : '' "></i>
         <i class="fas fa-utensils icon" :class="stage === 2 ? 'active' : '' "

@@ -11165,6 +11165,7 @@ h6 {
   position: absolute;
   top: 20px;
   right: 120px;
+  z-index: 10;
 }
 
 .client nav .burger-content a:hover {
