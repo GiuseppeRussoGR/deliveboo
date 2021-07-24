@@ -181,7 +181,7 @@ class DishSeeder extends Seeder
                 'category_id' => 4,
                 'img_path' => 'dishes-cover/anatra-alla-singapore.jpg',
                 'user_id' => 5,
-                'type_id' => 4
+                'type_id' => 3
             ],
             [
                 'name' => 'Manzo al curry',
@@ -191,7 +191,7 @@ class DishSeeder extends Seeder
                 'category_id' => 4,
                 'img_path' => 'dishes-cover/manzo-al-curry.jpg',
                 'user_id' => 5,
-                'type_id' => 4
+                'type_id' => 3
             ],
             [
                 'name' => 'Chitarra alla carbonara',
