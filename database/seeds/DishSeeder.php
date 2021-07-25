@@ -324,6 +324,70 @@ class DishSeeder extends Seeder
                 'user_id' => 12,
                 'type_id' => 8
             ],
+            [
+                'name' => 'Melitzanosalata',
+                'description' => 'Salsa di melanzane, aglio e cipolla',
+                'price' => 6.50,
+                'visibility' => 1,
+                'category_id' => 1,
+                'img_path' => 'dishes-cover/melitzanosalata.jpg',
+                'user_id' => 9,
+                'type_id' => 9
+            ],
+            [
+                'name' => 'Tzatziki',
+                'description' => 'Salsa di yogurt greco, aglio e cetriolo',
+                'price' => 6.00,
+                'visibility' => 1,
+                'category_id' => 1,
+                'img_path' => 'dishes-cover/tzatziki.jpg',
+                'user_id' => 9,
+                'type_id' => 9
+            ],
+            [
+                'name' => 'Mussakas',
+                'description' => 'Sfornato di melanzane, carne, grana e besciamella',
+                'price' => 11.00,
+                'visibility' => 1,
+                'category_id' => 4,
+                'img_path' => 'dishes-cover/mussaka.jpg',
+                'user_id' => 9,
+                'type_id' => 9
+            ],
+            [
+                'name' => 'Taramosalata',
+                'description' => 'Salsa di uova di pesce',
+                'price' => 7.00,
+                'visibility' => 1,
+                'category_id' => 1,
+                'img_path' => 'dishes-cover/taramosalata.jpg',
+                'user_id' => 15,
+                'type_id' => 9
+            ],
+            [
+                'name' => 'Feta Psiti',
+                'description' => 'Formaggio greco al forno con pomodorini e origano',
+                'price' => 6.00,
+                'visibility' => 1,
+                'category_id' => 1,
+                'img_path' => 'dishes-cover/feta-psiti.jpg',
+                'user_id' => 15,
+                'type_id' => 9
+            ],
+            [
+                'name' => 'Feta Saganaki',
+                'description' => 'Formaggio greco fritto al tegame',
+                'price' => 6.00,
+                'visibility' => 1,
+                'category_id' => 1,
+                'img_path' => 'dishes-cover/feta-saganaki.jpg',
+                'user_id' => 15,
+                'type_id' => 9
+            ],
+            
+            
+            
+            
         ];
         foreach ($dishes as $dish) {
             $new_dish = new Dish();
