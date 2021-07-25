@@ -285,12 +285,42 @@ class DishSeeder extends Seeder
             ],
 
             [
-                'name' => 'KHANG KRAI',
+                'name' => 'Khang Krai',
                 'description' => 'Pollo al curry giallo con latte di cocco e riso',
                 'price' => 12.00,
                 'visibility' => 1,
                 'category_id' => 3,
                 'img_path' => 'dishes-cover/khang-krai.jpg',
+                'user_id' => 12,
+                'type_id' => 8
+            ],
+            [
+                'name' => 'Por Pia',
+                'description' => 'Involtini di pasta croccante con verdure e soia',
+                'price' => 4.00,
+                'visibility' => 1,
+                'category_id' => 1,
+                'img_path' => 'dishes-cover/por-pia.jpg',
+                'user_id' => 12,
+                'type_id' => 8
+            ],
+            [
+                'name' => 'Tod Man Khung',
+                'description' => 'Polpette di gamberi con profumo di curry rosso (6pz.)',
+                'price' => 10.00,
+                'visibility' => 1,
+                'category_id' => 1,
+                'img_path' => 'dishes-cover/tod-man.jpg',
+                'user_id' => 12,
+                'type_id' => 8
+            ],
+            [
+                'name' => 'Pad Thai',
+                'description' => 'Pasta di riso saltata con tofu, pollo/gamberi germogli di soia e uova',
+                'price' => 10.00,
+                'visibility' => 1,
+                'category_id' => 3,
+                'img_path' => 'dishes-cover/pad-thai.jpg',
                 'user_id' => 12,
                 'type_id' => 8
             ],
