@@ -153,9 +153,14 @@
 
         .banner-image {
             filter: drop-shadow(0 0 10px rgba($primary_color, .2));
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             
             img {
-                width: 100%;
+                height: 100%;
+                width: auto;
             }
         }
     }
