@@ -1121,7 +1121,8 @@ var app = new Vue({
             return element.id;
           }).indexOf(select_dish.id);
           order_dishes[dish_index].quantita += parseInt(quantity);
-          order_dishes[dish_index].totale_singolo = parseInt(order_dishes[dish_index].quantita) * parseFloat(select_dish.price);
+          order_dishes[dish_index].totale_singolo = parseInt(order_dishes[dish_index].quantita) * parseFloat(select_dish.price.toFixed(1));
+          order_dishes[dish_index].totale_singolo = this.roundValue(order_dishes[dish_index].totale_singolo);
         } else {
           order_dishes.push({
             id: select_dish.id,
@@ -1129,11 +1130,12 @@ var app = new Vue({
             ristorante: parseInt(restaurant_select),
             nome: select_dish.name,
             prezzo_singolo: parseFloat(select_dish.price),
-            totale_singolo: parseInt(quantity) * parseFloat(select_dish.price)
+            totale_singolo: parseInt(quantity) * parseFloat(select_dish.price.toFixed(1))
           });
         }
 
         this.order.total_price += select_dish.price * parseInt(quantity);
+        this.order.total_price = this.roundValue(this.order.total_price);
       } else {
         this.notify = {
           style: 'danger',
@@ -1173,13 +1175,18 @@ var app = new Vue({
     /**
      * Funzione per ricalcolare il totale dell'ordine
      */
-    totalOrderRecalculated: function totalOrderRecalculated(index) {
+    totalOrderRecalculated: function totalOrderRecalculated(index, up_down) {
       var _this2 = this;
 
-      this.order.dishes[index].totale_singolo = this.order.dishes[index].quantita * this.order.dishes[index].prezzo_singolo;
+      if (up_down) {
+        this.order.dishes[index].totale_singolo = this.order.dishes[index].quantita * this.order.dishes[index].prezzo_singolo;
+        this.order.dishes[index].totale_singolo = this.roundValue(this.order.dishes[index].totale_singolo);
+      }
+
       this.order.total_price = 0;
       this.order.dishes.forEach(function (element) {
         _this2.order.total_price += element.prezzo_singolo * element.quantita;
+        _this2.order.total_price = _this2.roundValue(_this2.order.total_price);
       });
     },
 
@@ -1373,6 +1380,15 @@ var app = new Vue({
     teardownBraintree: function teardownBraintree() {
       this.braintree_payment.instance.teardown();
     },
+
+    /**
+     * Funzione che arrotonda in decimali
+     * @param element variabile su cui eseguire il trunk
+     * @returns numero float con 2 decimali
+     */
+    roundValue: function roundValue(element) {
+      return parseFloat(element.toFixed(1));
+    },
     // burger-menu
     showMenu: function showMenu() {
       $(".burger-content").fadeToggle("fast");
@@ -1398,7 +1414,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Endrit Morina\github\progetto-finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

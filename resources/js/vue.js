@@ -81,7 +81,8 @@ const app = new Vue(
                             return element.id
                         }).indexOf(select_dish.id);
                         order_dishes[dish_index].quantita += parseInt(quantity);
-                        order_dishes[dish_index].totale_singolo = parseInt(order_dishes[dish_index].quantita) * parseFloat(select_dish.price);
+                        order_dishes[dish_index].totale_singolo = parseInt(order_dishes[dish_index].quantita) * parseFloat(select_dish.price.toFixed(1));
+                        order_dishes[dish_index].totale_singolo = this.roundValue(order_dishes[dish_index].totale_singolo);
                     } else {
                         order_dishes.push({
                             id: select_dish.id,
@@ -89,10 +90,11 @@ const app = new Vue(
                             ristorante: parseInt(restaurant_select),
                             nome: select_dish.name,
                             prezzo_singolo: parseFloat(select_dish.price),
-                            totale_singolo: parseInt(quantity) * parseFloat(select_dish.price)
+                            totale_singolo: parseInt(quantity) * parseFloat(select_dish.price.toFixed(1))
                         })
                     }
                     this.order.total_price += select_dish.price * parseInt(quantity);
+                    this.order.total_price = this.roundValue(this.order.total_price);
                 } else {
                     this.notify = {
                         style: 'danger',
@@ -126,11 +128,15 @@ const app = new Vue(
             /**
              * Funzione per ricalcolare il totale dell'ordine
              */
-            totalOrderRecalculated(index) {
-                this.order.dishes[index].totale_singolo = this.order.dishes[index].quantita * this.order.dishes[index].prezzo_singolo;
+            totalOrderRecalculated(index, up_down) {
+                if (up_down) {
+                    this.order.dishes[index].totale_singolo = this.order.dishes[index].quantita * this.order.dishes[index].prezzo_singolo;
+                    this.order.dishes[index].totale_singolo = this.roundValue(this.order.dishes[index].totale_singolo);
+                }
                 this.order.total_price = 0;
                 this.order.dishes.forEach(element => {
                     this.order.total_price += element.prezzo_singolo * element.quantita;
+                    this.order.total_price = this.roundValue(this.order.total_price);
                 })
             },
             /**
@@ -263,6 +269,14 @@ const app = new Vue(
              */
             teardownBraintree() {
                 this.braintree_payment.instance.teardown();
+            },
+            /**
+             * Funzione che arrotonda in decimali
+             * @param element variabile su cui eseguire il trunk
+             * @returns numero float con 2 decimali
+             */
+            roundValue(element) {
+                return parseFloat(element.toFixed(1));
             },
 
             // burger-menu
