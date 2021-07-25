@@ -11066,11 +11066,11 @@ h6 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 1rem;
+  padding-top: 21px;
 }
 
 .client .icons-container .home-icon {
-  margin-top: 19px;
+  margin-top: 17px;
 }
 
 .client .icons-container .home-icon.active {
@@ -11194,11 +11194,28 @@ h6 {
   margin-bottom: 5px;
 }
 
-.client .types-section h6 {
+.client .types-section .types-container-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.client .types-section .types-container-title h6 {
   font-size: 1.4rem;
   margin-bottom: 1rem;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
+}
+
+.client .types-section .types-container-title span {
+  color: #FFA823;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.4s;
+}
+
+.client .types-section .types-container-title span:hover {
+  color: #ef9000;
 }
 
 .client .types-section .container {
@@ -11212,6 +11229,7 @@ h6 {
   height: 157px;
   overflow-x: auto;
   scrollbar-width: none;
+  transition: all 0.4s;
 }
 
 .client .types-section .container .type-cards::-webkit-scrollbar {
@@ -11220,6 +11238,10 @@ h6 {
 
 .client .types-section .container .type-cards > div {
   width: calc(100% / 6 - 10px);
+}
+
+.client .types-section .container .type-cards.enlarge {
+  height: 314px;
 }
 
 .client .types-section .container .type-cards .type-card {
@@ -11293,7 +11315,7 @@ h6 {
 }
 
 .client .type-indicator {
-  margin-bottom: 5px;
+  margin: 10px 0 5px;
   font-size: 1.2rem;
   font-weight: 500;
 }
@@ -11304,14 +11326,19 @@ h6 {
   align-items: flex-start;
   flex-wrap: wrap;
   transition: display 0.4s;
-  max-height: calc(100% - 96px - 201px - 48px);
+  max-height: calc(100% - 96px - 201px - 58px);
   overflow-y: auto;
   margin-bottom: 15px;
   scrollbar-width: none;
+  transition: all 0.4s;
 }
 
 .client .restaurants-container::-webkit-scrollbar {
   display: none;
+}
+
+.client .restaurants-container.reduce {
+  max-height: calc(100% - 96px - 201px - 58px - 157px);
 }
 
 .client .restaurants-container .restaurant-card {
@@ -11353,7 +11380,6 @@ h6 {
 }
 
 .client .restaurants-container .restaurant-card .restaurant-infos {
-  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -11812,6 +11838,10 @@ h6 {
   display: none;
 }
 
+.client .reduce {
+  height: calc(100% - 218px - 96px - 157px);
+}
+
 .user .icons-container {
   display: flex;
   flex-direction: column;
@@ -12171,19 +12201,25 @@ h6 {
   }
 }
 
-@media screen and (min-width: 992px) {
-  #app .my_container {
-    width: 90%;
+@media screen and (min-width: 1200px) {
+  .types-section .container {
+    max-width: 100%;
   }
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 1119px) {
   #app .my_container {
     width: 90%;
   }
 
   .types-section .container {
     max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  #app .my_container {
+    width: 90%;
   }
 
   .client {
@@ -12314,6 +12350,10 @@ h6 {
 
   .client .container .types-section .type-cards > div {
     width: calc(100% / 3 - 1rem);
+  }
+
+  .client .restaurants-container .restaurant-card .restaurant-img {
+    width: 40%;
   }
 
   .client .cart .order-items {

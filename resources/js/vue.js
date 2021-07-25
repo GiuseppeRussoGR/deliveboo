@@ -34,8 +34,19 @@ const app = new Vue(
             stage: 0,
             card: false,
             notify: {},
+            allTypesShown: false,
+            showHideTypesButton: "Mostra tutte"
         },
         methods: {
+            showAllTypes() {
+                if (this.allTypesShown) {
+                    this.allTypesShown = false;
+                    this.showHideTypesButton = 'Mostra tutte';
+                } else {
+                    this.allTypesShown = true;
+                    this.showHideTypesButton = "Riduci";
+                }
+            },
             /**
              * Funzione che permette di ricevere via API i ristoranti
              * @param parameter eventuale parametro di query string
@@ -154,7 +165,7 @@ const app = new Vue(
                     $('#my_form').addClass('was-validated');
                     this.notify = {
                         style: 'danger',
-                        message: 'Non tutti i campi sono stati compilati correttamente'
+                        message: 'Riempi tutti i campi contrassegnati'
                     }
                     $('#error_modal').modal('show');
                 }
@@ -230,7 +241,7 @@ const app = new Vue(
                                 dishes: []
                             };
                             $('#dropin-container').hide();
-                            $('#message_payment').html('Grazie per aver acquistato da noi');
+                            $('#message_payment').html('Ordine effettuato con successo!');
                             $('#button_payment').hide();
                         } else {
                             this.notify = {

@@ -101,6 +101,9 @@
                 </div>
                 <button v-if="!openBasket" class="btn burger" type="button" @click="openBasket = !openBasket">
                     <i class="fas fa-shopping-basket icon"></i>
+                    <span class="items-in-cart" v-if="">
+
+                    </span>
                 </button>
                 <button class="btn burger" type="button" @click="showMenu">
                     <i class="fas fa-user-circle icon"></i>
@@ -112,7 +115,7 @@
     <!-- Fine Navigator -->
 
     <!-- Inizio Jumbotron -->
-    <div class="my-jumbotron row" :class="{hide : categoryChosen}">
+    <div class="my-jumbotron row" :class="{hide : categoryChosen, reduce: allTypesShown}">
 
         <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 jumbotron-text">
             <h2>Ordina cibo della tua zona con l'app</h2>
@@ -133,12 +136,19 @@
 
     <!-- Inizio Tipologie -->
     <div class="types-section row" :class="{hide : restaurantChosen}">
-        <h6 class="col-12">
-            Esplora le Tipologie
-        </h6>
+        <div class="types-container-title col-12">
+            <h6>
+                Esplora le Tipologie
+            </h6>
+            <span @click="showAllTypes()">
+                @{{showHideTypesButton}}
+            </span>
+        </div>
+
+        
 
         <div class="container">
-            <div class="type-cards">
+            <div class="type-cards" :class="{enlarge : allTypesShown}">
                 <div class="col-6 col-md-4 col-lg-3 col-xl-2" v-for="(type,index) in types">
                     <div class="type-card" :class="{active : card === index}"
                          @click='getApi("api/restaurants/", "restaurants", type.id); card = index; categoryChosen = true; stage = 1'>
@@ -167,8 +177,9 @@
 
     <!-- Inizio Ristoranti -->
     <div v-if="restaurants.length > 0 && categoryChosen" class="restaurants-container row"
-         :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
-        <div class="col-12 col-xl-6" v-for='(restaurant, index) in restaurants'>
+         :class="[{show : categoryChosen}, {hide : restaurantChosen}, {reduce: allTypesShown}]">
+        <div :class="openBasket ? 'col-12 col-xl-6' : 'col-12 col-xl-6'" 
+        v-for='(restaurant, index) in restaurants'>
             <div class="restaurant-card"
                  @click="getApi('api/dishes/','dishes',restaurant.id, restaurant.type_id);restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
                 <div class="restaurant-img">
@@ -198,6 +209,7 @@
         </div>
     </div>
     <!-- Fine Ristoranti -->
+
     <div v-else-if="categoryChosen" class="restaurants-container row"
          :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
         Al momento non ci sono elementi in questa tipologia
@@ -228,11 +240,6 @@
                     Molto Buono
                     <span>(88)</span>
                 </div>
-
-                <!-- <div class="restaurant-category">
-                    <span>Categoria:</span>
-                </div> -->
-
             </div>
         </div>
         <!-- Fine Singolo Ristorante -->

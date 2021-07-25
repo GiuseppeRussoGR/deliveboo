@@ -4,10 +4,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-top: 1rem;
+        padding-top: 21px;
 
         .home-icon {
-            margin-top: 19px;
+            margin-top: 17px;
 
             &.active {
                 margin-top: 0;
@@ -146,13 +146,29 @@
     .types-section {
         margin-bottom: 5px;
 
-        h6 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            font-family: $content_font;
-            font-weight: 600;
+        .types-container-title {
+            @include d-flex-sb-center;
+
+            h6 {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+                font-family: $content_font;
+                font-weight: 600;
+            }
+
+            span {
+                color: $primary_color;
+                font-weight: 500;
+                cursor: pointer;
+                transition: color .4s;
+
+                &:hover {
+                    color: $primary_dark;
+                }
+            }
         }
 
+    
         .container {
             padding: 0;
 
@@ -163,6 +179,7 @@
                 height: 157px;
                 overflow-x: auto;
                 scrollbar-width: none;
+                transition: all .4s;
 
                 &::-webkit-scrollbar {
                     display: none;
@@ -171,6 +188,10 @@
 
                 & > div {
                     width: calc(100% / 6 - 10px);
+                }
+
+                &.enlarge {
+                    height: 314px;
                 }
 
                 .type-card {
@@ -252,7 +273,7 @@
     //Fine Cards Tipologie
 
     .type-indicator {
-        margin-bottom: 5px;
+        margin: 10px 0 5px;
         font-size: 1.2rem;
         font-weight: 500;
     }
@@ -264,13 +285,18 @@
         align-items: flex-start;
         flex-wrap: wrap;
         transition: display .4s;
-        max-height: calc(100% - 96px - 201px - 48px);
+        max-height: calc(100% - 96px - 201px - 58px);
         overflow-y: auto;
         margin-bottom: 15px;
         scrollbar-width: none;
+        transition: all .4s;
 
         &::-webkit-scrollbar {
             display: none;
+        }
+
+        &.reduce {
+            max-height: calc(100% - 96px - 201px - 58px - 157px);
         }
 
         .restaurant-card {
@@ -311,7 +337,6 @@
             }
 
             .restaurant-infos {
-                width: 50%;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-evenly;
@@ -782,6 +807,10 @@
 
     .hide {
         display: none;
+    }
+
+    .reduce {
+        height: calc(100% - 218px - 96px - 157px);
     }
 
 }

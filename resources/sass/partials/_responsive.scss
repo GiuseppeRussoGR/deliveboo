@@ -1,15 +1,18 @@
-// TABLET
-@include media-lg {
 
-    #app .my_container {
-        width: 90%;
+
+// LARGE DESKTOP
+@include media-xl {
+
+    .types-section {
+        .container {
+            max-width: 100%;
+        }
     }
-
 
 }
 
-// TABLET
-@include media-md {
+// DESKTOP
+@include media-lg {
 
     #app .my_container {
         width: 90%;
@@ -21,6 +24,14 @@
         }
     }
 
+}
+
+// TABLET
+@include media-md {
+
+    #app .my_container {
+        width: 90%;
+    }
 
     .client {
         height: 100%;
@@ -189,6 +200,11 @@
             }
         }
         // end tipologie
+        .restaurants-container .restaurant-card {
+            .restaurant-img {
+                width: 40%;
+            }
+        }
         .cart .order-items {
             height: calc(100% - 57px - 31px - 17px - 315px - 17px - 120px);
         }

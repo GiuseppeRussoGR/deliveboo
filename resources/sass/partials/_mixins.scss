@@ -52,7 +52,7 @@
 
 // laptop
 @mixin media-lg {
-    @media screen and (min-width: 992px) {
+    @media screen and (max-width: 1119px) {
         @content;
     }
 }
