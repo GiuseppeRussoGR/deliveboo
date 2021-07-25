@@ -1,5 +1,11 @@
 
 .user {
+
+    h6 {
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
     //Inizio Menu Verticale
     .icons-container {
         display: flex;
@@ -42,7 +48,7 @@
 
     //Inizio Navigator
     nav {
-        padding: 1.7rem 0 1.6rem;
+        padding: 1.7rem 0 1.2rem;
         @include d-flex-sb-center;
 
         .logo {
@@ -84,10 +90,6 @@
         .login-button {
             margin-right: 10px;
         }
-
-        // .burger {
-        //     display: none;
-        // }
     }
 
     //Fine Navigator
@@ -99,7 +101,7 @@
     //Inizio Ristoranti
     .dishes {
         margin-bottom: 1rem;
-        max-height: calc(100% - 230px);
+        max-height: calc(100% - 80px - 45px);
         overflow-y: auto;
         scrollbar-width: none;
 
@@ -114,14 +116,13 @@
             @include neumorph-shadow;
             border-radius: 10px;
             cursor: pointer;
-            margin-bottom: 20px;
-            background-color: $background_grey;
+            margin-bottom: 30px;
+            background-color: $background_light;
             transition: all .4s;
 
             &:hover {
                 @include neumorph-shadow-hover;
                 background-color: $background_grey;
-
             }
 
             img {
@@ -172,6 +173,7 @@
             border: 0;
             margin: 5px auto;
             display: flex;
+            background-color: $background_grey;
 
             .card-body {
                 z-index: 2;

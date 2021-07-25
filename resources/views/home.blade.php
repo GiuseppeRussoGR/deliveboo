@@ -116,18 +116,16 @@
     <!-- Inizio Jumbotron -->
     <div class="my-jumbotron row" :class="{hide : categoryChosen, reduce: allTypesShown}">
 
-        <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12 jumbotron-text">
-            <h2>Ordina cibo della tua zona con l'app</h2>
+        <div class="col-lg-6 col-md-12 col-sm-12 jumbotron-text">
+            <h2>Ordina dai migliori ristoranti della tua zona</h2>
 
             <div class="subtitle">
-                Scegli una delle categorie e visualizza subito i menù di tutti i ristoranti disponibili
+                Scegli una delle categorie e visualizza subito i menù dei tuoi ristoranti preferiti
             </div>
         </div>
 
-        <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12 banner-image">
-            <img
-                src="https://thumbs.dreamstime.com/b/beautiful-woman-smile-her-face-eyes-closed-enjoying-eating-carrot-healthy-organic-food-concept-beautiful-woman-171667781.jpg"
-                alt="">
+        <div class="col-lg-6 col-md-12 col-sm-12 banner-image">
+            <img src="storage/jumbo/jumbo.png" alt="jumbotron-image">
         </div>
 
     </div>
@@ -153,7 +151,6 @@
                          @click='getApi("api/restaurants/", "restaurants", type.id); card = index; categoryChosen = true; stage = 1'>
                         <div class="img-container">
                             <img :src="'storage/'+ type.img_path" alt=""/>
-
                         </div>
                         <div class="card-title">
                             @{{type.name}}
