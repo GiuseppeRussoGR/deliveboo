@@ -6,6 +6,13 @@
     <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
 @endsection
 @section('app_style', 'user statistics')
+
+@section('app-vertical-class', 'col-1')
+
+@section('app-content-class')
+    openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
+@endsection
+
 @section('vertical-nav')
     <!-- Inizio Menu Verticale -->
     <div class="icons-container">
@@ -17,9 +24,7 @@
     </div>
     <!-- Fine Menu Verticale -->
 @endsection
-@section('app-content-class')
-    openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
-@endsection
+
 @section('content')
     <!-- Inizio Navigator -->
     <nav class="row">

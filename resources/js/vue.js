@@ -35,7 +35,8 @@ const app = new Vue(
             card: false,
             notify: {},
             allTypesShown: false,
-            showHideTypesButton: "Mostra tutte"
+            showHideTypesButton: "Mostra tutte",
+            quantityInCart : 0
         },
         methods: {
             showAllTypes() {
@@ -46,6 +47,20 @@ const app = new Vue(
                     this.allTypesShown = true;
                     this.showHideTypesButton = "Riduci";
                 }
+            },
+            addQuantities() {
+                this.quantityInCart = 0;
+
+                this.order.dishes.forEach(item => {
+                    this.quantityInCart += item.quantita;
+                });
+            },
+            removeQuantities() {
+                this.quantityInCart = 0;
+
+                this.order.dishes.forEach(item => {
+                    this.quantityInCart -= item.quantita;
+                });
             },
             /**
              * Funzione che permette di ricevere via API i ristoranti
@@ -102,7 +117,10 @@ const app = new Vue(
                     }
                     $('#error_modal').modal('show');
                 }
-                this.setDataOrderCookie()
+                this.setDataOrderCookie();
+                console.log(this.order.dishes)
+
+                this.addQuantities();
             },
             /**
              * Funzione che permette di aumentare o diminuire il valore di input
@@ -124,6 +142,8 @@ const app = new Vue(
              */
             removeOrder(index) {
                 this.order.dishes.splice(index, 1);
+
+                this.removeQuantities();
             },
             /**
              * Funzione per ricalcolare il totale dell'ordine
@@ -249,6 +269,7 @@ const app = new Vue(
                             $('#dropin-container').hide();
                             $('#message_payment').html('Ordine effettuato con successo!');
                             $('#button_payment').hide();
+                            this.quantityInCart = 0;
                         } else {
                             this.notify = {
                                 style: 'danger',
@@ -285,7 +306,9 @@ const app = new Vue(
             }
         },
         mounted() {
-            this.getApi('api/types/', 'types', '')
+            this.getApi('api/types/', 'types', '');
+
+            this.addQuantities();
         },
         created() {
             if (this.$cookies.isKey('client_order')) {

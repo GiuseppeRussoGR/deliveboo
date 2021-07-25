@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('app_style', 'user login')
+@section('app_style', 'user')
+
+@section('app-vertical-class', '')
 
 @section('vertical-nav-class', '')
 
-@section('app-content-class')
-    'col-12'
-@endsection
+@section('app-content-class', 'col-12')
 
 @section('content')
-    <div class="row ">
+    <div class="row form-row">
         <div class="col-md-12 d-flex form-container">
             <div class="card ">
                 <div class="card-header">{{ __('Login') }}</div>
@@ -70,23 +70,20 @@
 {{--                            </div>--}}
                         </div>
 
-                        <div class="form-group row ">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary px-4 py-2">
+                        <div class="form-group row buttons">
+                            <div class="col-3">
+                                <a class="btn btn-secondary" href="{{route('home')}}">
+                                    <span>Back</span>
+                                </a>
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
                             </div>
                         </div>
                     </form>
-                    <div class="row">
-                        <div class="col-md-8 offset-md-4">
-                            <a href="{{route('home')}}">
-                                <button class="btn btn-secondary px-4 py-2">
-                                    <span>Back</span>
-                                </button>
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>

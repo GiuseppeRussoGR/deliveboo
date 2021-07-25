@@ -1,7 +1,12 @@
 /*css pagina login*/
-.user.login,
-.user.register{
-    .row {
+.user {
+    #root {
+        background-color: $background_grey;
+    }
+    .app-content {
+        margin: 0 auto;
+    }
+    .form-row {
         justify-content: center;
         align-items: center;
         height: 100%;
@@ -29,6 +34,17 @@
                     }
                 }
             }
+        }
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        color: hsl(206, 5%, 26%);
+        font-weight: 500;
+
+        &:hover {
+            background-color: #6c757d;
+            color: #FFFFFF;
         }
     }
 }

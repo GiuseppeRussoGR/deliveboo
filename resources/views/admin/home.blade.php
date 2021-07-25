@@ -2,7 +2,14 @@
 @section('header_script')
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 @endsection
+
 @section('app_style', 'user')
+
+@section('app-vertical-class', 'col-1')
+
+@section('app-content-class')
+    openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
+@endsection
 
 @section('vertical-nav')
     <!-- Inizio Menu Verticale -->
@@ -14,9 +21,7 @@
     </div>
     <!-- Fine Menu Verticale -->
 @endsection
-@section('app-content-class')
-    openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
-@endsection
+
 @section('content')
     <!-- Inizio Navigator -->
     <nav class="row">
@@ -43,34 +48,32 @@
             <h6>Elenco piatti</h6>
         </div>
     </div>
-    <div class="dishes-container row">
-        @foreach($dishes as $dish)
-            <div class="col-12 col-md-6">
-                <div class="dishes-card">
-                    <div class="dish-img">
-                        <img src="{{ asset('storage/' . $dish->img_path) }}" alt="{{ $dish->name}}">
-                    </div>
-                    <div class="dish-infos">
-                        <div class="card-title">
-                            {{$dish->name}}
-                        </div>
-                        <div class="card-description">
-                            {{$dish->description}}
-                        </div>
-                        <div class="card-price">
-                            {{$dish->price}}€
-                        </div>
-                        <div class="button_user">
+    <div class="dishes row">
+    @foreach($dishes as $dish)
+            <div class="col-6 col-lg-4 col-xl-3">
+                <div class="dish-card">
+                    <img src="{{ asset('storage/' . $dish->img_path) }}" alt="{{ $dish->name}}">
+                    <div class="dish-content">
+                        <span class="dish-name card-title">
+                            {{ $dish->name }}
+                        </span>
+                        <span class="dish-description">
+                            {{ $dish->description }}
+                        </span>
+                        <div class="dish-controls">
+                            <span class="price">{{ $dish->price }} €</span>
+                            <div class="button_user">
                             <a href="{{ route('admin.user.edit', [ 'user' => $dish->id ])}}" class="btn btn-success"
                                style="margin-right: 5px;">Modifica</a>
                             <a href="{{ route('admin.user.show', [ 'user' => $dish->id ])}}" class="btn btn-primary"
                                style="margin-left: 5px;">Dettagli</a>
                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
 @endsection
 
 @section('footer_script')

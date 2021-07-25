@@ -4,6 +4,12 @@
 @endsection
 @section('app_style', 'user')
 
+@section('app-vertical-class', 'col-1')
+
+@section('app-content-class')
+    openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
+@endsection
+
 @section('vertical-nav')
     <!-- Inizio Menu Verticale -->
     <div class="icons-container">
@@ -15,9 +21,7 @@
     </div>
     <!-- Fine Menu Verticale -->
 @endsection
-@section('app-content-class')
-    openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
-@endsection
+
 @section('content')
     <!-- Inizio Navigator -->
     <nav class="row">
@@ -40,7 +44,7 @@
     </nav>
     <div class="row">
         <div class="col-12">
-            <h3>Aggiungi un piatto</h3>
+            <h6>Aggiungi un piatto</h6>
         </div>
     </div>
 

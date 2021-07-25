@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('app_style', 'user register')
+@section('app_style', 'user')
+
+@section('app-vertical-class', '')
 
 @section('vertical-nav-class', '')
 
@@ -9,7 +11,7 @@
 @endsection
 
 @section('content')
-    <div class="row">
+    <div class="row form-row">
         <div class="col-8 form-container">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
@@ -28,11 +30,6 @@
                                        name="company_name" value="{{ old('company_name') }}" required
                                        autocomplete="company_name" autofocus>
 
-                            <!-- @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror -->
                             </div>
                         </div>
 
@@ -126,14 +123,14 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6">
+                        <div class="form-group row">
+                            <div class="offset-3 col-md-6">
                                 <label for="img_path">Inserisci un'immagine di copertina</label>
                                 <input type="file" class="form-control-file" id="img_path" name="img_path">
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-12">
+                        <div class="form-group row">
+                            <div class="form-group row col-12 ml-0">
                                 @foreach ($types as $type)
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" name="type_id[]"
@@ -146,23 +143,19 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                        <div class="form-group row buttons">
+                            <div class="offset-4 col-2">
+                                <a class="btn btn-secondary" href="{{route('home')}}">
+                                    <span>Back</span>
+                                </a>
+                            </div>
+                            <div class="col-2">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
                             </div>
                         </div>
                     </form>
-                    <div class="row mt-2">
-                        <div class="col-md-6 offset-md-4">
-                            <a href="{{route('home')}}">
-                            <button class="btn btn-secondary">
-                                <span>Back</span>
-                            </button>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

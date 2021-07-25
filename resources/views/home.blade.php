@@ -6,7 +6,6 @@
 @endsection
 
 @section('app_style', 'client')
-
 @section('app-vertical-class', 'col-1')
 
 @section('app-content-class')
@@ -101,8 +100,8 @@
                 </div>
                 <button v-if="!openBasket" class="btn burger" type="button" @click="openBasket = !openBasket">
                     <i class="fas fa-shopping-basket icon"></i>
-                    <span class="items-in-cart" v-if="">
-
+                    <span class="items-in-cart" v-if="order.dishes.length > 0">
+                        @{{ quantityInCart }}
                     </span>
                 </button>
                 <button class="btn burger" type="button" @click="showMenu">
@@ -260,7 +259,6 @@
                         </span>
                         <div class="dish-controls">
                             <span class="price">@{{ dish.price }} €</span>
-                            <!-- Ricorda di settare il più e il meno -->
                             <div class="number-input">
                                 <button @click="setQuantity($('#quantity-'+ index ), '-')"></button>
                                 <input disabled readonly min="1" :id="'quantity-' + index" type="number" name="quantita"
@@ -369,7 +367,7 @@
                 </li>
             </ul>
             <ul v-else>
-                <li>
+                <li class="empty-cart-msg">
                     Al momento il carrello è vuoto
                 </li>
             </ul>
