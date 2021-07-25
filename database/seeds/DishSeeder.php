@@ -165,7 +165,7 @@ class DishSeeder extends Seeder
             ],
             [
                 'name' => 'Spaghetti di soia con frutti di mare alla piastra',
-                'description' => 'leggermente piccanti',
+                'description' => 'Leggermente piccanti',
                 'price' => 8.00,
                 'visibility' => 1,
                 'category_id' => 3,
@@ -175,7 +175,7 @@ class DishSeeder extends Seeder
             ],
             [
                 'name' => 'Anatra alla Singapore',
-                'description' => 'accompagnata da crepes, verdurine e salsa alle prugne',
+                'description' => 'Accompagnata da crepes, verdurine e salsa alle prugne',
                 'price' => 11.20,
                 'visibility' => 1,
                 'category_id' => 4,
@@ -255,7 +255,7 @@ class DishSeeder extends Seeder
             ],
             [
                 'name' => 'TAJ BIRYANI',
-                'description' => 'risotto con carne d\'agnello, uvetta, mandorle e zafferano',
+                'description' => 'Risotto con carne d\'agnello, uvetta, mandorle e zafferano',
                 'price' => 9.50,
                 'visibility' => 1,
                 'category_id' => 3,
@@ -265,7 +265,7 @@ class DishSeeder extends Seeder
             ],
             [
                 'name' => 'JHENGA BIRYANI',
-                'description' => 'risotto con code di gamberi e mandorle',
+                'description' => 'Risotto con code di gamberi e mandorle',
                 'price' => 9.50,
                 'visibility' => 1,
                 'category_id' => 3,
@@ -275,13 +275,24 @@ class DishSeeder extends Seeder
             ],
             [
                 'name' => 'RING PAKORA',
-                'description' => 'anelli di cipolla fritti pastellati con farina di ceci',
+                'description' => 'Anelli di cipolla fritti pastellati con farina di ceci',
                 'price' => 8.50,
                 'visibility' => 1,
                 'category_id' => 1,
                 'img_path' => 'dishes-cover/ring-pakora.jpg',
                 'user_id' => 8,
                 'type_id' => 6
+            ],
+
+            [
+                'name' => 'KHANG KRAI',
+                'description' => 'Pollo al curry giallo con latte di cocco e riso',
+                'price' => 12.00,
+                'visibility' => 1,
+                'category_id' => 3,
+                'img_path' => 'dishes-cover/khang-krai.jpg',
+                'user_id' => 12,
+                'type_id' => 8
             ],
         ];
         foreach ($dishes as $dish) {
