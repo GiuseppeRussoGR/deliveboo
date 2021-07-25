@@ -11201,6 +11201,14 @@ h6 {
   display: none;
 }
 
+.client .my-jumbotron .subtitle {
+  font-weight: 500;
+}
+
+.client .my-jumbotron .banner-image {
+  filter: drop-shadow(0 0 10px rgba(255, 168, 35, 0.2));
+}
+
 .client .my-jumbotron .banner-image img {
   width: 100%;
 }
@@ -11371,6 +11379,7 @@ h6 {
 
 .client .restaurants-container .restaurant-card:hover {
   box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.1), -3px -3px 7px #fff, inset 3px 3px 5px 0 rgba(0, 0, 0, 0.1), inset -3px -3px 7px #FFFFFF;
+  background-color: #FBF9F9;
 }
 
 .client .restaurants-container .restaurant-card.active {
@@ -11492,8 +11501,9 @@ h6 {
   border-radius: 10px;
   cursor: pointer;
   margin-bottom: 20px;
-  background-color: #FBF9F9;
+  background-color: #FFFFFF;
   transition: all 0.4s;
+  overflow: hidden;
 }
 
 .client .single-restaurant-page .dishes .dish-card:hover {
@@ -11515,6 +11525,10 @@ h6 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.client .single-restaurant-page .dishes .dish-card .dish-content .dish-name {
+  white-space: nowrap;
 }
 
 .client .single-restaurant-page .dishes .dish-card .dish-content .dish-description {
@@ -11861,6 +11875,11 @@ h6 {
   height: calc(100% - 218px - 96px - 157px);
 }
 
+.user h6 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
 .user .icons-container {
   display: flex;
   flex-direction: column;
@@ -11899,7 +11918,7 @@ h6 {
 }
 
 .user nav {
-  padding: 1.7rem 0 1.6rem;
+  padding: 1.7rem 0 1.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11947,7 +11966,7 @@ h6 {
 
 .user .dishes {
   margin-bottom: 1rem;
-  max-height: calc(100% - 230px);
+  max-height: calc(100% - 80px - 45px);
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -11962,8 +11981,8 @@ h6 {
   box-shadow: 3px 2px 5px 0 rgba(0, 0, 0, 0.15), -3px -3px 7px #FFFFFF;
   border-radius: 10px;
   cursor: pointer;
-  margin-bottom: 20px;
-  background-color: #FBF9F9;
+  margin-bottom: 30px;
+  background-color: #FFFFFF;
   transition: all 0.4s;
 }
 
@@ -12017,6 +12036,7 @@ h6 {
   border: 0;
   margin: 5px auto;
   display: flex;
+  background-color: #FBF9F9;
 }
 
 .user.detail .card .card-body {
@@ -12347,6 +12367,12 @@ h6 {
     min-width: 550px;
   }
 
+  .client .icons-container .icon.active {
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
+  }
+
   .client .login {
     position: relative;
   }
@@ -12365,6 +12391,14 @@ h6 {
     right: 57px;
   }
 
+  .client .my-jumbotron {
+    text-align: center;
+  }
+
+  .client .my-jumbotron .banner-image img {
+    width: 60%;
+  }
+
   .client .container .types-section .type-cards > div {
     width: calc(100% / 3 - 1rem);
   }
@@ -12375,6 +12409,12 @@ h6 {
 
   .client .cart .order-items {
     height: calc(100% - 57px - 31px - 17px - 315px - 17px - 120px);
+  }
+
+  .user .icons-container .icon.active {
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
   }
 
   .user .form-group {

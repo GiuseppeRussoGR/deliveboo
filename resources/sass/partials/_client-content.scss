@@ -36,7 +36,6 @@
             }
         }
     }
-
     //Fine Menu Verticale
 
     //Inizio Navigator
@@ -148,7 +147,13 @@
             display: none;
         }
 
+        .subtitle {
+            font-weight: 500;
+        }
+
         .banner-image {
+            filter: drop-shadow(0 0 10px rgba($primary_color, .2));
+            
             img {
                 width: 100%;
             }
@@ -329,6 +334,7 @@
 
             &:hover {
                 @include neumorph-shadow-hover;
+                background-color: $background_grey;
             }
 
             &.active {
@@ -457,8 +463,9 @@
                 border-radius: 10px;
                 cursor: pointer;
                 margin-bottom: 20px;
-                background-color: $background_grey;
+                background-color: $background_light;
                 transition: all .4s;
+                overflow: hidden;
 
                 &:hover {
                     @include neumorph-shadow-hover;
@@ -479,6 +486,10 @@
                     display: flex;
                     flex-direction: column;
                     justify-content: space-between;
+
+                    .dish-name {
+                        white-space: nowrap;
+                    }
 
                     .dish-description {
                         font-size: 12px;

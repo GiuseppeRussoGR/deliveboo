@@ -49,7 +49,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6 offset-md-3">
             <form action=" {{ route('admin.user.store') }} " method="post" enctype="multipart/form-data">
                 @csrf
                 @method('POST')
@@ -116,7 +116,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary my-4">Crea</button>
+                <button type="submit" class="btn btn-primary my-4">Aggiungi</button>
             </form>
         </div>
         <div class="col-12 col-md-6">

@@ -50,7 +50,7 @@
     </div>
     <div class="dishes row">
     @foreach($dishes as $dish)
-            <div class="col-6 col-lg-4 col-xl-3">
+            <div class="col-12 col-lg-6 col-xl-4">
                 <div class="dish-card">
                     <img src="{{ asset('storage/' . $dish->img_path) }}" alt="{{ $dish->name}}">
                     <div class="dish-content">
