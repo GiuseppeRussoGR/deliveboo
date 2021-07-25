@@ -127,7 +127,7 @@ class UserSeeder extends Seeder
             ],
             //Italiano - Pesce - Carne
             [
-                'company_name' => 'Ristorante Morganti',
+                'company_name' => 'Morganti',
                 'password' => 'morganti',
                 'email' => 'morganti@email.it',
                 'address' => 'Via Luciano Morganti, 24',
