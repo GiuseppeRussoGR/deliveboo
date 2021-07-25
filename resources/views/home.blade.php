@@ -7,6 +7,16 @@
 
 @section('app_style', 'client')
 
+@section('app-vertical-class', 'col-1')
+
+@section('app-content-class')
+    openBasket ? 'col-7 col-md-8' : 'col-11'
+@endsection
+
+@section('app-side-class')
+    openBasket ? 'col-4 col-md-3' : ''
+@endsection
+
 @section('vertical-nav')
     <!-- Inizio Menu Verticale -->
     <div class="icons-container">
@@ -23,12 +33,8 @@
     <!-- Fine Menu Verticale -->
 @endsection
 
-@section('app-content-class')
-    openBasket ? 'col-7 col-md-8' : 'col-10 col-md-11'
-@endsection
-@section('app-side-class')
-    openBasket ? 'col-2 col-md-3' : ''
-@endsection
+
+
 
 @section('content')
     <!-- The Modal -->
@@ -133,7 +139,7 @@
 
         <div class="container">
             <div class="type-cards">
-                <div class="col-6 col-md-3 col-lg-2" v-for="(type,index) in types">
+                <div class="col-6 col-md-4 col-lg-3 col-xl-2" v-for="(type,index) in types">
                     <div class="type-card" :class="{active : card === index}"
                          @click='getApi("api/restaurants/", "restaurants", type.id); card = index; categoryChosen = true; stage = 1'>
                         <div class="img-container">
@@ -162,7 +168,7 @@
     <!-- Inizio Ristoranti -->
     <div v-if="restaurants.length > 0 && categoryChosen" class="restaurants-container row"
          :class="[{show : categoryChosen}, {hide : restaurantChosen}]">
-        <div class="col-12 col-lg-6" v-for='(restaurant, index) in restaurants'>
+        <div class="col-12 col-xl-6" v-for='(restaurant, index) in restaurants'>
             <div class="restaurant-card"
                  @click="getApi('api/dishes/','dishes',restaurant.id, restaurant.type_id);restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
                 <div class="restaurant-img">

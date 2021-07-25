@@ -261,10 +261,10 @@
     .restaurants-container {
         display: flex;
         justify-content: space-between;
+        align-items: flex-start;
         flex-wrap: wrap;
-        //display: none;
         transition: display .4s;
-        height: calc(100% - 96px - 201px - 48px);
+        max-height: calc(100% - 96px - 201px - 48px);
         overflow-y: auto;
         margin-bottom: 15px;
         scrollbar-width: none;
@@ -412,7 +412,7 @@
 
             .dish-card {
                 width: 100%;
-                height: 203px;
+                height: 240px;
                 @include neumorph-shadow;
                 border-radius: 10px;
                 cursor: pointer;
@@ -421,30 +421,37 @@
                 transition: all .4s;
 
                 &:hover {
-                    // background-color: $primary_color;
                     @include neumorph-shadow-hover;
                     background-color: $background_grey;
 
-                    .dish-name {
-                        // color: white;
-                    }
                 }
 
                 img {
                     width: 100%;
-                    height: 112px;
+                    height: 120px;
                     border-radius: 10px 10px 0px 0px;
                     object-fit: cover;
                 }
 
                 .dish-content {
+                    height: 120px;
                     padding: 10px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
 
                     .dish-description {
                         font-size: 12px;
                         display: block;
                         padding-top: 2px;
                         padding-bottom: 2px;
+                        height: 40px;
+                        overflow-x: auto;
+                        scrollbar-width: none;
+
+                        &::-webkit-scrollbar {
+                            display: none;
+                        }
                     }
 
                     .dish-controls {
@@ -615,6 +622,13 @@
         }
 
         .order-items {
+            height: calc(100% - 57px - 31px - 54px - 315px - 54px - 50px);
+            overflow-x: auto;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
 
             ul {
                 list-style-type: none;
@@ -624,6 +638,10 @@
                     font-size: 13px;
                     margin-bottom: 10px;
                     font-weight: 500;
+
+                    .dish-name {
+                        font-weight: 400;
+                    }
 
                     .bottom-order-item {
                         @include d-flex-sb-center;
@@ -678,7 +696,7 @@
                             content: '';
                             width: 9px;
                             height: 2px;
-                            background-color: $text_color;
+                            background-color: #3a2c23;
                             transform: translate(-50%, -50%);
                         }
 

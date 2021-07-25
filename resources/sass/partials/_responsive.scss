@@ -1,95 +1,10 @@
-// SMARTPHONE
-@include media-sm {
-#app .my_container {
-    width: 100%;
+// TABLET
+@include media-lg {
 
-    & > .container-fluid {
-        max-width: 100%;
-        margin: 0;
-    }
-}
-
-    .types-section {
-        .container {
-            max-width: 100%;
-        }
+    #app .my_container {
+        width: 90%;
     }
 
-    #root {
-        max-width: 600px;
-    }
-
-    .client {
-        height: 100%;
-        overflow: hidden;
-
-        // navigator
-        .login {
-            position: relative;
-
-            .burger-content {
-                margin: 10px 0;
-                position: absolute;
-                top: 42px;
-                right: 10px;
-                z-index: 1;
-            }
-
-            .logout-button {
-                position: absolute;
-                bottom: 13px;
-                right: 57px;
-            }
-
-        }
-
-        // end navigator
-
-        // jumbotron
-        .jumbotron-text {
-            h2 {
-                font-size: 2.5rem;
-            }
-
-            .subtitle {
-                font-size: 1.2rem;
-            }
-        }
-        // end jumbotron
-
-        // tipologie
-        .container {
-            .types-section {
-                height: auto;
-                margin-top: 20px;
-
-                h6 {
-                    margin-bottom: 11px;
-                }
-
-                .type-cards {
-                    flex-wrap: wrap;
-                    height: 165px;
-                    overflow-y: auto;
-                    scrollbar-width: none;
-
-                    &::-webkit-scrollbar {
-                        display: none;
-                    }
-
-                    & > div {
-                        width: calc(100% / 3 - 1rem);
-
-                        .type-card {
-                            margin-bottom: 1rem;
-                        }
-                    }
-                }
-            }
-        }
-        // end tipologie
-
-    }
 
 }
 
@@ -153,18 +68,131 @@
                 }
             }
         }
+    
+        .cart .order-items ul li .bottom-order-item .number-input input[type=number] {
+            font-size: 13px;
+        }
+
+        .cart .order-items ul li .bottom-order-item .number-input button:before, 
+        .client .cart .order-items ul li .bottom-order-item .number-input button:after {
+            width: 8px;
+        }
+
+        .cart .order-items ul li .bottom-order-item .dish-total-price {
+            font-size: 13px;
+    
+                i {
+                    font-size: 8px;
+                    bottom: 1px;
+                }
+        }
+
+        .cart {
+
+            form {
+
+                input {
+                    height: 1.8rem;
+                }
+
+                .form-control {
+                    font-size: 12px;
+                    padding: 5px 8px;
+                }
+            }
+
+            .cart-subtitle {
+                margin: 1rem 0 0;
+            }
+
+            .order-items {
+                height: calc(100% - 57px - 31px - 17px - 315px - 17px - 65px);
+
+                .dish-name {
+                    font-size: 12px;
+                }
+
+                
+            }
+
+            .bottom-info {
+
+                .order-total {
+                    font-size: 1rem;
+                }
+        
+                .btn-checkout {
+                    font-size: 1rem;
+                    padding: 7px 15px;
+                }
+            }
+        }
+        
+
 
         // end tipologie
     }
 
 }
 
-// TABLET
-@include media-lg {
 
-    #app .my_container {
-        width: 90%;
+// SMARTPHONE
+@include media-sm {
+#app .my_container {
+    width: 100%;
+
+    & > .container-fluid {
+        max-width: 100%;
+        margin: 0;
+    }
+}
+
+    #root {
+        min-width: 550px;
     }
 
+    .client {
+
+        // navigator
+        .login {
+            position: relative;
+
+            .burger-content {
+                margin: 10px 0;
+                position: absolute;
+                top: 42px;
+                right: 10px;
+                z-index: 1;
+            }
+
+            .logout-button {
+                position: absolute;
+                bottom: 13px;
+                right: 57px;
+            }
+
+        }
+
+        // end navigator
+
+        // tipologie
+        .container {
+            .types-section {
+
+                .type-cards {
+                
+                    & > div {
+                        width: calc(100% / 3 - 1rem);
+
+                    }
+                }
+            }
+        }
+        // end tipologie
+        .cart .order-items {
+            height: calc(100% - 57px - 31px - 17px - 315px - 17px - 120px);
+        }
+    }
 
 }
+

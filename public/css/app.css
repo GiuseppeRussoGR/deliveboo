@@ -11301,9 +11301,10 @@ h6 {
 .client .restaurants-container {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   flex-wrap: wrap;
   transition: display 0.4s;
-  height: calc(100% - 96px - 201px - 48px);
+  max-height: calc(100% - 96px - 201px - 48px);
   overflow-y: auto;
   margin-bottom: 15px;
   scrollbar-width: none;
@@ -11445,7 +11446,7 @@ h6 {
 
 .client .single-restaurant-page .dishes .dish-card {
   width: 100%;
-  height: 203px;
+  height: 240px;
   box-shadow: 3px 2px 5px 0 rgba(0, 0, 0, 0.15), -3px -3px 7px #FFFFFF;
   border-radius: 10px;
   cursor: pointer;
@@ -11461,14 +11462,18 @@ h6 {
 
 .client .single-restaurant-page .dishes .dish-card img {
   width: 100%;
-  height: 112px;
+  height: 120px;
   border-radius: 10px 10px 0px 0px;
   -o-object-fit: cover;
      object-fit: cover;
 }
 
 .client .single-restaurant-page .dishes .dish-card .dish-content {
+  height: 120px;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .client .single-restaurant-page .dishes .dish-card .dish-content .dish-description {
@@ -11476,6 +11481,13 @@ h6 {
   display: block;
   padding-top: 2px;
   padding-bottom: 2px;
+  height: 40px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.client .single-restaurant-page .dishes .dish-card .dish-content .dish-description::-webkit-scrollbar {
+  display: none;
 }
 
 .client .single-restaurant-page .dishes .dish-card .dish-content .dish-controls {
@@ -11639,6 +11651,16 @@ h6 {
   height: 2.1rem;
 }
 
+.client .cart .order-items {
+  height: calc(100% - 57px - 31px - 54px - 315px - 54px - 50px);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.client .cart .order-items::-webkit-scrollbar {
+  display: none;
+}
+
 .client .cart .order-items ul {
   list-style-type: none;
   padding: 0;
@@ -11648,6 +11670,10 @@ h6 {
   font-size: 13px;
   margin-bottom: 10px;
   font-weight: 500;
+}
+
+.client .cart .order-items ul li .dish-name {
+  font-weight: 400;
 }
 
 .client .cart .order-items ul li .bottom-order-item {
@@ -11705,7 +11731,7 @@ h6 {
   content: "";
   width: 9px;
   height: 2px;
-  background-color: #381d0b;
+  background-color: #3a2c23;
   transform: translate(-50%, -50%);
 }
 
@@ -12145,89 +12171,13 @@ h6 {
   }
 }
 
-@media screen and (min-width: 576px) and (max-width: 767px) {
+@media screen and (min-width: 992px) {
   #app .my_container {
-    width: 100%;
-  }
-
-  #app .my_container > .container-fluid,
-  #app .my_container > .container-sm,
-  #app .my_container > .container-md,
-  #app .my_container > .container-lg,
-  #app .my_container > .container-xl {
-    max-width: 100%;
-    margin: 0;
-  }
-
-  .types-section .container {
-    max-width: 100%;
-  }
-
-  #root {
-    max-width: 600px;
-  }
-
-  .client {
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .client .login {
-    position: relative;
-  }
-
-  .client .login .burger-content {
-    margin: 10px 0;
-    position: absolute;
-    top: 42px;
-    right: 10px;
-    z-index: 1;
-  }
-
-  .client .login .logout-button {
-    position: absolute;
-    bottom: 13px;
-    right: 57px;
-  }
-
-  .client .jumbotron-text h2 {
-    font-size: 2.5rem;
-  }
-
-  .client .jumbotron-text .subtitle {
-    font-size: 1.2rem;
-  }
-
-  .client .container .types-section {
-    height: auto;
-    margin-top: 20px;
-  }
-
-  .client .container .types-section h6 {
-    margin-bottom: 11px;
-  }
-
-  .client .container .types-section .type-cards {
-    flex-wrap: wrap;
-    height: 165px;
-    overflow-y: auto;
-    scrollbar-width: none;
-  }
-
-  .client .container .types-section .type-cards::-webkit-scrollbar {
-    display: none;
-  }
-
-  .client .container .types-section .type-cards > div {
-    width: calc(100% / 3 - 1rem);
-  }
-
-  .client .container .types-section .type-cards > div .type-card {
-    margin-bottom: 1rem;
+    width: 90%;
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
+@media screen and (max-width: 991px) {
   #app .my_container {
     width: 90%;
   }
@@ -12276,11 +12226,98 @@ h6 {
   .client .container .types-section .type-cards > div .type-card {
     margin-bottom: 1rem;
   }
+
+  .client .cart .order-items ul li .bottom-order-item .number-input input[type=number] {
+    font-size: 13px;
+  }
+
+  .client .cart .order-items ul li .bottom-order-item .number-input button:before,
+  .client .client .cart .order-items ul li .bottom-order-item .number-input button:after {
+    width: 8px;
+  }
+
+  .client .cart .order-items ul li .bottom-order-item .dish-total-price {
+    font-size: 13px;
+  }
+
+  .client .cart .order-items ul li .bottom-order-item .dish-total-price i {
+    font-size: 8px;
+    bottom: 1px;
+  }
+
+  .client .cart form input {
+    height: 1.8rem;
+  }
+
+  .client .cart form .form-control {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .client .cart .cart-subtitle {
+    margin: 1rem 0 0;
+  }
+
+  .client .cart .order-items {
+    height: calc(100% - 57px - 31px - 17px - 315px - 17px - 65px);
+  }
+
+  .client .cart .order-items .dish-name {
+    font-size: 12px;
+  }
+
+  .client .cart .bottom-info .order-total {
+    font-size: 1rem;
+  }
+
+  .client .cart .bottom-info .btn-checkout {
+    font-size: 1rem;
+    padding: 7px 15px;
+  }
 }
 
-@media screen and (min-width: 992px) and (max-width: 1199px) {
+@media screen and (max-width: 767px) {
   #app .my_container {
-    width: 90%;
+    width: 100%;
+  }
+
+  #app .my_container > .container-fluid,
+  #app .my_container > .container-sm,
+  #app .my_container > .container-md,
+  #app .my_container > .container-lg,
+  #app .my_container > .container-xl {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  #root {
+    min-width: 550px;
+  }
+
+  .client .login {
+    position: relative;
+  }
+
+  .client .login .burger-content {
+    margin: 10px 0;
+    position: absolute;
+    top: 42px;
+    right: 10px;
+    z-index: 1;
+  }
+
+  .client .login .logout-button {
+    position: absolute;
+    bottom: 13px;
+    right: 57px;
+  }
+
+  .client .container .types-section .type-cards > div {
+    width: calc(100% / 3 - 1rem);
+  }
+
+  .client .cart .order-items {
+    height: calc(100% - 57px - 31px - 17px - 315px - 17px - 120px);
   }
 }
 
