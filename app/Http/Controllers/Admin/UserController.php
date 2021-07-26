@@ -168,7 +168,6 @@ class UserController extends Controller
         $array_list = [];
         $user = Auth::user();
         $order_collection = $user->dishes()->join('dish_order', 'id', '=', 'dish_order.dish_id')->join('orders', 'order_id', '=', 'orders.id')->get();
-        // dd($order_collection);
         foreach ($order_collection as $single_order) {
             $order = new stdClass();
             $order->name = $single_order->name;

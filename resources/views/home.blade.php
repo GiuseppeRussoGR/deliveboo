@@ -346,7 +346,6 @@
             <ul v-if="order.dishes.length > 0">
                 <li v-for="(dish,index) in  order.dishes">
                     <span class="dish-name">@{{ dish.nome }}</span>
-                    <!-- Ricorda di settare il più e il meno -->
                     <div class="bottom-order-item">
                         <div class="number-input">
                             <button

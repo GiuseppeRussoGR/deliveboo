@@ -67,8 +67,7 @@
                             <input type="submit" class="btn btn-danger bottom" value="Elimina">
                         </form>
                         <p class="card-text">
-                            <small class="text-muted">prezzo: {{ $dish->price}}€
-                            </small>
+                            <span class="">prezzo: {{ $dish->price}}€</span>
                         </p>
                     </div>
                 </div>
