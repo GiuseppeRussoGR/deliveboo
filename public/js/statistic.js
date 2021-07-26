@@ -119,24 +119,41 @@ Vue.component('month-chart', {
       var _this2 = this;
 
       axios.get('/api/admin/' + this.id + '/statistics').then(function (response) {
-        response.data.forEach(function (element) {
-          if (!_this2.periodo.includes(element.created_at)) {
-            _this2.periodo.push(element.created_at);
+        for (data in response.data) {
+          if (!_this2.periodo.includes(response.data[data].created_at)) {
+            _this2.periodo.push(response.data[data].created_at);
 
             _this2.count.push({
-              data: element.created_at,
+              data: response.data[data].created_at,
               volte: 1,
-              totale: parseInt(element.total_price)
+              totale: parseInt(response.data[data].total_price)
             });
           } else {
             _this2.count.forEach(function (array_element) {
-              if (array_element.data === element.created_at) {
+              if (array_element.data === response.data[data].created_at) {
                 array_element.volte += 1;
-                array_element.totale += parseInt(element.total_price);
+                array_element.totale += parseInt(response.data[data].total_price);
               }
             });
           }
-        });
+        } // response.data.forEach(element => {
+        //     if (!this.periodo.includes(element.created_at)) {
+        //         this.periodo.push(element.created_at);
+        //         this.count.push({
+        //             data: element.created_at,
+        //             volte: 1,
+        //             totale: parseInt(element.total_price)
+        //         });
+        //     } else {
+        //         this.count.forEach(array_element => {
+        //             if (array_element.data === element.created_at) {
+        //                 array_element.volte += 1;
+        //                 array_element.totale += parseInt(element.total_price)
+        //             }
+        //         })
+        //     }
+        // })
+
       });
     },
     renderChar: function renderChar() {
@@ -206,27 +223,46 @@ Vue.component('year-chart', {
       var _this5 = this;
 
       axios.get('/api/admin/' + this.id + '/statistics').then(function (response) {
-        response.data.forEach(function (element) {
-          var split = element.created_at.split('-');
-          element.created_at = split[0];
+        for (data in response.data) {
+          var split = response.data[data].created_at.split('-');
+          response.data[data].created_at = split[0];
 
-          if (!_this5.periodo.includes(element.created_at)) {
-            _this5.periodo.push(element.created_at);
+          if (!_this5.periodo.includes(response.data[data].created_at)) {
+            _this5.periodo.push(response.data[data].created_at);
 
             _this5.count.push({
-              data: element.created_at,
+              data: response.data[data].created_at,
               volte: 1,
-              totale: parseInt(element.total_price)
+              totale: parseInt(response.data[data].total_price)
             });
           } else {
             _this5.count.forEach(function (array_element) {
-              if (array_element.data === element.created_at) {
+              if (array_element.data === response.data[data].created_at) {
                 array_element.volte += 1;
-                array_element.totale += parseInt(element.total_price);
+                array_element.totale += parseInt(response.data[data].total_price);
               }
             });
           }
-        });
+        } // response.data.forEach(element => {
+        //     let split = element.created_at.split('-');
+        //     element.created_at = split[0];
+        //     if (!this.periodo.includes(element.created_at)) {
+        //         this.periodo.push(element.created_at);
+        //         this.count.push({
+        //             data: element.created_at,
+        //             volte: 1,
+        //             totale: parseInt(element.total_price)
+        //         });
+        //     } else {
+        //         this.count.forEach(array_element => {
+        //             if (array_element.data === element.created_at) {
+        //                 array_element.volte += 1;
+        //                 array_element.totale += parseInt(element.total_price)
+        //             }
+        //         })
+        //     }
+        // })
+
       });
     },
     renderChar: function renderChar() {

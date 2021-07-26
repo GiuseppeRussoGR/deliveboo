@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use stdClass;
+use function Composer\Autoload\includeFile;
 
 class UserController extends Controller
 {
@@ -173,9 +174,11 @@ class UserController extends Controller
             $order->name = $single_order->name;
             $order->quantity = $single_order->quantity;
             $order->order_id = $single_order->order_id;
+            $order->name_dish = $single_order->name;
+            $order->quantita_dish = $single_order->quantita;
             $order->total_price = $single_order->total_price;
             $order->created_at = date_format(date_create($single_order->created_at), 'Y-m-d');
-            $array_list[] = $order;
+            $array_list[$order->order_id] = $order;
         }
         return view('admin.list_order', compact('array_list'));
     }
