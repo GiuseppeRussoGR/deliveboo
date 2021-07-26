@@ -289,7 +289,7 @@ var vm = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\statistic.js */"./resources/js/statistic.js");
+module.exports = __webpack_require__(/*! C:\Users\Endrit Morina\github\progetto-finale\deliveboo\resources\js\statistic.js */"./resources/js/statistic.js");
 
 
 /***/ })

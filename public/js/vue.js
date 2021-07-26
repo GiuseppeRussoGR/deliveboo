@@ -1082,20 +1082,12 @@ var app = new Vue({
         this.showHideTypesButton = "Riduci";
       }
     },
-    addQuantities: function addQuantities() {
+    refreshQuantities: function refreshQuantities() {
       var _this = this;
 
       this.quantityInCart = 0;
       this.order.dishes.forEach(function (item) {
         _this.quantityInCart += item.quantita;
-      });
-    },
-    removeQuantities: function removeQuantities() {
-      var _this2 = this;
-
-      this.quantityInCart = 0;
-      this.order.dishes.forEach(function (item) {
-        _this2.quantityInCart -= item.quantita;
       });
     },
 
@@ -1107,7 +1099,7 @@ var app = new Vue({
      * @param variable string variabile da popolare
      */
     getApi: function getApi(route, variable, id, parameter) {
-      var _this3 = this;
+      var _this2 = this;
 
       this[variable] = [];
       axios.get(route + id, {
@@ -1115,7 +1107,7 @@ var app = new Vue({
           value: parameter
         }
       }).then(function (response) {
-        _this3[variable] = response.data;
+        _this2[variable] = response.data;
       });
     },
 
@@ -1163,7 +1155,7 @@ var app = new Vue({
       }
 
       this.setDataOrderCookie();
-      this.addQuantities();
+      this.refreshQuantities();
     },
 
     /**
@@ -1181,6 +1173,7 @@ var app = new Vue({
       }
 
       input_type.val(value_select);
+      this.refreshQuantities();
     },
 
     /**
@@ -1189,14 +1182,14 @@ var app = new Vue({
      */
     removeOrder: function removeOrder(index) {
       this.order.dishes.splice(index, 1);
-      this.removeQuantities();
+      this.refreshQuantities();
     },
 
     /**
      * Funzione per ricalcolare il totale dell'ordine
      */
     totalOrderRecalculated: function totalOrderRecalculated(index, up_down) {
-      var _this4 = this;
+      var _this3 = this;
 
       if (up_down) {
         this.order.dishes[index].totale_singolo = this.order.dishes[index].quantita * this.order.dishes[index].prezzo_singolo;
@@ -1205,8 +1198,8 @@ var app = new Vue({
 
       this.order.total_price = 0;
       this.order.dishes.forEach(function (element) {
-        _this4.order.total_price += element.prezzo_singolo * element.quantita;
-        _this4.order.total_price = _this4.roundValue(_this4.order.total_price);
+        _this3.order.total_price += element.prezzo_singolo * element.quantita;
+        _this3.order.total_price = _this3.roundValue(_this3.order.total_price);
       });
     },
 
@@ -1214,7 +1207,7 @@ var app = new Vue({
      * Funzione che permette di inserire l'ordine nel DB
      */
     setOrder: function setOrder() {
-      var _this5 = this;
+      var _this4 = this;
 
       if (this.requireFormData() && !this.notify.hasOwnProperty('message')) {
         axios.post('api/order', _objectSpread({}, this.order)).then( /*#__PURE__*/function () {
@@ -1223,18 +1216,18 @@ var app = new Vue({
               while (1) {
                 switch (_context.prev = _context.next) {
                   case 0:
-                    _this5.order_set = {
+                    _this4.order_set = {
                       success: response.data.success,
                       id: response.data.order_number,
                       client_code: response.data.client_code
                     };
                     _context.next = 3;
-                    return _this5.getToken();
+                    return _this4.getToken();
 
                   case 3:
-                    _this5.braintree_payment.token = _context.sent;
+                    _this4.braintree_payment.token = _context.sent;
                     _context.next = 6;
-                    return _this5.getDataPayment();
+                    return _this4.getDataPayment();
 
                   case 6:
                     $('#payment').modal('show');
@@ -1251,7 +1244,7 @@ var app = new Vue({
             return _ref.apply(this, arguments);
           };
         }())["catch"](function (error) {
-          _this5.notify = {
+          _this4.notify = {
             style: 'danger',
             message: error.response.data.errors
           };
@@ -1316,7 +1309,7 @@ var app = new Vue({
      * @returns {Promise<void>}
      */
     getDataPayment: function getDataPayment() {
-      var _this6 = this;
+      var _this5 = this;
 
       braintree.dropin.create({
         authorization: this.braintree_payment.token,
@@ -1324,15 +1317,15 @@ var app = new Vue({
         vaultManager: true
       }, function (err, instance) {
         if (!instance) {
-          _this6.notify = {
+          _this5.notify = {
             style: false,
             message: 'Errore durante la richiesta di pagamento. Provare a ricaricare la pagina ed effettuare di nuovo il pagamento'
           };
           $('#error_modal').modal('show');
         }
 
-        _this6.braintree_payment.instance = instance;
-        _this6.braintree_payment.error = err;
+        _this5.braintree_payment.instance = instance;
+        _this5.braintree_payment.error = err;
       });
     },
 
@@ -1359,7 +1352,7 @@ var app = new Vue({
      * ne riceve il risultato
      */
     makePayment: function makePayment() {
-      var _this7 = this;
+      var _this6 = this;
 
       var price = this.order.total_price;
       $('#my_form').removeClass('was-validated');
@@ -1367,23 +1360,23 @@ var app = new Vue({
         axios.post('api/order/payment', {
           token: payload.nonce,
           amount: price,
-          id_order: _this7.order_set.id
+          id_order: _this6.order_set.id
         }).then(function (response) {
           if (response.data.success) {
-            _this7.braintree_payment.payment = true;
+            _this6.braintree_payment.payment = true;
 
-            _this7.$cookies.remove('client_order');
+            _this6.$cookies.remove('client_order');
 
-            _this7.openBasket = false;
-            _this7.order = {
+            _this6.openBasket = false;
+            _this6.order = {
               dishes: []
             };
             $('#dropin-container').hide();
             $('#message_payment').html('Ordine effettuato con successo!');
             $('#button_payment').hide();
-            _this7.quantityInCart = 0;
+            _this6.quantityInCart = 0;
           } else {
-            _this7.notify = {
+            _this6.notify = {
               style: 'danger',
               message: response.data.message
             };
@@ -1417,7 +1410,7 @@ var app = new Vue({
   },
   mounted: function mounted() {
     this.getApi('api/types/', 'types', '');
-    this.addQuantities();
+    this.refreshQuantities();
   },
   created: function created() {
     if (this.$cookies.isKey('client_order')) {
@@ -1436,7 +1429,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\Endrit Morina\github\progetto-finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

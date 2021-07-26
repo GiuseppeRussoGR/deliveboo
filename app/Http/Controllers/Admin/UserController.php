@@ -167,8 +167,11 @@ class UserController extends Controller
         $array_list = [];
         $user = Auth::user();
         $order_collection = $user->dishes()->join('dish_order', 'id', '=', 'dish_order.dish_id')->join('orders', 'order_id', '=', 'orders.id')->get();
+        // dd($order_collection);
         foreach ($order_collection as $single_order) {
             $order = new stdClass();
+            $order->name = $single_order->name;
+            $order->quantity = $single_order->quantity;
             $order->order_id = $single_order->order_id;
             $order->total_price = $single_order->total_price;
             $order->created_at = date_format(date_create($single_order->created_at), 'Y-m-d');

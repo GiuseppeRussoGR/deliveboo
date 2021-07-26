@@ -49,18 +49,11 @@ const app = new Vue(
                     this.showHideTypesButton = "Riduci";
                 }
             },
-            addQuantities() {
+            refreshQuantities() {
                 this.quantityInCart = 0;
 
                 this.order.dishes.forEach(item => {
                     this.quantityInCart += item.quantita;
-                });
-            },
-            removeQuantities() {
-                this.quantityInCart = 0;
-
-                this.order.dishes.forEach(item => {
-                    this.quantityInCart -= item.quantita;
                 });
             },
             /**
@@ -120,7 +113,7 @@ const app = new Vue(
                 }
                 this.setDataOrderCookie();
 
-                this.addQuantities();
+                this.refreshQuantities();
             },
             /**
              * Funzione che permette di aumentare o diminuire il valore di input
@@ -135,6 +128,7 @@ const app = new Vue(
                     value_select--;
                 }
                 input_type.val(value_select);
+                this.refreshQuantities();
             },
             /**
              * Funzione per rimuovere elementi nel carrello
@@ -143,7 +137,7 @@ const app = new Vue(
             removeOrder(index) {
                 this.order.dishes.splice(index, 1);
 
-                this.removeQuantities();
+                this.refreshQuantities();
             },
             /**
              * Funzione per ricalcolare il totale dell'ordine
@@ -308,7 +302,7 @@ const app = new Vue(
         mounted() {
             this.getApi('api/types/', 'types', '');
 
-            this.addQuantities();
+            this.refreshQuantities();
         },
         created() {
             if (this.$cookies.isKey('client_order')) {
