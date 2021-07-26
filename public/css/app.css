@@ -11415,6 +11415,7 @@ h6 {
   align-items: flex-start;
   color: #381d0b;
   padding: 10px;
+  flex-grow: 1;
 }
 
 .client .restaurants-container .restaurant-card .restaurant-infos .card-title {
@@ -11449,6 +11450,12 @@ h6 {
 
 .client .restaurants-container .restaurant-card .restaurant-infos .restaurant-rate span {
   color: #381d0b;
+}
+
+.client .restaurants-container .restaurant-card .if-basket {
+  padding-right: 10px;
+  padding-top: 10px;
+  color: #27a2ff;
 }
 
 .client .single-restaurant-page {

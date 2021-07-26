@@ -142,7 +142,6 @@
             </span>
         </div>
 
-        
 
         <div class="container">
             <div class="type-cards" :class="{enlarge : allTypesShown}">
@@ -174,10 +173,10 @@
     <!-- Inizio Ristoranti -->
     <div v-if="restaurants.length > 0 && categoryChosen" class="restaurants-container row"
          :class="[{show : categoryChosen}, {hide : restaurantChosen}, {reduce: allTypesShown}]">
-        <div :class="openBasket ? 'col-12 col-xl-6' : 'col-12 col-xl-6'" 
-        v-for='(restaurant, index) in restaurants'>
+        <div :class="openBasket ? 'col-12 col-xl-6' : 'col-12 col-xl-6'"
+             v-for='(restaurant, index) in restaurants'>
             <div class="restaurant-card"
-                 @click="getApi('api/dishes/','dishes',restaurant.id, restaurant.type_id);restaurantChosen = true; chosenRestaurantIndex = index; stage = 2">
+                 @click="getApi('api/dishes/','dishes',restaurant.id, restaurant.type_id);restaurantChosen = true; chosenRestaurantIndex = index; restaurant_id = restaurant.id; stage = 2">
                 <div class="restaurant-img">
                     <img :src="'storage/' + restaurant.img_path" :alt="restaurant.name">
                 </div>
@@ -201,6 +200,8 @@
                         <span>(88)</span>
                     </div>
                 </div>
+                <div v-if="order.dishes.length > 0 && restaurant.id === order.dishes[0].ristorante"
+                     class="if-basket"><i class="fas fa-cart-arrow-down"></i></div>
             </div>
         </div>
     </div>

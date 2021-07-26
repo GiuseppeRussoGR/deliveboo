@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -11,14 +12,20 @@ class OrderShipped extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $order;
+    public $dishes;
+    public $restaurants;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-        //
+        $this->order = $order;
+        $this->dishes = $order->dishes()->get();
+        $this->restaurants = $this->dishes[0]->user()->get();
     }
 
     /**
@@ -26,7 +33,7 @@ class OrderShipped extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): OrderShipped
     {
         return $this->view('emails.order-shipped');
     }

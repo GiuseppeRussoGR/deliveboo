@@ -21,7 +21,7 @@
     </div>
     <!-- Fine Menu Verticale -->
 @endsection
-ì
+
 @section('content')
     <!-- Inizio Navigator -->
     <nav class="row">
@@ -49,7 +49,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6 offset-md-3">
             <form action=" {{ route('admin.user.update', [ 'user' => $dish->id ]) }} " method="post"
                   enctype="multipart/form-data">
                 @csrf
@@ -72,7 +72,7 @@
                     <input type="number" step=".01" class="form-control" id="price" name="price"
                            value="{{ old('price', $dish->price) }}">
                 </div>
-                <div class="form-row">
+                <div style="height: auto" class="form-row">
                     <div class="form-group col-6">
                         <p>Visibilità</p>
                         <div class="form-check">

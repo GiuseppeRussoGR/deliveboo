@@ -1042,6 +1042,7 @@ var app = new Vue({
   data: {
     types: [],
     restaurants: [],
+    restaurant_id: false,
     dishes: [],
     order: {
       total_price: 0,
@@ -1062,7 +1063,7 @@ var app = new Vue({
     },
     categoryChosen: false,
     restaurantChosen: false,
-    chosenRestaurantIndex: 0,
+    chosenRestaurantIndex: false,
     openBasket: false,
     stage: 0,
     card: false,
@@ -1126,7 +1127,7 @@ var app = new Vue({
     insertBasket: function insertBasket(dishIndex, quantity) {
       var select_dish = this.dishes[dishIndex];
       var order_dishes = this.order.dishes;
-      var restaurant_select = this.chosenRestaurantIndex;
+      var restaurant_select = this.restaurant_id;
 
       if (order_dishes.some(function (dish) {
         return dish.ristorante === restaurant_select;
@@ -1162,7 +1163,6 @@ var app = new Vue({
       }
 
       this.setDataOrderCookie();
-      console.log(this.order.dishes);
       this.addQuantities();
     },
 
@@ -1436,7 +1436,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Endrit Morina\github\progetto-finale\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
+module.exports = __webpack_require__(/*! C:\Users\girav\Desktop\Boolean Progetto\deliveboo\resources\js\vue.js */"./resources/js/vue.js");
 
 
 /***/ })

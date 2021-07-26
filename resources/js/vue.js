@@ -9,6 +9,7 @@ const app = new Vue(
         data: {
             types: [],
             restaurants: [],
+            restaurant_id : false,
             dishes: [],
             order: {
                 total_price: 0,
@@ -29,7 +30,7 @@ const app = new Vue(
             },
             categoryChosen: false,
             restaurantChosen: false,
-            chosenRestaurantIndex: 0,
+            chosenRestaurantIndex: false,
             openBasket: false,
             stage: 0,
             card: false,
@@ -89,7 +90,7 @@ const app = new Vue(
             insertBasket(dishIndex, quantity) {
                 const select_dish = this.dishes[dishIndex];
                 const order_dishes = this.order.dishes;
-                const restaurant_select = this.chosenRestaurantIndex;
+                const restaurant_select = this.restaurant_id;
                 if (order_dishes.some(dish => dish.ristorante === restaurant_select) || order_dishes.length === 0) {
                     if (order_dishes.some(dish => dish.id === select_dish.id)) {
                         let dish_index = order_dishes.map(element => {
@@ -118,7 +119,6 @@ const app = new Vue(
                     $('#error_modal').modal('show');
                 }
                 this.setDataOrderCookie();
-                console.log(this.order.dishes)
 
                 this.addQuantities();
             },
