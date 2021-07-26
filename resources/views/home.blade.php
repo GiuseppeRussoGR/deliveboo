@@ -380,7 +380,7 @@
                 @{{ order.total_price }} €
                 </span>
             </div>
-            <button class="btn-checkout" @click="setOrder()">
+            <button v-if="order.dishes.length > 0" class="btn-checkout" @click="setOrder()">
                 CHECKOUT
             </button>
         </div>

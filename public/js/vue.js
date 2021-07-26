@@ -1379,10 +1379,14 @@ var app = new Vue({
               dishes: []
             };
             $('#dropin-container').hide();
-            $('#message_payment').html('Ordine effettuato con successo!');
+            $('#message_payment').html('Ordine effettuato con successo! <br> Verrà evaso il prima possibile');
             $('#button_payment').hide();
             _this7.quantityInCart = 0;
+            setTimeout(function () {
+              location.reload();
+            }, 5000);
           } else {
+            response.data.message = response.data.message.replace("['']", "");
             _this7.notify = {
               style: 'danger',
               message: response.data.message

@@ -99,9 +99,10 @@ class UsersController extends Controller
         $collection_base = $user->dishes()->join('dish_order', 'id', '=', 'dish_order.dish_id')->join('orders', 'order_id', '=', 'orders.id')->get();
         foreach ($collection_base as $single_order) {
             $order_statistic = new stdClass();
+            $order_statistic->order_id = $single_order->order_id;
             $order_statistic->total_price = $single_order->total_price;
             $order_statistic->created_at = date_format(date_create($single_order->created_at), 'Y-m');
-            $array_statistic[] = $order_statistic;
+            $array_statistic[$single_order->order_id] = $order_statistic;
         }
         return response()->json($array_statistic);
     }

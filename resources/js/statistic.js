@@ -20,23 +20,40 @@ Vue.component('month-chart', {
     methods: {
         caricaChar() {
             axios.get('/api/admin/' + this.id + '/statistics').then(response => {
-                response.data.forEach(element => {
-                    if (!this.periodo.includes(element.created_at)) {
-                        this.periodo.push(element.created_at);
+                for (data in response.data){
+                    if (!this.periodo.includes(response.data[data].created_at)) {
+                        this.periodo.push(response.data[data].created_at);
                         this.count.push({
-                            data: element.created_at,
+                            data: response.data[data].created_at,
                             volte: 1,
-                            totale: parseInt(element.total_price)
+                            totale: parseInt(response.data[data].total_price)
                         });
                     } else {
                         this.count.forEach(array_element => {
-                            if (array_element.data === element.created_at) {
+                            if (array_element.data === response.data[data].created_at) {
                                 array_element.volte += 1;
-                                array_element.totale += parseInt(element.total_price)
+                                array_element.totale += parseInt(response.data[data].total_price)
                             }
                         })
                     }
-                })
+                }
+                // response.data.forEach(element => {
+                //     if (!this.periodo.includes(element.created_at)) {
+                //         this.periodo.push(element.created_at);
+                //         this.count.push({
+                //             data: element.created_at,
+                //             volte: 1,
+                //             totale: parseInt(element.total_price)
+                //         });
+                //     } else {
+                //         this.count.forEach(array_element => {
+                //             if (array_element.data === element.created_at) {
+                //                 array_element.volte += 1;
+                //                 array_element.totale += parseInt(element.total_price)
+                //             }
+                //         })
+                //     }
+                // })
             })
 
         },
@@ -106,25 +123,44 @@ Vue.component('year-chart', {
     methods: {
         caricaChar() {
             axios.get('/api/admin/' + this.id + '/statistics').then(response => {
-                response.data.forEach(element => {
-                    let split = element.created_at.split('-')
-                    element.created_at = split[0];
-                    if (!this.periodo.includes(element.created_at)) {
-                        this.periodo.push(element.created_at);
+                for (data in response.data){
+                    let split = response.data[data].created_at.split('-');
+                    response.data[data].created_at = split[0];
+                    if (!this.periodo.includes(response.data[data].created_at)) {
+                        this.periodo.push(response.data[data].created_at);
                         this.count.push({
-                            data: element.created_at,
+                            data: response.data[data].created_at,
                             volte: 1,
-                            totale: parseInt(element.total_price)
+                            totale: parseInt(response.data[data].total_price)
                         });
                     } else {
                         this.count.forEach(array_element => {
-                            if (array_element.data === element.created_at) {
+                            if (array_element.data === response.data[data].created_at) {
                                 array_element.volte += 1;
-                                array_element.totale += parseInt(element.total_price)
+                                array_element.totale += parseInt(response.data[data].total_price)
                             }
                         })
                     }
-                })
+                }
+                // response.data.forEach(element => {
+                //     let split = element.created_at.split('-');
+                //     element.created_at = split[0];
+                //     if (!this.periodo.includes(element.created_at)) {
+                //         this.periodo.push(element.created_at);
+                //         this.count.push({
+                //             data: element.created_at,
+                //             volte: 1,
+                //             totale: parseInt(element.total_price)
+                //         });
+                //     } else {
+                //         this.count.forEach(array_element => {
+                //             if (array_element.data === element.created_at) {
+                //                 array_element.volte += 1;
+                //                 array_element.totale += parseInt(element.total_price)
+                //             }
+                //         })
+                //     }
+                // })
             })
 
         },

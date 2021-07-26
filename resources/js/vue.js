@@ -9,7 +9,7 @@ const app = new Vue(
         data: {
             types: [],
             restaurants: [],
-            restaurant_id : false,
+            restaurant_id: false,
             dishes: [],
             order: {
                 total_price: 0,
@@ -37,7 +37,7 @@ const app = new Vue(
             notify: {},
             allTypesShown: false,
             showHideTypesButton: "Mostra tutte",
-            quantityInCart : 0
+            quantityInCart: 0
         },
         methods: {
             showAllTypes() {
@@ -135,6 +135,7 @@ const app = new Vue(
                     value_select--;
                 }
                 input_type.val(value_select);
+
             },
             /**
              * Funzione per rimuovere elementi nel carrello
@@ -267,10 +268,14 @@ const app = new Vue(
                                 dishes: []
                             };
                             $('#dropin-container').hide();
-                            $('#message_payment').html('Ordine effettuato con successo!');
+                            $('#message_payment').html('Ordine effettuato con successo! <br> Verrà evaso il prima possibile');
                             $('#button_payment').hide();
                             this.quantityInCart = 0;
+                            setTimeout(()=>{
+                                location.reload();
+                            },5000)
                         } else {
+                            response.data.message = response.data.message.replace("['']", "");
                             this.notify = {
                                 style: 'danger',
                                 message: response.data.message
