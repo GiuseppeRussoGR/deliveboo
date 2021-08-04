@@ -119,7 +119,7 @@ class OrderController extends Controller
             $message = 'Transazione eseguita';
             $status = 200;
             //invio email
-            //Mail::to('cliente@email.it')->send(new OrderShipped($order));
+            Mail::to('cliente@email.it')->send(new OrderShipped($order));
             $order->update(['payment_status' => 'accepted']);
         } else {
             $success = false;

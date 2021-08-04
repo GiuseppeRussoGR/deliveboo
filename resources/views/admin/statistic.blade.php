@@ -45,7 +45,7 @@
             </div>
         </div>
     </nav>
-    <div class="row">
+    <div class="row" v-if="isLoading">
         <div class="col-12">
             <div id="statistics">
                 <div class="lds-roller">
@@ -58,12 +58,41 @@
                     <div></div>
                     <div></div>
                 </div>
-                <month-chart v-if="status" :id="{{$id}}"></month-chart>
-                <year-chart v-else :id="{{$id}}"></year-chart>
-                <button class="btn btn-primary" id="change_visual" @click="status = !status">Cambia visuale</button>
             </div>
         </div>
     </div>
+    <div v-if="!isLoading && status" class="row pb-4">
+        <div class="col-12 pb-3 text-center">
+            <h2>Statistiche per mese</h2>
+        </div>
+        <div class="col-12 col-md-6">
+            <month-chart :filtrato='filter' :periodo="periodo_mese" :ordini="numeroOrdini"></month-chart>
+        </div>
+        <div class="col-12 col-md-6">
+            <month-chart :filtrato='filter' :periodo="periodo_mese" :incassi="incassiTotali"></month-chart>
+        </div>
+    </div>
+    <div v-else-if="!isLoading && !status" class="row pb-4">
+        <div class="col-12 pb-3 text-center">
+            <h2>Statistiche per anno</h2>
+        </div>
+        <div class="col-12 col-md-6">
+            <year-chart :filtrato='filter' :periodo="periodo_anno" :ordini="numeroOrdini"></year-chart>
+        </div>
+        <div class="col-12 col-md-6">
+            <year-chart :filtrato='filter' :periodo="periodo_anno" :incassi="incassiTotali"></year-chart>
+        </div>
+    </div>
+    <div v-if="status" class="row">
+        <button class="btn btn-primary" id="change_visual" @click="status = !status; switchYear()">Cambia visuale
+        </button>
+    </div>
+    <div v-else class="row">
+        <button class="btn btn-primary" id="change_visual" @click="status = !status; switchMonth()">Cambia visuale
+        </button>
+    </div>
+
+
 @endsection
 @section('footer_script')
     <script src="{{ asset('js/statistic.js') }}" charset="utf-8"></script>

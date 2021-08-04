@@ -15,7 +15,6 @@
 
         body {
             background: linear-gradient(180deg, #76c4ff 0%, #24A1FF 75%, #43aeff 100%);
-            height: 100vh;
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -174,6 +173,7 @@
         </div>
         <div class="sender-receiver">
             <div class="sender">
+                <h4>Ristorante</h4>
                 <ul>
                     @foreach($restaurants as $data)
                         <li>{{$data->company_name}}</li>
@@ -186,6 +186,7 @@
                 <img src="https://www.foodserviceweb.it/wp-content/uploads/sites/4/2020/05/food-delivery.jpg" alt="">
             </div>
             <div class="receiver">
+                <h4>Destinatario</h4>
                 <ul>
                     <li>{{$order->client_name}}</li>
                     <li>{{$order->client_address}}</li>

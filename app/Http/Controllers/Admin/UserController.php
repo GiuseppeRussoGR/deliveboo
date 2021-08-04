@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Dish;
 use App\Http\Controllers\Controller;
+use App\Order;
 use App\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -170,14 +171,17 @@ class UserController extends Controller
         $order_collection = $user->dishes()->join('dish_order', 'id', '=', 'dish_order.dish_id')->join('orders', 'order_id', '=', 'orders.id')->get();
         foreach ($order_collection as $single_order) {
             $order = new stdClass();
-            $order->name = $single_order->name;
-            $order->quantity = $single_order->quantity;
-            $order->order_id = $single_order->order_id;
-            $order->name_dish = $single_order->name;
-            $order->quantita_dish = $single_order->quantita;
+            $order_find = Order::find($single_order->order_id);
+            $dishes = $order_find->dishes()->get();
+            $order->dishes = $dishes;
+            $order->payment_status = $single_order->payment_status;
+            $order->client_code = $single_order->client_code;
+            $order->client_name = $single_order->client_name;
+            $order->client_address = $single_order->client_address;
+            $order->client_number = $single_order->client_number;
             $order->total_price = $single_order->total_price;
-            $order->created_at = date_format(date_create($single_order->created_at), 'Y-m-d');
-            $array_list[$order->order_id] = $order;
+            $order->created_at = date_format(date_create($single_order->created_at), 'd-m-Y');
+            $array_list[ $single_order->order_id] = $order;
         }
         return view('admin.list_order', compact('array_list'));
     }

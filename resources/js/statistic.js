@@ -1,84 +1,12 @@
 Vue.config.devtools = true
 Vue.component('month-chart', {
-    props: ['id'],
+    props: ['filtrato', 'periodo', 'ordini', 'incassi'],
     extends: VueChartJs.Bar,
     data() {
         return {
-            periodo: [],
-            count: [],
-            data_ordini: [],
-            data_totale: [],
-            structure: {},
-        }
-    },
-    mounted() {
-        this.caricaChar();
-        setTimeout(() => {
-            this.renderChar();
-        }, 5000)
-    },
-    methods: {
-        caricaChar() {
-            axios.get('/api/admin/' + this.id + '/statistics').then(response => {
-                for (data in response.data){
-                    if (!this.periodo.includes(response.data[data].created_at)) {
-                        this.periodo.push(response.data[data].created_at);
-                        this.count.push({
-                            data: response.data[data].created_at,
-                            volte: 1,
-                            totale: parseInt(response.data[data].total_price)
-                        });
-                    } else {
-                        this.count.forEach(array_element => {
-                            if (array_element.data === response.data[data].created_at) {
-                                array_element.volte += 1;
-                                array_element.totale += parseInt(response.data[data].total_price)
-                            }
-                        })
-                    }
-                }
-                // response.data.forEach(element => {
-                //     if (!this.periodo.includes(element.created_at)) {
-                //         this.periodo.push(element.created_at);
-                //         this.count.push({
-                //             data: element.created_at,
-                //             volte: 1,
-                //             totale: parseInt(element.total_price)
-                //         });
-                //     } else {
-                //         this.count.forEach(array_element => {
-                //             if (array_element.data === element.created_at) {
-                //                 array_element.volte += 1;
-                //                 array_element.totale += parseInt(element.total_price)
-                //             }
-                //         })
-                //     }
-                // })
-            })
-
-        },
-        renderChar() {
-            this.count.forEach(element => {
-                this.data_ordini.push(element.volte);
-                this.data_totale.push(element.totale);
-            })
-            $('.lds-roller').hide();
-            this.renderChart({
-                labels: this.periodo,
-                datasets: [
-                    {
-                        label: 'Ordini',
-                        backgroundColor: '#FFA823',
-                        data: this.data_ordini
-                    },
-                    {
-                        label: 'Totale in Euro',
-                        backgroundColor: '#24A1FF',
-                        data: this.data_totale
-                    }
-
-                ]
-            }, {
+            quantita_ordini: [],
+            valore_totale_ordini: [],
+            structure: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
@@ -91,120 +19,125 @@ Vue.component('month-chart', {
                                     }
                             }
                         ]
-                },
-                title: {
-                    display: true,
-                    text: 'Statistiche per mese',
-                    font: {weight: 'bold'},
-                    fontSize: 40
                 }
-            })
-        }
-    }
-})
-Vue.component('year-chart', {
-    extends: VueChartJs.Bar,
-    props: ['id'],
-    data() {
-        return {
-            periodo: [],
-            count: [],
-            data_ordini: [],
-            data_totale: [],
-            structure: {},
+            },
         }
     },
     mounted() {
-        this.caricaChar();
-        setTimeout(() => {
-            this.renderChar();
-        }, 5000)
-    },
-    methods: {
-        caricaChar() {
-            axios.get('/api/admin/' + this.id + '/statistics').then(response => {
-                for (data in response.data){
-                    let split = response.data[data].created_at.split('-');
-                    response.data[data].created_at = split[0];
-                    if (!this.periodo.includes(response.data[data].created_at)) {
-                        this.periodo.push(response.data[data].created_at);
-                        this.count.push({
-                            data: response.data[data].created_at,
-                            volte: 1,
-                            totale: parseInt(response.data[data].total_price)
-                        });
-                    } else {
-                        this.count.forEach(array_element => {
-                            if (array_element.data === response.data[data].created_at) {
-                                array_element.volte += 1;
-                                array_element.totale += parseInt(response.data[data].total_price)
-                            }
-                        })
-                    }
-                }
-                // response.data.forEach(element => {
-                //     let split = element.created_at.split('-');
-                //     element.created_at = split[0];
-                //     if (!this.periodo.includes(element.created_at)) {
-                //         this.periodo.push(element.created_at);
-                //         this.count.push({
-                //             data: element.created_at,
-                //             volte: 1,
-                //             totale: parseInt(element.total_price)
-                //         });
-                //     } else {
-                //         this.count.forEach(array_element => {
-                //             if (array_element.data === element.created_at) {
-                //                 array_element.volte += 1;
-                //                 array_element.totale += parseInt(element.total_price)
-                //             }
-                //         })
-                //     }
-                // })
-            })
-
-        },
-        renderChar() {
-            this.count.forEach(element => {
-                this.data_ordini.push(element.volte);
-                this.data_totale.push(element.totale);
-            })
-            this.visible = !this.visible;
-            $('.lds-roller').hide();
+        if (typeof this.ordini === 'undefined') {
             this.renderChart({
                 labels: this.periodo,
                 datasets: [
                     {
-                        label: 'Ordini',
-                        backgroundColor: '#FFA823',
-                        data: this.data_ordini
-                    },
-                    {
                         label: 'Totale in Euro',
-                        backgroundColor: '#24A1FF',
-                        data: this.data_totale
+                        backgroundColor: [
+                            "#ffed67",
+                            "#00328a",
+                            "#6b9800",
+                            "#007df3",
+                            "#d80000",
+                            "#00beff",
+                            "#f00389",
+                            "#0078e7",
+                            "#d890ce",
+                            "#c15fbe"],
+                        data: this.incassi
                     }
 
                 ]
-            }, {
+            }, this.structure)
+        } else {
+            this.renderChart({
+                labels: this.periodo,
+                datasets: [
+                    {
+                        label: 'Numero di Ordini',
+                        backgroundColor: ["#ffed67",
+                            "#00328a",
+                            "#6b9800",
+                            "#007df3",
+                            "#d80000",
+                            "#00beff",
+                            "#f00389",
+                            "#0078e7",
+                            "#d890ce",
+                            "#c15fbe"],
+                        data: this.ordini
+                    }
+
+                ]
+            }, this.structure)
+        }
+
+    }
+})
+Vue.component('year-chart', {
+    extends: VueChartJs.Bar,
+    props: ['filtrato', 'periodo', 'ordini', 'incassi'],
+    data() {
+        return {
+            quantita_ordini: [],
+            valore_totale_ordini: [],
+            structure: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    yAxes: [
-                        {
-                            ticks:
-                                {
-                                    beginAtZero: true
-                                }
-                        }]
-                },
-                title: {
-                    display: true,
-                    text: 'Statistiche per anno',
-                    font: {weight: 'bold'},
-                    fontSize: 40
+                    yAxes:
+                        [
+                            {
+                                ticks:
+                                    {
+                                        beginAtZero: true
+                                    }
+                            }
+                        ]
                 }
-            })
+            },
+        }
+    },
+    mounted() {
+        if (typeof this.ordini === 'undefined') {
+            this.renderChart({
+                labels: this.periodo,
+                datasets: [
+                    {
+                        label: 'Totale in Euro',
+                        backgroundColor: ["#ffed67",
+                            "#00328a",
+                            "#6b9800",
+                            "#007df3",
+                            "#d80000",
+                            "#00beff",
+                            "#f00389",
+                            "#0078e7",
+                            "#d890ce",
+                            "#c15fbe"],
+                        data: this.incassi
+                    }
+
+                ]
+            }, this.structure)
+        } else {
+            this.renderChart({
+                labels: this.periodo,
+                datasets: [
+                    {
+                        label: 'Numero di Ordini',
+                        backgroundColor: ["#ffed67",
+                            "#00328a",
+                            "#6b9800",
+                            "#007df3",
+                            "#d80000",
+                            "#00beff",
+                            "#f00389",
+                            "#0078e7",
+                            "#d890ce",
+                            "#c15fbe"],
+                        data: this.ordini
+                    }
+
+                ]
+            }, this.structure)
         }
     }
 })
@@ -212,6 +145,79 @@ var vm = new Vue({
     el: '#root',
     data: {
         status: true,
-        openBasket: false
-    }
+        openBasket: false,
+        id: false,
+        response: {},
+        responseError: {},
+        isLoading: true,
+        periodo_mese: [],
+        periodo_anno: [],
+        filter: [],
+        numeroOrdini: [],
+        incassiTotali: [],
+        listYear: [],
+    },
+    methods: {
+        popolaPeriodo(anno, variable) {
+            this[variable] = [];
+            this.filter = [];
+            this.numeroOrdini = [];
+            this.incassiTotali = [];
+            for (let data in this.response) {
+                if (anno) {
+                    let split = this.response[data].created_at.split('-');
+                    this.countData(variable, data, split[0]);
+                } else {
+                    this.countData(variable, data, this.response[data].created_at);
+                }
+            }
+        },
+        countData(variable, data, element) {
+            if (!this[variable].includes(element)) {
+                this[variable].push(element);
+                this.filter.push({
+                    data: element,
+                    volte: 1,
+                    totale: parseInt(this.response[data].total_price)
+                });
+            } else {
+                this.filter.forEach(array_element => {
+                    if (array_element.data === element) {
+                        array_element.volte += 1;
+                        array_element.totale += parseInt(this.response[data].total_price)
+                    }
+                })
+            }
+        },
+        makeFilter() {
+            this.filter.forEach(element => {
+                this.numeroOrdini.push(element.volte);
+                this.incassiTotali.push(element.totale);
+            })
+        },
+        switchYear() {
+            this.popolaPeriodo(true, 'periodo_anno');
+            this.makeFilter();
+            this.isLoading = false;
+        },
+        switchMonth() {
+            this.popolaPeriodo(false, 'periodo_mese');
+            this.makeFilter();
+            this.isLoading = false;
+        }
+    },
+    async created() {
+        this.id = parseInt(window.location.href.split('/')[4]);
+        await axios.get('/api/admin/' + this.id + '/statistics').then(response => {
+            this.response = response.data;
+        }, error => {
+            this.responseError = error;
+        })
+        if (_.size(this.response) >= 1) {
+            this.switchMonth();
+        } else {
+            //TODO inserire l'errore
+        }
+    },
+
 })

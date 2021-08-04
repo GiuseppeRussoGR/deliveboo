@@ -65,6 +65,7 @@ class UsersController extends Controller
     /**
      * This function will return all the Dishes from a determinated User/Restaurant
      * @param $id int by user/restaurant
+     * @param Request $request
      * @param Dish $dish instance of Dish
      * @return JsonResponse
      */

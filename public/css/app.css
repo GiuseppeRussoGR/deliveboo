@@ -10953,6 +10953,10 @@ body {
   min-width: 576px;
 }
 
+ul {
+  list-style-type: none;
+}
+
 h1,
 h2,
 h3,
@@ -12119,6 +12123,11 @@ h6 {
 
 .user.detail .card .bottom {
   float: right;
+}
+
+.user.list i {
+  color: #24A1FF;
+  cursor: pointer;
 }
 
 .user.statistics .lds-roller {

@@ -47,17 +47,65 @@
             <h6>Elenco ordini ricevuti</h6>
         </div>
     </div>
-    <div class="row" style="{{count($array_list) > 16 ? 'height: 100%;' : ''}} overflow: auto">
-        @foreach($array_list as $element)
-            <div class="col-12 col-md-3" style="padding-bottom: 20px">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">Ordine fatto il {{$element->created_at}}</h6>
-                        <p class="card-text">Totale: {{$element->total_price}}€</p>
-                    </div>
-                </div>
-            </div>
-        @endforeach
+    <div class="row" style="overflow: auto">
+        {{--        {{count($array_list) > 16 ? 'height: 100%;' : ''}}--}}
+        <div class="col-12 table-responsive" style="padding-bottom: 20px">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Ordine del</th>
+                    <th scope="col">Nome e Cognome</th>
+                    <th scope="col">Indirizzo di spedizione</th>
+                    <th scope="col">Numero</th>
+                    <th scope="col">Codice transazione</th>
+                    <th scope="col">Stato pagamento</th>
+                    <th scope="col">Totale ordine</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($array_list as $element)
+                    @php
+                        $list_dish = [];
+                    @endphp
+                    @foreach($element->dishes as $dish)
+                        @php
+                            $list_dish [$dish->name] = $dish->pivot->quantita;
+                        @endphp
+                    @endforeach
+                    <tr>
+                        <th scope="row">{{$element->created_at}}</th>
+                        <td>{{$element->client_name}}</td>
+                        <td>{{$element->client_address}}</td>
+                        <td>{{$element->client_number}}</td>
+                        <td>{{$element->client_code}}</td>
+                        <td>{{$element->payment_status}}</td>
+                        <td>
+                            <div class="row">
+                                <div class="col-6">
+                                    {{$element->total_price}}€
+                                </div>
+                                <div class="col-6">
+                                    <div class="dropdown">
+                                        <i class="fas fa-shopping-basket" data-toggle="dropdown" aria-haspopup="true"
+                                           aria-expanded="false"></i>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <h6 class="text-center">Lista ordine</h6>
+                                            <div class="dropdown-divider"></div>
+                                            <ul>
+                                            @foreach($list_dish as $key => $dishQuantity)
+                                                <li>{{$key}}<span> x</span>{{$dishQuantity}}</li>
+                                            @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection
 
