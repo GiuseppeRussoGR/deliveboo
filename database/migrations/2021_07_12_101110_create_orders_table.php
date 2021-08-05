@@ -20,7 +20,8 @@ class CreateOrdersTable extends Migration
             $table->string('client_code', 255)->unique();
             $table->string('client_name', 50);
             $table->string('client_address', 100);
-            $table->string('client_number', 10);
+            $table->string('client_number', 20);
+            $table->string('client_email', 50);
             $table->timestamps();
         });
     }

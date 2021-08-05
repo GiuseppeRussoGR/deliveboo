@@ -114,7 +114,7 @@ class OrderController extends Controller
             $success = true;
         } else {
             $success = false;
-            $message = 'Errore durante la verifica della carta inserita. Inserire una carta valida';
+            $message = 'Errore durante la verifica della carta inserita. <br> Inserire una carta valida';
             $customerId = '';
             $gateway->customer()->delete($customer->customer->id);
         }
@@ -157,11 +157,11 @@ class OrderController extends Controller
             $message = 'Ordine effettuato con successo! <br> Verrà evaso il prima possibile';
             $status = 200;
             //invio email
-            Mail::to('cliente@email.it')->send(new OrderShipped($order));
+            Mail::to($request->client_email)->send(new OrderShipped($order));
             $order->update(['payment_status' => 'accepted']);
         } else {
             $success = false;
-            $message = 'Errore durante la transazione. Eseguire di nuovo il pagamento';
+            $message = 'Errore durante la transazione. <br> Eseguire di nuovo il pagamento';
             $status = 200;
         }
 

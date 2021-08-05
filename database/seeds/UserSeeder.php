@@ -102,7 +102,7 @@ class UserSeeder extends Seeder
                 'img_path' => 'users-cover/taj-mahal.jpg',
                 'type_id' => 6
             ],
-            
+
             //Greco
             [
                 'company_name' => 'Taverna Greca Mykonos',
@@ -191,7 +191,7 @@ class UserSeeder extends Seeder
                 'img_path' => 'users-cover/sakura.jpg',
                 'type_id' => 4
             ],
-            //Pizza 
+            //Pizza
             [
                 'company_name' => 'Da Zero',
                 'password' => 'dazero',

@@ -1365,7 +1365,8 @@ var app = new Vue({
             axios.post('api/order/payment', {
               amount: price,
               id_order: _this6.order_set.id,
-              customer_id: response.data.customerId
+              customer_id: response.data.customerId,
+              client_email: _this6.client_email
             }).then(function (result) {
               if (result.data.success) {
                 _this6.braintree_payment.payment = true;
