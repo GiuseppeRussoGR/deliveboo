@@ -91,10 +91,46 @@ class OrderController extends Controller
         return response()->json($data, $status);
     }
 
+    public function createCustomer(Request $request, Gateway $gateway): JsonResponse
+    {
+
+        $customer = $gateway->customer()->create([
+            'firstName' => $request->client_name,
+            'email' => $request->client_email,
+            'phone' => $request->client_number
+        ]);
+
+        $result = $gateway->paymentMethod()->create([
+            'customerId' => $customer->customer->id,
+            'paymentMethodNonce' => $request->token,
+            'options' => [
+                'verifyCard' => true
+            ]
+        ]);
+
+        if ($result->success) {
+            $customerId = $customer->customer->id;
+            $message = 'Verifica carta andata con successo';
+            $success = true;
+        } else {
+            $success = false;
+            $message = 'Errore durante la verifica della carta inserita. Inserire una carta valida';
+            $customerId = '';
+            $gateway->customer()->delete($customer->customer->id);
+        }
+
+        $data = [
+            'success' => $success,
+            'message' => $message,
+            'customerId' => $customerId
+        ];
+        return response()->json($data);
+    }
+
     /**
      * Payment request to Braintree service
      * @param Request $request instance of Request
-     * @param Gateway $gateway instance of Bentree Gateway Service
+     * @param Gateway $gateway instance of Braintree Gateway Service
      * @return JsonResponse
      */
     public function makePayment(Request $request, Gateway $gateway): JsonResponse
@@ -106,25 +142,27 @@ class OrderController extends Controller
             $request->amount = $order->total_price;
         }
 
+
         $payment = $gateway->transaction()->sale([
             'amount' => $request->amount,
-            'paymentMethodNonce' => $request->token,
+            'customerId' => $request->customer_id,
+            'orderId' => $request->id_order,
             'options' => [
-                'submitForSettlement' => True
+                'submitForSettlement' => True,
             ]
         ]);
 
         if ($payment->success) {
             $success = true;
-            $message = 'Transazione eseguita';
+            $message = 'Ordine effettuato con successo! <br> Verrà evaso il prima possibile';
             $status = 200;
             //invio email
             Mail::to('cliente@email.it')->send(new OrderShipped($order));
             $order->update(['payment_status' => 'accepted']);
         } else {
             $success = false;
-            $message = 'Transazione non eseguita';
-            $status = 401;
+            $message = 'Errore durante la transazione. Eseguire di nuovo il pagamento';
+            $status = 200;
         }
 
         $data = [

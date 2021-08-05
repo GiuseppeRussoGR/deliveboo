@@ -1049,6 +1049,7 @@ var app = new Vue({
       client_name: '',
       client_address: '',
       client_civic_number: '',
+      client_email: '',
       client_city_cap: '',
       client_city: '',
       client_number: "",
@@ -1070,7 +1071,8 @@ var app = new Vue({
     notify: {},
     allTypesShown: false,
     showHideTypesButton: "Mostra tutte",
-    quantityInCart: 0
+    quantityInCart: 0,
+    checkoutButton: true
   },
   methods: {
     showAllTypes: function showAllTypes() {
@@ -1230,9 +1232,12 @@ var app = new Vue({
                     return _this4.getDataPayment();
 
                   case 6:
+                    $('#dropin-container').show();
+                    $('#button_payment').show();
+                    $('#message_payment').removeClass('bg-danger p-3 text-light').hide();
                     $('#payment').modal('show');
 
-                  case 7:
+                  case 10:
                   case "end":
                     return _context.stop();
                 }
@@ -1289,13 +1294,9 @@ var app = new Vue({
 
               case 2:
                 response = _context2.sent;
-                _context2.next = 5;
-                return response.data.token;
+                return _context2.abrupt("return", response.data.token);
 
-              case 5:
-                return _context2.abrupt("return", _context2.sent);
-
-              case 6:
+              case 4:
               case "end":
                 return _context2.stop();
             }
@@ -1357,39 +1358,42 @@ var app = new Vue({
       var price = this.order.total_price;
       $('#my_form').removeClass('was-validated');
       this.braintree_payment.instance.requestPaymentMethod(function (err, payload) {
-        axios.post('api/order/payment', {
-          token: payload.nonce,
-          amount: price,
-          id_order: _this6.order_set.id
+        axios.post('api/order/customer', {
+          token: payload.nonce
         }).then(function (response) {
           if (response.data.success) {
-            _this6.braintree_payment.payment = true;
+            axios.post('api/order/payment', {
+              amount: price,
+              id_order: _this6.order_set.id,
+              customer_id: response.data.customerId
+            }).then(function (result) {
+              if (result.data.success) {
+                _this6.braintree_payment.payment = true;
 
-            _this6.$cookies.remove('client_order');
+                _this6.$cookies.remove('client_order');
 
-            _this6.openBasket = false;
-            _this6.order = {
-              dishes: []
-            };
-            $('#dropin-container').hide();
-            $('#message_payment').html('Ordine effettuato con successo! <br> Verrà evaso il prima possibile');
-            $('#button_payment').hide();
-            _this6.quantityInCart = 0;
-            setTimeout(function () {
-              location.reload();
-            }, 5000);
+                _this6.openBasket = false;
+                _this6.order = {
+                  dishes: []
+                };
+                $('#dropin-container').hide();
+                $('#message_payment').addClass('bg-success p-3 text-light text-center').html(result.data.message).show();
+                $('#button_payment').hide();
+                _this6.quantityInCart = 0;
+                _this6.stage = 0;
+              } else {
+                $('#dropin-container').hide();
+                $('#button_payment').hide();
+                $('#message_payment').addClass('bg-danger p-3 text-light text-center').html(result.data.message).show();
+              }
+            });
           } else {
-            response.data.message = response.data.message.replace("['']", "");
-            _this6.notify = {
-              style: 'danger',
-              message: response.data.message
-            };
-            $('#error_modal').modal('show'); // $('#dropin-container').hide();
-            // $('#message_payment').html('Il tuo ordine verrà evaso il prima possibile');
-            // $('#button_payment').hide();
+            $('#dropin-container').hide();
+            $('#button_payment').hide();
+            $('#message_payment').addClass('bg-danger p-3 text-light text-center').html(response.data.message).show();
           }
         });
-      }); //}
+      });
     },
 
     /**

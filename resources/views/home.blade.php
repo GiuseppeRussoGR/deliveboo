@@ -43,7 +43,7 @@
                 <!-- Modal Header -->
                 <div :class="'modal-header alert-'+ notify.style">
                     <h4 class="modal-title">Errore</h4>
-                    <button type="button" class="close" data-dismiss="modal" @click="notify = {}">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" @click="notify = {};checkoutButton = true;">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -56,7 +56,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="notify = {}">Chiudi
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="notify = {};checkoutButton = true;">Chiudi
                     </button>
                 </div>
 
@@ -289,7 +289,7 @@
                 Carrello
             </div>
             <div class="closing-icon">
-                <i class="fas fa-times" @click="openBasket = false; stage === 3 ? stage = 2 : stage"></i>
+                <i class="fas fa-times" @click="openBasket = false; stage === 3 ? stage = 2 : stage; refreshQuantities()"></i>
             </div>
         </div>
         <div class="cart-subtitle">
@@ -307,6 +307,12 @@
                 <input type="phone" class="form-control" id="client_number"
                        v-model="order.client_number" required name="client_number"
                        placeholder="es. 3249065865">
+            </div>
+            <div class="form-group">
+                <label for="client_email">Email</label>
+                <input type="email" class="form-control" id="client_email"
+                       v-model="order.client_email" required name="client_email"
+                       placeholder="@email.it">
             </div>
             <div class="form-group">
                 <label for="client_address">Indirizzo</label>
@@ -379,8 +385,13 @@
                 @{{ order.total_price }} €
                 </span>
             </div>
-            <button v-if="order.dishes.length > 0" class="btn-checkout" @click="setOrder()">
+            <button v-if="order.dishes.length > 0 && checkoutButton" class="btn-checkout"
+                    @click="setOrder(); checkoutButton = false">
                 CHECKOUT
+            </button>
+            <button v-else-if="order.dishes.length > 0 && !checkoutButton" class="btn-checkout d-flex align-items-center" disabled>
+                <span class="spinner-grow spinner-grow-sm mr-2" role="status" aria-hidden="true"></span>
+                Verifica...
             </button>
         </div>
 
@@ -394,7 +405,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Pagamento</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            @click="teardownBraintree()">
+                            @click="teardownBraintree(); checkoutButton = true;">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -403,7 +414,7 @@
                     <div id="message_payment"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="teardownBraintree()">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @click="teardownBraintree(); checkoutButton = true;">
                         Chiudi
                     </button>
                     <button type="button" class="btn btn-primary" id="button_payment"

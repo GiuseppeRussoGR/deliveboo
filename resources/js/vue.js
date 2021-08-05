@@ -16,6 +16,7 @@ const app = new Vue(
                 client_name: '',
                 client_address: '',
                 client_civic_number: '',
+                client_email: '',
                 client_city_cap: '',
                 client_city: '',
                 client_number: "",
@@ -37,7 +38,8 @@ const app = new Vue(
             notify: {},
             allTypesShown: false,
             showHideTypesButton: "Mostra tutte",
-            quantityInCart: 0
+            quantityInCart: 0,
+            checkoutButton: true
         },
         methods: {
             showAllTypes() {
@@ -51,7 +53,6 @@ const app = new Vue(
             },
             refreshQuantities() {
                 this.quantityInCart = 0;
-
                 this.order.dishes.forEach(item => {
                     this.quantityInCart += item.quantita;
                 });
@@ -112,7 +113,6 @@ const app = new Vue(
                     $('#error_modal').modal('show');
                 }
                 this.setDataOrderCookie();
-
                 this.refreshQuantities();
             },
             /**
@@ -166,6 +166,9 @@ const app = new Vue(
                         }
                         this.braintree_payment.token = await this.getToken();
                         await this.getDataPayment();
+                        $('#dropin-container').show();
+                        $('#button_payment').show();
+                        $('#message_payment').removeClass('bg-danger p-3 text-light').hide();
                         $('#payment').modal('show');
                     }).catch(error => {
                         this.notify = {
@@ -202,7 +205,7 @@ const app = new Vue(
              */
             async getToken() {
                 const response = await axios.get('api/order/token ');
-                return await response.data.token;
+                return response.data.token;
             },
             /**
              * Funzione che prende i dati di pagamento dall'utente e genero l'istanza di braintree
@@ -248,40 +251,40 @@ const app = new Vue(
                 const price = this.order.total_price;
                 $('#my_form').removeClass('was-validated');
                 this.braintree_payment.instance.requestPaymentMethod((err, payload) => {
-                    axios.post('api/order/payment', {
+                    axios.post('api/order/customer', {
                         token: payload.nonce,
-                        amount: price,
-                        id_order: this.order_set.id
                     }).then(response => {
                         if (response.data.success) {
-                            this.braintree_payment.payment = true;
-                            this.$cookies.remove('client_order');
-                            this.openBasket = false;
-                            this.order = {
-                                dishes: []
-                            };
-                            $('#dropin-container').hide();
-                            $('#message_payment').html('Ordine effettuato con successo! <br> Verrà evaso il prima possibile');
-                            $('#button_payment').hide();
-                            this.quantityInCart = 0;
-                            setTimeout(()=>{
-                                location.reload();
-                            },5000)
+                            axios.post('api/order/payment', {
+                                amount: price,
+                                id_order: this.order_set.id,
+                                customer_id: response.data.customerId
+                            }).then(result => {
+                                if (result.data.success) {
+                                    this.braintree_payment.payment = true;
+                                    this.$cookies.remove('client_order');
+                                    this.openBasket = false;
+                                    this.order = {
+                                        dishes: []
+                                    };
+                                    $('#dropin-container').hide();
+                                    $('#message_payment').addClass('bg-success p-3 text-light text-center').html(result.data.message).show();
+                                    $('#button_payment').hide();
+                                    this.quantityInCart = 0;
+                                    this.stage = 0;
+                                } else {
+                                    $('#dropin-container').hide();
+                                    $('#button_payment').hide();
+                                    $('#message_payment').addClass('bg-danger p-3 text-light text-center').html(result.data.message).show();
+                                }
+                            })
                         } else {
-                            response.data.message = response.data.message.replace("['']", "");
-                            this.notify = {
-                                style: 'danger',
-                                message: response.data.message
-                            }
-                            $('#error_modal').modal('show');
-                            // $('#dropin-container').hide();
-                            // $('#message_payment').html('Il tuo ordine verrà evaso il prima possibile');
-                            // $('#button_payment').hide();
+                            $('#dropin-container').hide();
+                            $('#button_payment').hide();
+                            $('#message_payment').addClass('bg-danger p-3 text-light text-center').html(response.data.message).show();
                         }
                     })
                 });
-                //}
-
             },
             /**
              * Funzione che in caso di chiusura della modale cancella l'istanza di braintree

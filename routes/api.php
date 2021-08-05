@@ -27,6 +27,7 @@ Route::get('/dishes/{id}', 'Api\UsersController@dishes')->name('api-dishes');
 Route::post('/order', [OrderController::class, 'setOrder'])->name('setOrder');
 Route::get('/order/get/{id}', [OrderController::class, 'getOrder'])->name('getOrder');
 Route::get('/order/token', [OrderController::class, 'getToken'])->name('getToken');
+Route::post('/order/customer', [OrderController::class, 'createCustomer'])->name('createCustomer');
 Route::post('/order/payment', [OrderController::class, 'makePayment'])->name('makePayment');
 //UserStatistics
 Route::get('/admin/{id}/statistics', [UsersController::class, 'statistics'])->name('api-statistics');
