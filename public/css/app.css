@@ -11862,7 +11862,7 @@ h6 {
   font-weight: 600;
   outline: 0;
   border: 0;
-  margin-top: 15px;
+  margin: 15px auto auto;
   border-radius: 10px;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.25);

@@ -6,14 +6,12 @@ use App\Category;
 use App\Dish;
 use App\Http\Controllers\Controller;
 use App\Order;
-use App\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use stdClass;
-use function Composer\Autoload\includeFile;
 
 class UserController extends Controller
 {
